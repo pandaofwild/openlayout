@@ -54,7 +54,7 @@ export default async function LayoutDetailPage({ params }: LayoutDetailPageProps
 
         <section
           aria-label={`${layout.nameKo} 실제 웹 프리뷰`}
-          className="relative mt-8 h-[calc(100vh-230px)] min-h-[560px] max-h-[760px] overflow-hidden rounded-lg border border-zinc-900 bg-zinc-950 shadow-sm"
+          className="relative mt-8 h-[calc(100vh-230px)] min-h-[560px] max-h-[760px] overflow-hidden rounded-lg bg-zinc-100 shadow-sm ring-1 ring-zinc-900/10"
           data-testid="layout-stage"
         >
           <LayoutStagePreview layout={layout} />

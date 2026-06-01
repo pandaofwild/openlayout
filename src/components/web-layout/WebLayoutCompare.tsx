@@ -73,7 +73,7 @@ export function WebLayoutCompare() {
       ) : activeLayout ? (
         <section
           aria-label="레이아웃 비교 결과"
-          className="relative h-[calc(100vh-300px)] min-h-[470px] max-h-[760px] overflow-hidden rounded-lg border border-zinc-900 bg-zinc-950 shadow-sm md:h-[calc(100vh-230px)] md:min-h-[560px]"
+          className="relative h-[calc(100vh-300px)] min-h-[470px] max-h-[760px] overflow-hidden rounded-lg bg-zinc-100 shadow-sm ring-1 ring-zinc-900/10 md:h-[calc(100vh-230px)] md:min-h-[560px]"
           data-testid="layout-stage"
         >
           <LayoutStagePreview
@@ -84,21 +84,21 @@ export function WebLayoutCompare() {
 
           <button
             aria-label="이전 레이아웃 보기"
-            className="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/90 text-2xl font-semibold text-zinc-950 shadow-lg transition hover:scale-105 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:left-6 md:h-14 md:w-14"
+            className="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-zinc-950 shadow-lg transition hover:scale-105 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:left-6 md:h-14 md:w-14"
             disabled={selectedLayouts.length <= 1}
             onClick={showPreviousLayout}
             type="button"
           >
-            ←
+            <ArrowLeftIcon />
           </button>
           <button
             aria-label="다음 레이아웃 보기"
-            className="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/90 text-2xl font-semibold text-zinc-950 shadow-lg transition hover:scale-105 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:right-6 md:h-14 md:w-14"
+            className="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-zinc-950 shadow-lg transition hover:scale-105 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:right-6 md:h-14 md:w-14"
             disabled={selectedLayouts.length <= 1}
             onClick={showNextLayout}
             type="button"
           >
-            →
+            <ArrowRightIcon />
           </button>
 
           <div className="absolute left-1/2 top-4 z-20 hidden -translate-x-1/2 gap-2 rounded-full border border-white/20 bg-zinc-950/65 px-3 py-2 backdrop-blur md:flex">
@@ -171,5 +171,45 @@ export function WebLayoutCompare() {
         </div>
       </section>
     </div>
+  );
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15 6 9 12l6 6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2.4"
+      />
+    </svg>
+  );
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m9 6 6 6-6 6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2.4"
+      />
+    </svg>
   );
 }

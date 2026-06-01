@@ -1,3 +1,6 @@
+"use client";
+
+import { useId, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { WebLayout } from "@/data/webLayouts";
 import { Badge } from "@/components/ui/badge";
@@ -45,105 +48,325 @@ export function LayoutStagePreview({
   indexLabel,
   showMetrics = true,
 }: LayoutStagePreviewProps) {
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const detailPanelId = useId();
+
   return (
-    <div className={cn("absolute inset-0", className)}>
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,#0f172a_0%,#18181b_48%,#064e3b_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:42px_42px] opacity-50" />
+    <div
+      className={cn("absolute inset-0 overflow-hidden bg-zinc-100", className)}
+      data-testid="layout-stage-preview"
+    >
+      <div className="absolute inset-0 bg-zinc-100" data-testid="layout-preview-background">
+        <div className="h-full overflow-hidden md:hidden">
+          <div className="min-h-full bg-zinc-50 p-3">
+            <LayoutPreviewRenderer
+              denseContent
+              layout={layout}
+              showLabels={false}
+              viewport="mobile"
+            />
+          </div>
+        </div>
+        <div className="hidden h-full overflow-hidden md:block">
+          <div className="min-h-full bg-zinc-50 p-6">
+            <LayoutPreviewRenderer
+              denseContent
+              layout={layout}
+              showLabels={false}
+              viewport="desktop"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-zinc-950/50 via-zinc-950/20 to-transparent" />
 
       {indexLabel ? (
-        <div className="absolute right-4 top-4 z-20 flex items-center gap-2 rounded-full border border-white/20 bg-zinc-950/70 px-3 py-2 text-xs font-semibold text-white backdrop-blur md:right-6 md:top-6">
+        <div className="absolute right-3 top-3 z-20 flex items-center gap-2 rounded-full border border-zinc-950/10 bg-white/90 px-3 py-2 text-xs font-semibold text-zinc-950 shadow-lg backdrop-blur md:right-5 md:top-5">
           <span>{indexLabel}</span>
-          <span className="hidden h-1 w-1 rounded-full bg-white/45 sm:block" />
+          <span className="hidden h-1 w-1 rounded-full bg-zinc-400 sm:block" />
           <span className="hidden sm:inline">{layout.previewType}</span>
         </div>
       ) : null}
 
-      <div className="absolute inset-x-3 top-14 bottom-32 md:inset-x-8 md:top-16 md:bottom-36">
-        <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-white/20 bg-zinc-100 shadow-2xl">
-          <div className="flex h-8 shrink-0 items-center gap-2 border-b border-zinc-200 bg-white px-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
-            <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-            <div className="ml-2 flex h-5 flex-1 items-center overflow-hidden rounded-md bg-zinc-100 px-3 text-[10px] font-medium text-zinc-500">
-              openlayout.local/{layout.slug}
-            </div>
-          </div>
-          <div className="relative flex-1 overflow-hidden bg-[linear-gradient(180deg,#fafafa,#e4e4e7)] p-2 md:p-3">
-            <div className="h-full overflow-hidden md:hidden">
-              <LayoutPreviewRenderer
-                denseContent
-                layout={layout}
-                showLabels={false}
-                viewport="mobile"
-              />
-            </div>
-            <div className="hidden h-full overflow-hidden md:block">
-              <LayoutPreviewRenderer
-                denseContent
-                layout={layout}
-                showLabels={false}
-                viewport="desktop"
-              />
+      <div className="absolute bottom-3 left-3 right-3 z-30 sm:right-auto sm:w-[min(440px,calc(100%-1.5rem))] md:bottom-5 md:left-5">
+        <div
+          className="rounded-lg border border-white/60 bg-white/90 p-3 text-zinc-950 shadow-2xl backdrop-blur-xl"
+          data-testid="layout-floating-summary"
+        >
+          <div className="flex items-start gap-3">
+            <button
+              aria-label="설명 열기"
+              aria-controls={detailPanelId}
+              aria-expanded={isDetailOpen}
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-zinc-950 text-white transition hover:bg-zinc-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950"
+              onClick={() => setIsDetailOpen(true)}
+              type="button"
+            >
+              <InfoIcon />
+              <span className="sr-only">설명 열기</span>
+            </button>
+            <button
+              aria-controls={detailPanelId}
+              aria-expanded={isDetailOpen}
+              className="min-w-0 flex-1 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-zinc-950"
+              onClick={() => setIsDetailOpen(true)}
+              type="button"
+            >
+              <span className="block truncate text-sm font-bold">{layout.nameKo}</span>
+              <span className="mt-1 block truncate text-xs leading-5 text-zinc-600">
+                {layout.summary}
+              </span>
+            </button>
+            <div className="flex shrink-0 gap-1.5">
+              {detailHref ? (
+                <Link
+                  aria-label={`${layout.nameKo} 상세 페이지로 이동`}
+                  className="flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-800 transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950"
+                  href={detailHref}
+                >
+                  <ExternalLinkIcon />
+                </Link>
+              ) : null}
+              <button
+                aria-controls={detailPanelId}
+                aria-expanded={isDetailOpen}
+                className="flex h-9 items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-2.5 text-xs font-semibold text-zinc-800 transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950"
+                onClick={() => setIsDetailOpen(true)}
+                type="button"
+              >
+                <ChevronUpIcon />
+                설명
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent" />
-      <div className="absolute inset-x-3 bottom-3 z-20 rounded-lg border border-white/20 bg-zinc-950/82 p-4 text-white shadow-2xl backdrop-blur-md md:inset-x-8 md:bottom-6 md:p-5">
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_430px] lg:items-end">
-          <div className="min-w-0">
-            <div className="flex flex-wrap gap-2">
-              <Badge className="border-white/15 bg-white/12 text-white">
-                {layout.category}
-              </Badge>
-              <Badge className={cn("border", complexityTone(layout.complexity))}>
-                {formatComplexity(layout.complexity)}
-              </Badge>
-            </div>
-            <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      {isDetailOpen ? (
+        <>
+          <button
+            aria-label="설명 닫기"
+            className="absolute inset-0 z-40 bg-zinc-950/40 backdrop-blur-[2px]"
+            onClick={() => setIsDetailOpen(false)}
+            type="button"
+          />
+          <div
+            aria-label={`${layout.nameKo} 전체 설명`}
+            aria-modal="true"
+            className="absolute bottom-3 left-3 right-3 z-50 max-h-[calc(100%-1.5rem)] overflow-y-auto rounded-lg border border-white/70 bg-white/95 p-4 text-zinc-950 shadow-2xl backdrop-blur-xl md:bottom-5 md:left-5 md:right-auto md:max-h-[calc(100%-2.5rem)] md:w-[min(720px,calc(100%-2.5rem))] md:p-5"
+            data-testid="layout-detail-panel"
+            id={detailPanelId}
+            role="dialog"
+          >
+            <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
-                <h2 className="truncate text-2xl font-bold tracking-normal text-white md:text-3xl">
+                <div className="flex flex-wrap gap-2">
+                  <Badge>{layout.category}</Badge>
+                  <Badge className={cn("border", complexityTone(layout.complexity))}>
+                    {formatComplexity(layout.complexity)}
+                  </Badge>
+                  <Badge>{layout.previewType}</Badge>
+                </div>
+                <h2 className="mt-4 text-2xl font-bold tracking-normal md:text-3xl">
                   {layout.nameKo}
                 </h2>
-                <p className="truncate text-sm font-medium text-white/55">
+                <p className="mt-1 text-sm font-medium text-zinc-500">
                   {layout.nameEn}
                 </p>
               </div>
-              {detailHref ? (
+              <button
+                aria-label="설명 패널 닫기"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-700 transition hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950"
+                onClick={() => setIsDetailOpen(false)}
+                type="button"
+              >
+                <CloseIcon />
+              </button>
+            </div>
+
+            <div className="mt-5 rounded-md border border-zinc-200 bg-zinc-50 p-4">
+              <p className="text-sm font-semibold leading-6 text-zinc-800">
+                {layout.summary}
+              </p>
+              <p className="mt-3 text-sm leading-6 text-zinc-600">
+                {layout.description}
+              </p>
+            </div>
+
+            {showMetrics ? (
+              <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
+                <Metric label="추천" value={layout.bestFor[0]} />
+                <Metric label="모바일" value={mobileFitFor(layout)} />
+                <Metric label="밀도" value={densityFor(layout)} />
+                <Metric label="난이도" value={formatComplexity(layout.complexity)} />
+              </div>
+            ) : null}
+
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <DetailBlock title="구조 설명" items={layout.structure} />
+              <DetailBlock title="반응형 동작" items={layout.responsiveBehavior} />
+              <DetailBlock title="어울리는 페이지" items={layout.bestFor} />
+              <DetailBlock title="피해야 할 상황" items={layout.notGoodFor} />
+              <DetailBlock title="장점" items={layout.pros} />
+              <DetailBlock title="단점" items={layout.cons} />
+            </div>
+
+            <DetailBlock
+              className="mt-4"
+              items={layout.accessibilityNotes}
+              title="접근성 체크포인트"
+            />
+
+            {detailHref ? (
+              <div className="mt-5 flex justify-end">
                 <Link
-                  className="inline-flex h-9 shrink-0 items-center justify-center rounded-md border border-white/25 bg-white px-3 text-sm font-semibold text-zinc-950 transition hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex h-10 items-center gap-2 rounded-md bg-zinc-950 px-4 text-sm font-semibold text-white transition hover:bg-zinc-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950"
                   href={detailHref}
                 >
                   {detailLabel}
+                  <ExternalLinkIcon />
                 </Link>
-              ) : null}
-            </div>
-            <p className="mt-3 line-clamp-1 max-w-3xl text-sm leading-6 text-white/72">
-              {layout.summary}
-            </p>
+              </div>
+            ) : null}
           </div>
-          {showMetrics ? (
-            <div className="hidden grid-cols-2 gap-2 sm:grid sm:grid-cols-4 lg:grid-cols-2">
-              <Metric label="추천" value={layout.bestFor[0]} />
-              <Metric label="모바일" value={mobileFitFor(layout)} />
-              <Metric label="밀도" value={densityFor(layout)} />
-              <Metric label="난이도" value={formatComplexity(layout.complexity)} />
-            </div>
-          ) : null}
-        </div>
-      </div>
+        </>
+      ) : null}
     </div>
+  );
+}
+
+function DetailBlock({
+  title,
+  items,
+  className,
+}: {
+  title: string;
+  items: string[];
+  className?: string;
+}) {
+  return (
+    <section className={cn("rounded-md border border-zinc-200 bg-white p-4", className)}>
+      <h3 className="text-sm font-bold text-zinc-950">{title}</h3>
+      <ul className="mt-3 space-y-2">
+        {items.map((item) => (
+          <li className="flex gap-2 text-sm leading-6 text-zinc-600" key={`${title}-${item}`}>
+            <CheckIcon />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-white/12 bg-white/10 p-3">
-      <p className="text-[11px] font-bold uppercase tracking-normal text-white/48">
+    <div className="rounded-md border border-zinc-200 bg-white p-3">
+      <p className="text-[11px] font-bold uppercase tracking-normal text-zinc-500">
         {label}
       </p>
-      <p className="mt-1 truncate text-sm font-semibold text-white">{value}</p>
+      <p className="mt-1 truncate text-sm font-semibold text-zinc-950">{value}</p>
     </div>
+  );
+}
+
+function SvgIcon({ children }: { children: ReactNode }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-4 w-4 shrink-0"
+      fill="none"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {children}
+    </svg>
+  );
+}
+
+function InfoIcon() {
+  return (
+    <SvgIcon>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 10.5v6" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
+      <path d="M12 7.5h.01" stroke="currentColor" strokeLinecap="round" strokeWidth="3" />
+    </SvgIcon>
+  );
+}
+
+function ChevronUpIcon() {
+  return (
+    <SvgIcon>
+      <path
+        d="m6 15 6-6 6 6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </SvgIcon>
+  );
+}
+
+function ExternalLinkIcon() {
+  return (
+    <SvgIcon>
+      <path
+        d="M14 5h5v5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path
+        d="m10 14 9-9"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path
+        d="M19 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </SvgIcon>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <SvgIcon>
+      <path
+        d="m6 6 12 12M18 6 6 18"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </SvgIcon>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="mt-1.5 h-3.5 w-3.5 shrink-0 text-emerald-600"
+      fill="none"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m5 12 4 4 10-10"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2.4"
+      />
+    </svg>
   );
 }
