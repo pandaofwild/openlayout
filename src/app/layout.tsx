@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { StylePresetProvider } from "@/components/style-preset/StylePresetProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -10,6 +11,11 @@ export const metadata: Metadata = {
   description: "웹사이트 설계에 활용할 수 있는 레이아웃 구조 사전",
 };
 
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: "device-width",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,9 +24,11 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full antialiased">
       <body className="flex min-h-full flex-col">
-        <RawNavigation />
-        {children}
-        <RawFooter />
+        <StylePresetProvider>
+          <RawNavigation />
+          {children}
+          <RawFooter />
+        </StylePresetProvider>
       </body>
     </html>
   );
@@ -42,6 +50,7 @@ function RawNavigation() {
         <div className="hidden items-center gap-8 md:flex">
           {[
             ["Library", "/web-layouts"],
+            ["Styles", "/design-styles"],
             ["Compare", "/web-layouts/compare"],
             ["Skill", "/web-layouts#layout-skill"],
           ].map(([label, href]) => (
@@ -99,6 +108,7 @@ function RawFooter() {
         <FooterLinks
           items={[
             ["Library", "/web-layouts"],
+            ["Styles", "/design-styles"],
             ["Compare", "/web-layouts/compare"],
             ["GitHub", "https://github.com/pandaofwild/openlayout"],
           ]}
