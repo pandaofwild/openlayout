@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { webLayouts, previewTypes, webLayoutCategories } from "@/data/webLayouts";
+import { AppliedStyleStrip } from "@/components/style-preset/AppliedStyleStrip";
 import { WebLayoutExplorer } from "@/components/web-layout/WebLayoutExplorer";
 
 export const metadata: Metadata = {
@@ -122,6 +123,9 @@ export default function WebLayoutsPage() {
             필터를 좁히고 카드에서 구조를 고른 뒤, 상세 화면의 플로팅 설명으로
             구현 조건을 확인하세요.
           </p>
+        </div>
+        <div className="mb-10">
+          <AppliedStyleStrip />
         </div>
         <WebLayoutExplorer />
       </section>
