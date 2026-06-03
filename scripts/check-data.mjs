@@ -27,6 +27,8 @@ for (const s of designStyles) {
   assert(s.tokens !== undefined, `style ${s.slug} missing tokens`);
   assert(["airy","normal","tight"].includes(s.tokens.space.density), `style ${s.slug} bad density: ${s.tokens.space.density}`);
   assert(typeof s.tokens.typography.weightDisplay === "number", `style ${s.slug} bad weightDisplay`);
+  assert(typeof s.tokens.shape.radius === "string" && s.tokens.shape.radius.length > 0, `style ${s.slug} missing shape.radius`);
+  assert(typeof s.tokens.shape.radiusPill === "string" && s.tokens.shape.radiusPill.length > 0, `style ${s.slug} missing shape.radiusPill`);
   assert(s.tokens.color.base === s.palette.base, `style ${s.slug} tokens.color.base mismatch`);
 }
 
