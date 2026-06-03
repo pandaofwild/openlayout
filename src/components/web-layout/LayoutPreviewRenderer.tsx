@@ -121,7 +121,7 @@ function RawButton({ children, tone = "dark" }: { children: ReactNode; tone?: "d
           ? "border-[var(--st-primary)] bg-[var(--st-primary)] text-[var(--st-surface)]"
           : "border-[rgb(var(--st-border-rgb)_/_0.28)] bg-[rgb(var(--st-surface-rgb)_/_0.80)] text-[var(--st-text)]",
       )}
-      style={{ borderRadius: "var(--st-radius)", borderWidth: "var(--st-border-width)" }}
+      style={{ borderRadius: "var(--st-radius-pill)", borderWidth: "var(--st-border-width)" }}
       type="button"
     >
       {children}

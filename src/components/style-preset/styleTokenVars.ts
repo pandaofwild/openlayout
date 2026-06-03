@@ -42,6 +42,7 @@ export function styleTokenVars(style: DesignStyle): CSSProperties {
     "--st-heading-scale": String(typography.headingScale),
     // Shape tokens
     "--st-radius": shape.radius,
+    "--st-radius-pill": shape.radiusPill,
     "--st-border-width": shape.borderWidth,
     // Space tokens
     "--st-gap": space.gap,
