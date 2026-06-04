@@ -621,40 +621,60 @@ function SoftMinimalService({ className, compact = false, style }: Props) {
 }
 
 function HighEndMinimalProduct({ className, compact = false, style }: Props) {
-  const details = ["Material", "Size", "Reserve"];
+  const details = [
+    ["Material", "wool silk / brushed taupe"],
+    ["Made in", "small atelier, Kyoto"],
+    ["Delivery", "reserved dispatch"],
+  ];
+  const swatches = [style.palette.surface, style.palette.accent2, style.palette.accent];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
       <div className="grid h-full grid-rows-[auto_1fr]">
         <div className="flex items-center justify-between border-b border-[var(--sample-border-soft)] pb-3 text-[10px] text-[var(--sample-muted)]">
-          <span className="text-[var(--sample-text)]">Maison Item</span>
-          <span>Shop / Atelier / Cart</span>
+          <span className="text-[var(--sample-text)]">Atelier product page</span>
+          <span>Objects / Service / Bag 01</span>
         </div>
-        <div className={cn("grid min-h-0 gap-5 pt-5", compact ? "grid-cols-[0.85fr_1.15fr]" : "grid-cols-1 md:grid-cols-[0.82fr_1.18fr]")}>
-          <div className="flex min-w-0 flex-col justify-between">
-            <div>
-              <p className="text-[10px] text-[var(--sample-muted)]">Atelier edition</p>
+        <div className={cn("grid min-h-0 gap-5 pt-5", compact ? "grid-cols-[0.9fr_1.1fr]" : "grid-cols-1 sm:grid-cols-[0.95fr_1.05fr]")}>
+          <div className="grid min-h-0 grid-rows-[1fr_auto] gap-3">
+            <div className="grid min-h-0 place-items-center overflow-hidden border border-[var(--sample-border-soft)] bg-[var(--sample-surface)] p-4">
+              <div className="relative aspect-[4/5] w-[62%] max-w-[15rem] border border-[var(--sample-border-soft)] bg-[linear-gradient(160deg,var(--sample-accent-2),var(--sample-surface)_44%,var(--sample-base))]">
+                <span className="absolute bottom-5 left-1/2 h-24 w-[42%] -translate-x-1/2 border border-[var(--sample-border-soft)] bg-[var(--sample-base)] opacity-80" />
+                <span className="absolute left-1/2 top-8 h-7 w-[34%] -translate-x-1/2 border border-[var(--sample-border-soft)]" />
+              </div>
+            </div>
+            <div className={cn("grid grid-cols-3 gap-2", compact ? "hidden" : "")}>
+              {swatches.map((color, index) => (
+                <span className="h-8 border border-[var(--sample-border-soft)]" key={`${color}-${index}`} style={{ backgroundColor: color }} />
+              ))}
+            </div>
+          </div>
+          <div className={cn("flex min-w-0 flex-col justify-between", compact ? "border-l border-[var(--sample-border-soft)] pl-4" : "border-t border-[var(--sample-border-soft)] pt-4 sm:border-l sm:border-t-0 sm:pl-4 sm:pt-0")}>
+            <div className="max-w-[26rem]">
+              <p className="text-[10px] text-[var(--sample-muted)]">Edition 04 / Objet 219</p>
               <h3
                 className={cn("mt-4 max-w-full break-words font-display leading-[1.04]", compact ? "text-2xl" : "text-4xl md:text-5xl")}
                 style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
               >
-                A quiet frame for one object.
+                One object, three decisions.
               </h3>
+              <p className={cn("mt-4 text-xs leading-5 text-[var(--sample-muted)]", compact ? "hidden" : "line-clamp-2")}>
+                Quiet retail framing based on material, proportion, and a single decisive purchase action.
+              </p>
             </div>
-            <div className={cn("mt-5 border-t border-[var(--sample-border-soft)] pt-3", compact ? "hidden" : "block")}>
-              <p className="line-clamp-2 text-xs leading-5 text-[var(--sample-muted)]">{style.summary}</p>
-            </div>
-          </div>
-          <div className="grid min-w-0 grid-rows-[1fr_auto] gap-3">
-            <div className="grid place-items-center bg-[var(--sample-surface)]">
-              <div className="aspect-[4/5] w-[58%] border border-[var(--sample-border-soft)] bg-[linear-gradient(150deg,var(--sample-accent-2),var(--sample-surface)_48%,var(--sample-accent))]" />
-            </div>
-            <div className="grid grid-cols-3 border-y border-[var(--sample-border-soft)] text-[10px]">
-              {details.map((detail) => (
-                <span className="border-r border-[var(--sample-border-soft)] px-2 py-2 text-center last:border-r-0" key={detail}>
-                  {detail}
-                </span>
-              ))}
+            <div className="mt-4 grid gap-3">
+              <div className={cn("grid border-t border-[var(--sample-border-soft)] text-[10px]", compact ? "hidden" : "")}>
+                {details.map(([label, value]) => (
+                  <div className="grid grid-cols-[5.5rem_1fr] border-b border-[var(--sample-border-soft)] py-2" key={label}>
+                    <span className="text-[var(--sample-muted)]">{label}</span>
+                    <span className="text-[var(--sample-text)]">{value}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-[1fr_auto] items-center border border-[var(--sample-text)] bg-[var(--sample-text)] text-[var(--sample-base)]">
+                <span className="px-3 py-3 text-xs">Reserve object</span>
+                <span className="border-l border-[var(--sample-base)] px-3 py-3 text-xs">$680</span>
+              </div>
             </div>
           </div>
         </div>
@@ -664,31 +684,39 @@ function HighEndMinimalProduct({ className, compact = false, style }: Props) {
 }
 
 function RawBrutalistIndex({ className, compact = false, style }: Props) {
-  const rows = compact ? ["News", "Index", "Buy"] : ["Exhibition notice", "Archive index", "Ticket request", "Press file"];
+  const rows = compact
+    ? ["NOTICE.TXT", "INDEX", "FORM"]
+    : ["EXHIBITION NOTICE", "ARCHIVE INDEX", "TICKET REQUEST", "PRESS FILE", "NO CMS LOG"];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
-      <div className="grid h-full grid-rows-[auto_1fr_auto] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)]">
+      <div className="grid h-full grid-rows-[auto_auto_1fr_auto] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)] font-mono">
         <div className="grid grid-cols-[auto_1fr_auto] border-b-4 border-[var(--sample-border)] text-[10px] font-bold">
-          <span className="bg-[var(--sample-text)] px-3 py-2 text-[var(--sample-base)]">RAW</span>
-          <span className="px-3 py-2">Public index</span>
-          <span className="border-l-4 border-[var(--sample-border)] px-3 py-2">06.04</span>
+          <span className="bg-[var(--sample-text)] px-3 py-2 text-[var(--sample-base)]">INDEX.HTML</span>
+          <span className="px-3 py-2">PUBLIC ARCHIVE / NO THEME</span>
+          <span className="border-l-4 border-[var(--sample-border)] px-3 py-2">V.06</span>
         </div>
-        <div className={cn("grid min-h-0", compact ? "grid-cols-[1fr_0.8fr]" : "grid-cols-1 md:grid-cols-[1fr_0.86fr]")}>
+        <div className={cn("grid border-b-4 border-[var(--sample-border)] text-[10px] font-bold", compact ? "grid-cols-[1fr_auto]" : "grid-cols-[1fr_auto_auto]")}>
+          <span className="px-3 py-2">Find record:</span>
+          <span className="border-l-4 border-[var(--sample-border)] px-3 py-2">submit</span>
+          <span className={cn("border-l-4 border-[var(--sample-border)] px-3 py-2", compact ? "hidden" : "")}>plain html</span>
+        </div>
+        <div className={cn("grid min-h-0", compact ? "grid-cols-[0.9fr_1.1fr]" : "grid-cols-1 md:grid-cols-[0.92fr_1.08fr]")}>
           <div className="flex min-w-0 flex-col justify-between border-r-4 border-[var(--sample-border)] p-3">
             <h3
               className={cn("break-words font-display leading-[0.92]", compact ? "text-3xl" : "text-5xl md:text-6xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              WEB STRUCTURE FIRST.
+              Raw public index.
             </h3>
-            <span className="mt-4 w-max border-4 border-[var(--sample-border)] bg-[var(--sample-accent)] px-3 py-1 text-xs font-bold">OPEN</span>
+            <span className="mt-4 w-max border-4 border-[var(--sample-border)] bg-[var(--sample-accent)] px-3 py-1 text-xs font-bold">OPEN / GET</span>
           </div>
-          <div className="grid min-w-0">
+          <div className="grid min-w-0 content-start">
             {rows.map((row, index) => (
-              <div className="grid grid-cols-[2.2rem_1fr] border-b-4 border-[var(--sample-border)] last:border-b-0" key={row}>
+              <div className="grid grid-cols-[2.2rem_1fr_auto] border-b-4 border-[var(--sample-border)] last:border-b-0" key={row}>
                 <span className="border-r-4 border-[var(--sample-border)] px-2 py-2 text-[10px] font-bold">0{index + 1}</span>
                 <span className="truncate px-2 py-2 text-xs font-bold">{row}</span>
+                <span className={cn("border-l-4 border-[var(--sample-border)] px-2 py-2 text-[10px]", compact ? "hidden" : "")}>LINK</span>
               </div>
             ))}
           </div>
@@ -702,31 +730,39 @@ function RawBrutalistIndex({ className, compact = false, style }: Props) {
 }
 
 function NeoBrutalistApp({ className, compact = false, style }: Props) {
-  const metrics = ["Sales", "Tasks", "Payout"];
+  const metrics = [
+    ["Sales", "$8,420", style.palette.accent],
+    ["Tasks", "14 open", style.palette.accent2],
+    ["Payout", "Fri 09", style.palette.accent3],
+  ];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
       <div className="grid h-full grid-rows-[auto_1fr]">
-        <div className="mb-4 flex items-center justify-between rounded-[var(--st-radius)] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-2" style={{ boxShadow: "var(--st-shadow)" }}>
-          <span className="text-xs font-black">Creator desk</span>
-          <span className="rounded-[var(--st-radius)] bg-[var(--sample-accent-2)] px-3 py-1 text-[10px] font-black">Ship</span>
+        <div className="mb-4 flex items-center justify-between rounded-[var(--st-radius)] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-2" style={{ boxShadow: "6px 6px 0 var(--sample-border)" }}>
+          <span className="text-xs font-black">Creator checkout desk</span>
+          <span className="rounded-[var(--st-radius)] border-[3px] border-[var(--sample-border)] bg-[var(--sample-accent-2)] px-3 py-1 text-[10px] font-black">Publish</span>
         </div>
         <div className={cn("grid min-h-0 gap-3", compact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-[0.9fr_1.1fr]")}>
-          <div className="rounded-[var(--st-radius)] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)] p-4" style={{ boxShadow: "var(--st-shadow)" }}>
-            <p className="text-[10px] font-black">New product</p>
+          <div className="grid min-h-0 rounded-[var(--st-radius)] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)] p-4" style={{ boxShadow: "6px 6px 0 var(--sample-accent)" }}>
+            <p className="text-[10px] font-black">New product form</p>
             <h3
               className={cn("mt-3 break-words font-display leading-[0.95]", compact ? "text-3xl" : "text-5xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
               Sell a tiny tool today.
             </h3>
+            <div className={cn("mt-4 grid grid-cols-[1fr_auto] border-[3px] border-[var(--sample-border)] bg-[var(--sample-base)] text-xs font-black", compact ? "hidden" : "")}>
+              <span className="px-3 py-2">icon pack.zip</span>
+              <span className="border-l-[3px] border-[var(--sample-border)] bg-[var(--sample-accent-3)] px-3 py-2">$19</span>
+            </div>
           </div>
-          <div className="grid min-w-0 grid-rows-3 gap-2">
-            {metrics.map((metric, index) => (
-              <div className="grid grid-cols-[1fr_auto] items-center rounded-[var(--st-radius)] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-2" key={metric}>
+          <div className="grid min-w-0 gap-2">
+            {metrics.map(([metric, value, color]) => (
+              <div className="grid grid-cols-[1fr_auto] items-center rounded-[var(--st-radius)] border-4 border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-2" key={metric} style={{ boxShadow: "4px 4px 0 var(--sample-border)" }}>
                 <span className="text-xs font-black">{metric}</span>
-                <span className="rounded-[var(--st-radius)] px-2 py-1 text-[10px] font-black" style={{ backgroundColor: [style.palette.accent, style.palette.accent2, style.palette.accent3][index] }}>
-                  {[82, 14, 3][index]}%
+                <span className="rounded-[var(--st-radius)] border-2 border-[var(--sample-border)] px-2 py-1 text-[10px] font-black" style={{ backgroundColor: color }}>
+                  {value}
                 </span>
               </div>
             ))}
@@ -738,28 +774,29 @@ function NeoBrutalistApp({ className, compact = false, style }: Props) {
 }
 
 function AntiDesignLanding({ className, compact = false, style }: Props) {
-  const links = ["wrong shop", "index?", "about now"];
+  const links = ["wrong shop", "index?", "pay wall", "about now"];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
+      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "linear-gradient(90deg, var(--sample-accent-3) 0 1px, transparent 1px), linear-gradient(0deg, var(--sample-accent) 0 1px, transparent 1px)", backgroundSize: "29px 17px" }} />
       <div className="relative grid h-full grid-rows-[auto_1fr_auto]">
         <div className="flex items-start justify-between">
-          <span className="border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] px-2 py-1 text-xs font-black">no polish</span>
-          <span className="translate-y-3 border-2 border-[var(--sample-border)] bg-[var(--sample-accent)] px-2 py-1 text-[10px] font-black">menu</span>
+          <span className="rotate-[-2deg] border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] px-2 py-1 text-xs font-black">This page refuses polish.</span>
+          <span className="translate-y-3 rotate-[4deg] border-2 border-[var(--sample-border)] bg-[var(--sample-accent)] px-2 py-1 text-[10px] font-black">menu?</span>
         </div>
-        <div className={cn("grid min-h-0 gap-2", compact ? "grid-cols-[0.9fr_1.1fr]" : "grid-cols-1 md:grid-cols-[0.86fr_1.14fr]")}>
+        <div className={cn("grid min-h-0 gap-2", compact ? "grid-cols-[0.9fr_1.1fr]" : "grid-cols-1 md:grid-cols-[0.82fr_1.18fr]")}>
           <div className="rotate-[-3deg] self-center border-4 border-[var(--sample-border)] bg-[var(--sample-accent-2)] p-3">
             <h3
               className={cn("break-words font-display leading-[0.9]", compact ? "text-3xl" : "text-5xl md:text-6xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              Useful friction.
+              Useful friction, visible links.
             </h3>
           </div>
           <div className="grid content-center gap-2">
             {links.map((link, index) => (
               <span
-                className={cn("block border-2 border-[var(--sample-border)] px-3 py-2 text-xs font-black", index === 1 ? "translate-x-4 bg-[var(--sample-accent)]" : "bg-[var(--sample-accent-3)]")}
+                className={cn("block border-2 border-[var(--sample-border)] px-3 py-2 text-xs font-black", index === 1 ? "translate-x-4 bg-[var(--sample-accent)]" : index === 2 ? "-translate-x-2 bg-[var(--sample-surface)]" : "bg-[var(--sample-accent-3)]")}
                 key={link}
               >
                 {link}
@@ -776,29 +813,48 @@ function AntiDesignLanding({ className, compact = false, style }: Props) {
 }
 
 function MaximalistPatternMarket({ className, compact = false, style }: Props) {
-  const items = ["Silk", "Bloom", "Gold"];
+  const items = ["Silk scarf", "Bloom coat", "Gold tote"];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
-      <div className="absolute inset-0 opacity-35" style={{ backgroundImage: "radial-gradient(circle at 12px 12px, var(--sample-accent) 0 4px, transparent 5px), linear-gradient(135deg, transparent 0 45%, var(--sample-accent-2) 45% 55%, transparent 55%)", backgroundSize: "32px 32px, 44px 44px" }} />
+      <div
+        className="absolute inset-0 opacity-45"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 12px 12px, var(--sample-accent) 0 4px, transparent 5px), linear-gradient(135deg, transparent 0 42%, var(--sample-accent-2) 42% 58%, transparent 58%), radial-gradient(circle at 85% 18%, var(--sample-accent-3) 0 18px, transparent 19px)",
+          backgroundSize: "32px 32px, 44px 44px, 100% 100%",
+        }}
+      />
       <div className="relative grid h-full grid-rows-[auto_1fr]">
         <div className="flex items-center justify-between pb-3">
-          <span className="bg-[var(--sample-surface)] px-3 py-1 text-xs font-bold text-[var(--sample-border)]">Pattern hall</span>
-          <span className="bg-[var(--sample-accent)] px-3 py-1 text-[10px] font-bold text-[var(--sample-border)]">Cart 03</span>
+          <span className="border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-1 text-xs font-bold text-[var(--sample-border)]">Pattern market</span>
+          <span className="border-2 border-[var(--sample-border)] bg-[var(--sample-accent)] px-3 py-1 text-[10px] font-bold text-[var(--sample-border)]">Cart 03</span>
         </div>
         <div className={cn("grid gap-3", compact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-[1fr_0.9fr]")}>
-          <div className="border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] p-3 text-[var(--sample-border)]">
+          <div className="relative overflow-hidden border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] p-3 text-[var(--sample-border)]">
+            <span className="absolute right-3 top-3 rounded-full border-2 border-[var(--sample-border)] bg-[var(--sample-accent-3)] px-2 py-1 text-[10px] font-bold">drop 18</span>
             <h3
               className={cn("break-words font-display leading-[0.95]", compact ? "text-3xl" : "text-5xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              More color, more world.
+              Pattern is the product.
             </h3>
+            <div className={cn("mt-4 grid grid-cols-3 gap-2", compact ? "hidden" : "")}>
+              {[style.palette.accent, style.palette.accent2, style.palette.accent3].map((color, index) => (
+                <span className="h-9 border-2 border-[var(--sample-border)]" key={`${color}-${index}`} style={{ backgroundColor: color }} />
+              ))}
+            </div>
           </div>
           <div className="grid grid-cols-3 gap-2">
             {items.map((item, index) => (
               <div className="flex min-w-0 flex-col justify-between border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] p-2 text-[var(--sample-border)]" key={item}>
-                <span className="block aspect-square" style={{ backgroundColor: [style.palette.accent, style.palette.accent2, style.palette.accent3][index] }} />
+                <span
+                  className="block aspect-square border border-[var(--sample-border)]"
+                  style={{
+                    backgroundColor: [style.palette.accent, style.palette.accent2, style.palette.accent3][index],
+                    backgroundImage: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55) 0 14%, transparent 15%), linear-gradient(45deg, transparent 0 46%, rgba(0,0,0,0.25) 47% 53%, transparent 54%)",
+                  }}
+                />
                 <span className="mt-2 truncate text-xs font-bold">{item}</span>
               </div>
             ))}
@@ -810,33 +866,47 @@ function MaximalistPatternMarket({ className, compact = false, style }: Props) {
 }
 
 function GlitchArtInterface({ className, compact = false, style }: Props) {
-  const nodes = ["Signal", "Noise", "Error"];
+  const nodes = [
+    ["Signal", "72%"],
+    ["Noise", "42%"],
+    ["Error", "91%"],
+  ];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
-      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent 0 10px, var(--sample-accent) 11px 12px)" }} />
+      <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent 0 8px, var(--sample-accent) 9px 10px), linear-gradient(90deg, transparent, var(--sample-accent-2), transparent)" }} />
       <div className="relative grid h-full grid-rows-[auto_1fr]">
         <div className="flex items-center justify-between border border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-2 font-mono text-[10px]">
           <span>SYS://GLITCH</span>
-          <span className="text-[var(--sample-accent-2)]">LIVE</span>
+          <span className="text-[var(--sample-accent-2)]">REC 00:17</span>
         </div>
         <div className={cn("grid min-h-0 gap-3 pt-3", compact ? "grid-cols-[0.8fr_1.2fr]" : "grid-cols-1 md:grid-cols-[0.82fr_1.18fr]")}>
           <div className="grid gap-2">
-            {nodes.map((node, index) => (
+            {nodes.map(([node, value]) => (
               <div className="border border-[var(--sample-border)] bg-[var(--sample-surface)] p-3 font-mono" key={node}>
                 <p className="text-[10px] text-[var(--sample-muted)]">{node}</p>
-                <div className="mt-2 h-2 bg-[var(--sample-accent-2)]" style={{ width: `${[72, 42, 91][index]}%` }} />
+                <div className="mt-2 h-2 bg-[var(--sample-accent-2)]" style={{ width: value }} />
               </div>
             ))}
           </div>
           <div className="relative overflow-hidden border border-[var(--sample-border)] bg-[var(--sample-surface)] p-4" style={{ boxShadow: "var(--st-shadow)" }}>
+            <span aria-hidden="true" className="absolute left-3 top-5 font-display text-4xl leading-none text-[var(--sample-accent)] opacity-60 md:text-6xl">
+              signal
+            </span>
+            <span aria-hidden="true" className="absolute left-5 top-4 font-display text-4xl leading-none text-[var(--sample-accent-2)] opacity-60 md:text-6xl">
+              signal
+            </span>
             <h3
-              className={cn("break-words font-display leading-[0.95] text-[var(--sample-text)]", compact ? "text-3xl" : "text-5xl md:text-6xl")}
+              className={cn("relative break-words font-display leading-[0.95] text-[var(--sample-text)]", compact ? "text-3xl" : "text-5xl md:text-6xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              DATA BROKE CLEAN.
+              signal failed beautifully.
             </h3>
-            <span className="absolute bottom-4 left-4 right-4 h-2 bg-[var(--sample-accent)]" />
+            <div className={cn("absolute bottom-4 left-4 right-4 grid grid-cols-5 gap-1", compact ? "hidden" : "")}>
+              {[48, 72, 38, 91, 56].map((height, index) => (
+                <span className="block bg-[var(--sample-accent)]" key={height + index} style={{ height: `${height / 5}px` }} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -845,23 +915,25 @@ function GlitchArtInterface({ className, compact = false, style }: Props) {
 }
 
 function DeconstructiveExhibition({ className, compact = false, style }: Props) {
-  const projects = ["Fold", "Cut", "Void"];
+  const projects = ["Folded hall", "Cut section", "Open void"];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
       <div className="grid h-full grid-rows-[auto_1fr]">
         <div className="flex items-center justify-between border-b-2 border-[var(--sample-border)] pb-2 text-[10px] font-bold">
-          <span>Architecture index</span>
-          <span>Projects 12</span>
+          <span>Architecture exhibition</span>
+          <span>Projects / 12</span>
         </div>
         <div className={cn("relative grid min-h-0 gap-3 pt-4", compact ? "grid-cols-[1fr_0.85fr]" : "grid-cols-1 md:grid-cols-[1fr_0.9fr]")}>
-          <div className="relative border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] p-4">
-            <div className="absolute -right-3 top-8 h-16 w-24 skew-x-[-18deg] bg-[var(--sample-accent)]" />
+          <div className="relative overflow-hidden border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] p-4">
+            <div className="absolute -right-4 top-7 h-20 w-28 skew-x-[-18deg] bg-[var(--sample-accent)]" />
+            <div className="absolute bottom-8 left-4 h-20 w-24 bg-[var(--sample-accent-2)]" style={{ clipPath: "polygon(0 16%, 100% 0, 74% 100%, 18% 76%)" }} />
+            <div className="absolute bottom-2 right-12 h-24 w-10 rotate-[24deg] bg-[var(--sample-accent-3)]" />
             <h3
               className={cn("relative break-words font-display leading-[0.95]", compact ? "text-3xl" : "text-5xl md:text-6xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              Fragments become navigation.
+              Broken grid, built intent.
             </h3>
           </div>
           <div className="grid gap-2">
@@ -879,7 +951,7 @@ function DeconstructiveExhibition({ className, compact = false, style }: Props) 
 }
 
 function AvantGardeEditorial({ className, compact = false, style }: Props) {
-  const program = ["Talk", "Film", "Essay"];
+  const program = ["Talk / 19:30", "Film / black box", "Essay / reading room"];
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
@@ -895,9 +967,12 @@ function AvantGardeEditorial({ className, compact = false, style }: Props) {
               className={cn("break-words font-display leading-[0.9]", compact ? "text-3xl" : "text-5xl md:text-7xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              New rules for public culture.
+              Culture should disturb the grid.
             </h3>
-            <span className={cn("mt-4 h-10 w-24 bg-[var(--sample-accent)]", compact ? "hidden" : "block")} />
+            <div className={cn("mt-4 grid grid-cols-[6rem_1fr] items-end gap-3", compact ? "hidden" : "")}>
+              <span className="h-12 bg-[var(--sample-accent)]" />
+              <p className="max-w-[14rem] text-xs leading-5 text-[var(--sample-muted)]">A cultural program page with poster tension, dates, modules, and readable asymmetry.</p>
+            </div>
           </div>
           <div className="grid gap-2">
             {program.map((item, index) => (
@@ -923,19 +998,27 @@ function PostmodernMemphisPortal({ className, compact = false, style }: Props) {
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
-      <div className="absolute inset-0 opacity-60" style={{ backgroundImage: "radial-gradient(circle at 20px 20px, var(--sample-accent) 0 5px, transparent 6px)", backgroundSize: "42px 42px" }} />
+      <div
+        className="absolute inset-0 opacity-60"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 20px 20px, var(--sample-accent) 0 5px, transparent 6px), linear-gradient(135deg, transparent 0 48%, var(--sample-accent-3) 48% 52%, transparent 52%)",
+          backgroundSize: "42px 42px, 28px 28px",
+        }}
+      />
       <div className="relative grid h-full grid-rows-[auto_1fr]">
         <div className="flex items-center justify-between pb-3">
-          <span className="rounded-full border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-1 text-xs font-black">Memphis shop</span>
+          <span className="rounded-full border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] px-3 py-1 text-xs font-black">Memphis portal</span>
           <span className="h-8 w-8 rounded-full bg-[var(--sample-accent-2)]" />
         </div>
         <div className={cn("grid gap-3", compact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-[0.9fr_1.1fr]")}>
           <div className="rounded-[var(--st-radius)] border-2 border-[var(--sample-border)] bg-[var(--sample-surface)] p-4" style={{ boxShadow: "var(--st-shadow)" }}>
+            <span className="inline-block rounded-full border-2 border-[var(--sample-border)] bg-[var(--sample-accent)] px-3 py-1 text-[10px] font-black">$240 / object</span>
             <h3
-              className={cn("break-words font-display leading-[0.95]", compact ? "text-3xl" : "text-5xl")}
+              className={cn("mt-3 break-words font-display leading-[0.95]", compact ? "text-3xl" : "text-5xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              Objects with jokes inside.
+              Rules are props.
             </h3>
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -959,17 +1042,24 @@ function RetroDinerShop({ className, compact = false, style }: Props) {
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
       <div className="grid h-full grid-rows-[auto_1fr]">
         <div className="flex items-center justify-between pb-3">
-          <span className="rounded-full bg-[var(--sample-text)] px-3 py-1 text-xs font-bold text-[var(--sample-base)]">Retro Mart</span>
-          <span className="rounded-full border-2 border-[var(--sample-border)] px-3 py-1 text-[10px] font-bold">Open</span>
+          <span className="rounded-full bg-[var(--sample-text)] px-3 py-1 text-xs font-bold text-[var(--sample-base)]">Retro radio mart</span>
+          <span className="rounded-full border-2 border-[var(--sample-border)] px-3 py-1 text-[10px] font-bold">ON AIR</span>
         </div>
         <div className={cn("grid gap-3", compact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-[0.9fr_1.1fr]")}>
-          <div className="rounded-[var(--st-radius)] border-2 border-[var(--sample-border)] bg-[var(--sample-accent-2)] p-4">
+          <div className="relative overflow-hidden rounded-[var(--st-radius)] border-2 border-[var(--sample-border)] bg-[var(--sample-accent-2)] p-4">
+            <div className={cn("absolute right-4 top-4 grid aspect-square w-20 place-items-center rounded-full border-4 border-[var(--sample-border)] bg-[var(--sample-surface)]", compact ? "hidden" : "")}>
+              <span className="aspect-square w-7 rounded-full bg-[var(--sample-text)]" />
+            </div>
             <h3
               className={cn("break-words font-display leading-[0.95]", compact ? "text-3xl" : "text-5xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              Nostalgia you can buy.
+              Tune in, shop later.
             </h3>
+            <div className={cn("mt-4 grid grid-cols-[1fr_auto] items-center rounded-full border-2 border-[var(--sample-border)] bg-[var(--sample-base)] px-3 py-2 text-xs font-bold", compact ? "hidden" : "")}>
+              <span>FM 74.5 summer shelf</span>
+              <span>play</span>
+            </div>
           </div>
           <div className="grid grid-cols-3 gap-2">
             {products.map((product, index) => (
@@ -990,9 +1080,10 @@ function VintagePaperCatalog({ className, compact = false, style }: Props) {
 
   return (
     <SampleFrame className={cn("bg-[var(--sample-base)]", className)} compact={compact} style={style}>
-      <div className="grid h-full grid-rows-[auto_1fr] border border-[var(--sample-border)] bg-[var(--sample-surface)]">
+      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, var(--sample-border) 0 1px, transparent 1px)", backgroundSize: "11px 11px" }} />
+      <div className="relative grid h-full grid-rows-[auto_1fr] border border-[var(--sample-border)] bg-[var(--sample-surface)]">
         <div className="flex items-center justify-between border-b border-[var(--sample-border)] px-3 py-2 text-[10px]">
-          <span>Heritage catalog</span>
+          <span>Heritage catalog / mail order</span>
           <span>Est. 1912</span>
         </div>
         <div className={cn("grid min-h-0", compact ? "grid-cols-[0.9fr_1.1fr]" : "grid-cols-1 md:grid-cols-[0.8fr_1.2fr]")}>
@@ -1001,9 +1092,11 @@ function VintagePaperCatalog({ className, compact = false, style }: Props) {
               className={cn("break-words font-display leading-[1.02]", compact ? "text-2xl" : "text-4xl md:text-5xl")}
               style={{ fontFamily: "var(--st-font-display)", fontWeight: "var(--st-weight-display)", letterSpacing: "var(--st-tracking)" }}
             >
-              Goods with a long memory.
+              Archival goods, ordered by hand.
             </h3>
-            <span className={cn("mt-5 block h-10 w-16 rounded-full border border-[var(--sample-border)]", compact ? "hidden" : "")} />
+            <span className={cn("mt-5 grid h-14 w-20 rotate-[-8deg] place-items-center rounded-full border border-[var(--sample-border)] text-[10px]", compact ? "hidden" : "")}>
+              INSPECTED
+            </span>
           </div>
           <div className="grid">
             {rows.map((row, index) => (
