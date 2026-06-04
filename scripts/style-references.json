@@ -3,13 +3,14 @@
 
   "minimalism": {
     "sites": [
-      { "url": "https://linear.app", "title": "Linear", "note": "타이포, 넓은 여백, 모노크롬 — 현대 SaaS 미니멀의 교과서" },
-      { "url": "https://stripe.com", "title": "Stripe", "note": "여백·그리드·타이포 비율이 매우 정교한 미니멀 B2B" },
-      { "url": "https://www.muji.com", "title": "Muji", "note": "일본식 절제 미니멀, 오프화이트 배경 + 로우 채도" }
+      { "url": "https://linear.app", "title": "Linear", "note": "Muted palette, spacious layout, sharp typography, and restrained product surfaces define modern SaaS minimalism." },
+      { "url": "https://www.apple.com", "title": "Apple", "note": "Generous white space, product-first composition, neutral color, and very low visual noise anchor premium minimalism." },
+      { "url": "https://stripe.com", "title": "Stripe", "note": "Precise grid rhythm, restrained copy density, thin dividers, and controlled accent use show minimalism for complex B2B content." }
     ],
     "galleries": [
-      { "url": "https://www.awwwards.com/websites/minimal/", "title": "Awwwards — Minimal", "note": "수상작 모음 — 타이포/여백 토큰 참고용" },
-      { "url": "https://dribbble.com/tags/minimalist-web-design", "title": "Dribbble — Minimalist Web Design" }
+      { "url": "https://www.pinterest.com/web_design_mini_blog/web-design-inspiration-minimalist/", "title": "Pinterest - Web Design Inspiration Minimalist", "note": "Moodboard reference for white space, neutral palettes, thin rules, sparse product imagery, and quiet composition patterns." },
+      { "url": "https://www.awwwards.com/websites/minimalist-websites/", "title": "Awwwards - Minimalist Websites", "note": "Award-gallery reference for high-quality minimal web execution, interaction restraint, layout proportion, and typographic detail." },
+      { "url": "https://dribbble.com/tags/minimalist-website", "title": "Dribbble - Minimalist Website", "note": "UI reference for minimal cards, interface hierarchy, button restraint, muted surfaces, and component-level visual vocabulary." }
     ]
   },
 

@@ -92,7 +92,7 @@ Each style below must end with explicit references, explicit copy, explicit pale
 
 ### 모던 / 미니멀
 
-- [ ] `minimalism`
+- [x] `minimalism`
 - [ ] `modernism`
 - [ ] `swiss-design`
 - [ ] `international-style`
@@ -140,7 +140,7 @@ Each style below must end with explicit references, explicit copy, explicit pale
 ### 럭셔리 / 클래식
 
 - [ ] `classic`
-- [ ] `neoclassical`
+- [ ] `neoclassic`
 - [ ] `luxury`
 - [ ] `old-money`
 - [ ] `art-deco`
@@ -253,7 +253,7 @@ Every style must satisfy:
 - Modify: `package.json`
 - Modify: `scripts/capture-references.mjs`
 
-- [ ] **Step 1: Create reference check script**
+- [x] **Step 1: Create reference check script**
 
 Create `scripts/check-style-references.mjs`:
 
@@ -308,7 +308,7 @@ if (errors.length) {
 console.log(`style reference check passed: ${designStyles.length} styles covered`);
 ```
 
-- [ ] **Step 2: Add npm script**
+- [x] **Step 2: Add npm script**
 
 In `package.json`, add:
 
@@ -316,7 +316,7 @@ In `package.json`, add:
 "check:style-refs": "node --experimental-strip-types --no-warnings=ExperimentalWarning scripts/check-style-references.mjs"
 ```
 
-- [ ] **Step 3: Add capture preflight summary**
+- [x] **Step 3: Add capture preflight summary**
 
 In `scripts/capture-references.mjs`, import `designStyles`:
 
@@ -336,7 +336,7 @@ if (missingReferenceSlugs.length > 0) {
 }
 ```
 
-- [ ] **Step 4: Verify failure before adding all references**
+- [x] **Step 4: Verify failure before adding all references**
 
 Run:
 
@@ -351,7 +351,7 @@ STYLE REFERENCE CHECK FAILED:
 missing references for international-style
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add package.json scripts/check-style-references.mjs scripts/capture-references.mjs
@@ -734,7 +734,7 @@ For every slug in `styleSeedTuples`, add `styleTokenOverrides[slug]` that change
 Token rules:
 
 - `minimalism`, `swiss-design`, `grid-system`, and `flat-design` must not share the same token signature.
-- `luxury`, `old-money`, `classic`, `neoclassical`, `baroque`, `rococo`, and `art-deco` must use distinct type/shape/spacing behaviors.
+- `luxury`, `old-money`, `classic`, `neoclassic`, `baroque`, `rococo`, and `art-deco` must use distinct type/shape/spacing behaviors.
 - `cyberpunk`, `neon-noir`, `rave-style`, `ai-aesthetic`, and `hologram-style` must differ beyond neon color.
 - `kawaii`, `pastel-style`, `bubble-design`, `toy-design`, and `claymorphism` must differ in radius, shadow, density, and surface behavior.
 - `streetwear`, `graffiti`, `punk`, `grunge`, and `indie-sleaze` must differ in texture/effect and density.
@@ -1000,3 +1000,4 @@ git commit -m "Document representative style research workflow"
 - [x] 2026-06-04: Found `scripts/style-references.json` as the existing reference memo. It covers 12 styles and is consumed by `scripts/capture-references.mjs`.
 - [x] 2026-06-04: Confirmed current implementation has 88 styles, 24 tuned token overrides, 12 reference-backed styles, 64 mostly untuned styles, and 76 styles without reference entries.
 - [x] 2026-06-04: User clarified that reference work must include additional matching sources for each style, specifically Pinterest, Awwwards, and Dribbble, not only existing real-site references.
+- [x] 2026-06-04: Completed the first per-style pass for `minimalism`: refreshed Linear, Apple, Stripe, Pinterest, Awwwards, and Dribbble references; added targeted reference validation; rewrote copy, palette, tokens, research brief, and a dedicated sample renderer; verified desktop and mobile renders with Playwright.
