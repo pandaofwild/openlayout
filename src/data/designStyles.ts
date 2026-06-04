@@ -60,6 +60,20 @@ export type StyleTokens = {
   };
 };
 
+export type StyleReferenceSource = {
+  title: string;
+  url: string;
+  note: string;
+};
+
+export type StyleResearchBrief = {
+  referenceSites: StyleReferenceSource[];
+  referenceGalleries: StyleReferenceSource[];
+  representativeTraits: string[];
+  avoidTraits: string[];
+  tokenIntent: string;
+};
+
 export type DesignStyle = {
   slug: string;
   nameKo: string;
@@ -78,6 +92,7 @@ export type DesignStyle = {
   related: string[];
   palette: DesignStylePalette;
   imagePrompt: string;
+  research?: StyleResearchBrief;
   sampleType: DesignStyleSampleType;
   tokens: StyleTokens;
 };
@@ -113,6 +128,21 @@ type DesignStyleSeedTuple = [
   tags: string[],
   sampleType: DesignStyleSampleType,
 ];
+
+type StyleContentOverride = Partial<Pick<
+  DesignStyle,
+  | "summary"
+  | "description"
+  | "visualFeatures"
+  | "colorPalette"
+  | "typography"
+  | "layoutTraits"
+  | "useCases"
+  | "goodFor"
+  | "cautions"
+  | "imagePrompt"
+  | "research"
+>>;
 
 const promptSuffix =
   "clean composition, high-quality design reference image, no logo, no watermark, suitable for a design encyclopedia card";
@@ -305,15 +335,15 @@ const categoryTokenDefaults: Record<string, StyleTokens> = {
 
 const palettes: Record<string, DesignStylePalette> = {
   minimalism: {
-    base: "#F4F1EA",
+    base: "#F7F7F4",
     surface: "#FFFFFF",
-    text: "#202020",
-    mutedText: "#6C675F",
-    primary: "#202020",
-    accent: "#A87854",
-    accent2: "#D8C7AA",
-    accent3: "#9DB0A5",
-    border: "#302B25",
+    text: "#151515",
+    mutedText: "#72716C",
+    primary: "#151515",
+    accent: "#8E9AAF",
+    accent2: "#E1DDD4",
+    accent3: "#C9D2C5",
+    border: "#D8D5CD",
   },
   brutalism: {
     base: "#E4E2DD",
@@ -561,6 +591,72 @@ const styleSeeds: DesignStyleSeed[] = styleSeedTuples.map(([slug, nameKo, nameEn
   tone,
 }));
 
+const styleContentOverrides: Record<string, StyleContentOverride> = {
+  minimalism: {
+    summary: "미니멀리즘은 장식을 덜어내고 여백, 얇은 선, 정밀한 타이포 위계로 제품과 메시지를 선명하게 보이게 하는 디자인입니다.",
+    description:
+      "미니멀리즘은 화면을 비우는 스타일이 아니라 필요한 정보만 남겨 사용자가 곧바로 구조를 읽게 만드는 방식입니다. Linear의 조용한 제품 표면, Apple의 제품 중심 여백, Stripe의 정밀한 그리드처럼 낮은 채도의 배경과 얇은 구분선, 짧은 문장, 정확한 타이포 비례를 사용합니다. 강한 장식이나 과한 그림자 대신 간격, 정렬, 대비가 브랜드의 신뢰감을 만듭니다.",
+    visualFeatures: [
+      "넓은 빈 공간과 낮은 채도 표면으로 핵심 콘텐츠 주변의 시각 소음을 줄입니다.",
+      "검정에 가까운 본문색, 부드러운 회색 보조 텍스트, 얇은 경계선으로 구조를 만듭니다.",
+      "이미지나 제품 프레임은 크게 쓰되 주변 장식은 최소화해 초점을 분명히 합니다.",
+      "색은 CTA나 상태 표시처럼 필요한 순간에만 작은 면적으로 사용합니다.",
+    ],
+    colorPalette: [
+      "오프화이트 배경과 순백 표면을 기본으로 사용해 조용한 계층을 만듭니다.",
+      "텍스트는 거의 검정에 가까운 중성색으로 고정해 가독성을 확보합니다.",
+      "보조색은 푸른 회색, 따뜻한 회색, 세이지 계열처럼 낮은 채도로 제한합니다.",
+      "경계선은 본문색보다 훨씬 약하게 두어 선은 보이지만 화면이 무거워지지 않게 합니다.",
+    ],
+    typography: [
+      "중립적인 산세리프를 사용하고 제목도 과도하게 압축하거나 장식하지 않습니다.",
+      "제목, 메타, 본문 사이의 크기 차이는 분명하지만 자간은 0에 가깝게 유지합니다.",
+      "짧은 문장과 넉넉한 행간으로 사용자가 빠르게 훑을 수 있게 합니다.",
+    ],
+    layoutTraits: [
+      "좌측 정렬과 넓은 내부 여백으로 읽는 순서를 단순하게 만듭니다.",
+      "얇은 분할선, 작은 메타 라벨, 명확한 콘텐츠 블록으로 정보 구조를 표현합니다.",
+      "카드나 패널은 평평하게 두고 그림자 대신 간격과 경계선으로 구분합니다.",
+      "CTA는 한두 개만 남기고 주변 텍스트와 충분히 떨어뜨립니다.",
+    ],
+    useCases: ["SaaS 랜딩", "제품 소개", "프리미엄 포트폴리오", "문서형 서비스"],
+    goodFor: ["복잡한 제품을 선명하게 설명해야 하는 B2B 서비스", "사진이나 제품 자체가 주인공인 브랜드", "신뢰와 정밀함이 중요한 도구형 웹앱", "불필요한 마케팅 장식을 줄이고 싶은 랜딩페이지"],
+    cautions: [
+      "요소를 줄이는 것만으로는 대표성이 생기지 않으므로 간격, 선, 타이포 비례를 끝까지 조정해야 합니다.",
+      "색을 너무 없애면 상태와 행동이 약해지므로 CTA와 현재 위치에는 작은 강조색을 남겨야 합니다.",
+      "모바일에서는 넓은 여백이 정보 부족처럼 보이지 않도록 첫 화면의 메시지 밀도를 확인해야 합니다.",
+    ],
+    imagePrompt:
+      "A calm minimal web design reference image with generous white space, precise sans-serif typography, thin dividers, neutral off-white surfaces, one restrained cool gray accent, product-first composition, no decorative clutter, no logo, no watermark",
+    research: {
+      referenceSites: [
+        { title: "Linear", url: "https://linear.app", note: "Muted palette, spacious layout, sharp typography, and restrained product surfaces define modern SaaS minimalism." },
+        { title: "Apple", url: "https://www.apple.com", note: "Generous white space, product-first composition, neutral color, and very low visual noise anchor premium minimalism." },
+        { title: "Stripe", url: "https://stripe.com", note: "Precise grid rhythm, restrained copy density, thin dividers, and controlled accent use show minimalism for complex B2B content." },
+      ],
+      referenceGalleries: [
+        { title: "Pinterest - Web Design Inspiration Minimalist", url: "https://www.pinterest.com/web_design_mini_blog/web-design-inspiration-minimalist/", note: "Moodboard reference for white space, neutral palettes, thin rules, sparse product imagery, and quiet composition patterns." },
+        { title: "Awwwards - Minimalist Websites", url: "https://www.awwwards.com/websites/minimalist-websites/", note: "Award-gallery reference for high-quality minimal web execution, interaction restraint, layout proportion, and typographic detail." },
+        { title: "Dribbble - Minimalist Website", url: "https://dribbble.com/tags/minimalist-website", note: "UI reference for minimal cards, interface hierarchy, button restraint, muted surfaces, and component-level visual vocabulary." },
+      ],
+      representativeTraits: [
+        "Generous negative space",
+        "Neutral, low-saturation surfaces",
+        "Sharp sans-serif hierarchy",
+        "Thin structural dividers",
+        "Product-first composition",
+      ],
+      avoidTraits: [
+        "Decorative gradients used as the main identity",
+        "Heavy shadows or raised cards",
+        "Overly warm Japandi color treatment",
+      ],
+      tokenIntent:
+        "Use flat off-white surfaces, near-black text, soft dividers, no shadow, nearly zero tracking, airy spacing, and a small cool gray accent so the style reads as precise web minimalism rather than warm lifestyle minimalism.",
+    },
+  },
+};
+
 function hashSlug(slug: string) {
   return slug.split("").reduce((hash, char) => hash + char.charCodeAt(0), 0);
 }
@@ -570,8 +666,11 @@ type DeepPartial<T> = { [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]>
 const styleTokenOverrides: Record<string, DeepPartial<Omit<StyleTokens, "color">>> = {
   // Representative styles — more will be added in Task 5
   "minimalism": {
-    shape: { radius: "0px", borderWidth: "1px" },
+    typography: { weightDisplay: 500, weightBody: 400, tracking: "0em", headingScale: 0.96 },
+    shape: { radius: "2px", radiusPill: "9999px", borderWidth: "1px", borderStyle: "solid" },
+    space: { density: "airy", gap: "1.5rem", padScale: 1.45 },
     decoration: { shadow: "none", effect: "none" },
+    layout: { heroVariant: "left", navStyle: "minimal", alignment: "left" },
   },
   "modernism": {
     typography: { weightDisplay: 700, tracking: "-0.03em", headingScale: 1.08 },
@@ -748,8 +847,9 @@ function buildStyle(seed: DesignStyleSeed, index: number): DesignStyle {
   };
   const mergedNonColor = mergeTokens(baseTokens, styleTokenOverrides[seed.slug]);
   const tokens: StyleTokens = { ...mergedNonColor, color: colorTokens };
+  const contentOverride = styleContentOverrides[seed.slug];
 
-  return {
+  const generatedStyle: DesignStyle = {
     slug: seed.slug,
     nameKo: seed.nameKo,
     nameEn: seed.nameEn,
@@ -792,6 +892,11 @@ function buildStyle(seed: DesignStyleSeed, index: number): DesignStyle {
     imagePrompt: `A square editorial poster representing ${seed.nameEn} design style, ${seed.tone}, ${profile.visual.join(", ")}, ${promptSuffix}`,
     sampleType: seed.sampleType ?? profile.sampleType,
     tokens,
+  };
+
+  return {
+    ...generatedStyle,
+    ...contentOverride,
   };
 }
 
