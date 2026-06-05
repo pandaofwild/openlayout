@@ -2,45 +2,81 @@
 
 **English** | [한국어](./README.ko.md)
 
-A design lab for combining layout, style, palette, and component attributes into real webpage-style previews, prompts, and implementation-ready snippets.
+OpenDesignLab is an open design specification lab for AI-assisted frontend work.
 
-OpenDesignLab helps you quickly pick page structure and visual language before you start designing. It provides 96 layouts, 88 design styles, 10 style categories, and webpage-style sample renderers. Each entry includes recommended use cases, trade-offs, responsive behavior, accessibility checkpoints, a color palette, and Tailwind implementation hints.
+It combines layout structures, visual styles, color palettes, and component patterns into real webpage-style previews, prompts, and implementation-ready snippets. The long-term goal is to turn those choices into a reusable `design.md` file that coding agents can follow consistently across a project.
 
 | Item | Value |
 | --- | --- |
 | Repository | https://github.com/pandaofwild/OpenDesignLab |
-| Last reviewed | 2026-06-04 |
+| Current catalog | 96 layouts, 88 design styles, 10 style categories |
+| Outputs | Previews, prompts, HTML/CSS snippets, style tokens |
+| Roadmap | Project-specific `design.md` generation |
+| Last reviewed | 2026-06-05 |
 
-## Who It's For
+![OpenDesignLab style cards](docs/assets/opendesignlab-style-cards.jpg)
 
-- Designers who need to quickly compare website structures
-- Frontend developers looking for base skeletons for landing pages, dashboards, docs, and commerce screens
-- Teams that want responsive behavior and accessibility checkpoints alongside visual direction
+## Why This Exists
+
+AI coding works better when the design direction is explicit. A prompt like "make it modern and clean" leaves too much room for inconsistent layout, weak hierarchy, random palettes, and inaccessible components.
+
+OpenDesignLab turns design intent into inspectable choices:
+
+- Pick a page structure before writing code.
+- Choose a visual language before styling components.
+- Tune palette and token behavior before generating UI.
+- Export prompts and code snippets that describe the decision clearly.
+- Move toward a project-level `design.md` that can guide Codex and other coding agents.
+
+## Who It Helps
+
+- Designers comparing website structures before committing to a direction
+- Frontend developers looking for reliable starting points for pages and components
+- AI coding users who need clearer layout, style, accessibility, and component rules
+- Teams that want a shared vocabulary for design decisions before implementation
+
+## What You Can Combine
+
+| Area | What it provides |
+| --- | --- |
+| Layouts | 96 structures for landing pages, dashboards, docs, commerce, galleries, mobile flows, and experimental pages |
+| Design styles | 88 visual directions with palettes, typography notes, sample previews, use cases, and cautions |
+| Components | Tokenized previews for buttons, cards, navigation, inputs, and badges |
+| Palettes | Prompt-driven palette generation that can be applied to layout previews |
+| Studio | A Style x Layout workspace for previewing combinations and copying prompts or HTML/CSS |
+
+## Screenshots
+
+### Layout Explorer
+
+![OpenDesignLab layout explorer](docs/assets/opendesignlab-layouts.jpg)
 
 ## Key Features
 
 - **Layout explorer**: Filter layouts by search term, category, purpose, and complexity.
 - **Full-stage preview**: View layouts large, like a real webpage background, on detail and compare pages.
-- **Floating detail panel**: Keep the base screen focused, then open structure details and pros/cons in a floating panel.
-- **Compare view**: Select up to 3 layouts and compare recommended use, mobile support, density, and difficulty side by side.
-- **Design Style Lab**: Explore 88 design styles by category, tag, and search term, then inspect palettes and webpage-style samples on detail pages.
-- **Style application**: A design style chosen in `/styles` is applied to `/layouts` and `/layouts/compare` previews and persisted in localStorage.
+- **Design Style Lab**: Explore 88 styles by category, tag, and search term, then inspect palettes and webpage-style samples.
+- **Style application**: Apply a selected design style to `/layouts` and `/layouts/compare`, with localStorage persistence.
 - **Studio copy**: Copy a prompt or self-contained HTML/CSS for the selected Style x Layout combination from `/studio`.
-- **Component dictionary**: Preview how the same style tokens affect buttons, cards, navigation, input fields, and badges in `/components`.
-- **Prompt palette**: Mix prompts to generate a custom color palette and apply it directly to the current layout preview.
-- **Image generation admin**: In a local environment with `OPENAI_API_KEY`, generate per-style reference images and save them to `public/generated/design-styles`.
-- **SVG controls**: Comparison arrows and info/close/detail icons are managed as inline SVG.
-- **Implementation hints**: Tailwind code examples and implementation tips are provided per `previewType`.
-- **Project skills**: `skills/layout-recommender/SKILL.md` and `skills/design-style-recommender/SKILL.md` guide purpose-based layout and style recommendations.
+- **Component dictionary**: Preview how style tokens affect buttons, cards, navigation, input fields, and badges.
+- **Prompt palette**: Generate a custom color palette from a prompt and apply it to the current layout preview.
+- **Image generation admin**: Generate per-style reference images locally with the OpenAI Image API.
+- **Project skills**: Internal recommendation skills help coding agents select layouts and styles by purpose, tone, and constraints.
 
-## Why It Helps Vibe Coding
+## AI Coding Workflow
 
-- State your page purpose up front and quickly narrow down layout candidates, such as "SaaS dashboard landing", "brand campaign", or "docs-style knowledge base".
-- Each layout includes recommended use, situations to avoid, responsive behavior, and accessibility checkpoints, so design constraints can move directly into a prompt.
-- Large previews and floating description panels make it easy to iterate with short feedback like "use this structure" or "this one is weak on mobile".
-- `previewType` works like shorthand for implementation direction, such as `hero`, `card-grid`, `dashboard`, `docs`, or `comparison`.
-- `DesignStyle` works like shorthand for visual direction, such as `brutalism`, `cyberpunk`, `luxury`, `organic-design`, or `saas-style`.
-- For a new screen, the most reliable flow is to choose structure first, then choose color/typography/mood, then hand components and copy to a coding agent.
+1. Choose a layout for the page purpose, such as `hero`, `card-grid`, `dashboard`, `docs`, or `comparison`.
+2. Choose a design style, such as `brutalism`, `cyberpunk`, `luxury`, `organic-design`, or `saas-style`.
+3. Preview how the structure and style behave together.
+4. Copy the prompt or HTML/CSS snippet into a coding workflow.
+5. Use the selected rules as the basis for a future `design.md` file.
+
+## Roadmap
+
+- Generate a project-level `design.md` from selected layout, style, palette, and component rules.
+- Add stronger component specifications so buttons, forms, cards, navigation, and page sections can share one design contract.
+- Improve accessibility and responsive checks for each layout and style combination.
+- Add more export formats for AI coding agents, design handoff, and frontend scaffolding.
 
 ## Quick Start
 
