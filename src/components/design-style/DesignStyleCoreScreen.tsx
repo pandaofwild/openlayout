@@ -78,6 +78,7 @@ export function DesignStyleCoreScreen() {
   const sort = searchParams.get("sort") ?? "category";
   const view = searchParams.get("view") === "list" ? "list" : "grid";
   const gridColumns = normalizeGridColumns(searchParams.get("columns"));
+  const catalogStateQuery = searchParams.toString();
 
   const categoryCounts = designStyleCategories.map((category) => ({
     category,
@@ -182,10 +183,10 @@ export function DesignStyleCoreScreen() {
             activeEffect={activeEffect}
             activeFilterCount={activeFilterCount}
             categoryCounts={categoryCounts}
+            categoryHref={(category) => styleCategoryFilterHref(category, activeCategory, searchParams)}
             filterSummary={mobileFilterSummary}
             hasFilters={hasFilters}
             locale={locale}
-            onCategoryChange={(category) => setParam("category", category)}
             onDensityChange={(density) => setParam("density", density)}
             onEffectChange={(effect) => setParam("effect", effect)}
             onReset={resetFilters}
@@ -197,16 +198,16 @@ export function DesignStyleCoreScreen() {
                 <SpecimenOptionRow
                   active={activeCategory === "all"}
                   count={designStyles.length}
+                  href={styleCategoryFilterHref(null, activeCategory, searchParams)}
                   label={locale === "ko" ? "전체 스타일" : "All styles"}
-                  onClick={() => setParam("category", null)}
                 />
                 {categoryCounts.map(({ category, count }) => (
                   <SpecimenOptionRow
                     active={activeCategory === category}
                     count={count}
+                    href={styleCategoryFilterHref(category, activeCategory, searchParams)}
                     key={category}
                     label={styleCategoryLabel(category, locale)}
-                    onClick={() => setParam("category", activeCategory === category ? null : category)}
                   />
                 ))}
               </div>
@@ -339,6 +340,7 @@ export function DesignStyleCoreScreen() {
                       key={style.slug}
                       onSelect={setSelectedSlug}
                       style={style}
+                      styleDetailHref={withCatalogState(`/styles/${style.slug}`, catalogStateQuery)}
                     />
                   ))}
                 </div>
@@ -351,6 +353,7 @@ export function DesignStyleCoreScreen() {
                       key={style.slug}
                       onSelect={setSelectedSlug}
                       style={style}
+                      styleDetailHref={withCatalogState(`/styles/${style.slug}`, catalogStateQuery)}
                     />
                   ))}
                 </div>
@@ -411,10 +414,10 @@ function StyleMobileFilters({
   activeEffect,
   activeFilterCount,
   categoryCounts,
+  categoryHref,
   filterSummary,
   hasFilters,
   locale,
-  onCategoryChange,
   onDensityChange,
   onEffectChange,
   onReset,
@@ -424,10 +427,10 @@ function StyleMobileFilters({
   activeEffect: string;
   activeFilterCount: number;
   categoryCounts: Array<{ category: string; count: number }>;
+  categoryHref: (category: string | null) => string;
   filterSummary: string;
   hasFilters: boolean;
   locale: "en" | "ko";
-  onCategoryChange: (category: string | null) => void;
   onDensityChange: (density: StyleDensity | null) => void;
   onEffectChange: (effect: StyleEffect | null) => void;
   onReset: () => void;
@@ -466,26 +469,24 @@ function StyleMobileFilters({
             {locale === "ko" ? "카테고리" : "Category"}
           </p>
           <div className="specimen-scrollbar -mx-1 flex min-w-0 max-w-full gap-1.5 overflow-x-auto px-1 pb-1">
-            <button
+            <LocalizedLink
               aria-pressed={activeCategory === "all"}
               className={styleMobileFilterChipClass(activeCategory === "all")}
-              onClick={() => onCategoryChange(null)}
-              type="button"
+              href={categoryHref(null)}
             >
               <span>{locale === "ko" ? "전체" : "All"}</span>
               <span className="font-mono opacity-70">{designStyles.length}</span>
-            </button>
+            </LocalizedLink>
             {categoryCounts.map(({ category, count }) => (
-              <button
+              <LocalizedLink
                 aria-pressed={activeCategory === category}
                 className={styleMobileFilterChipClass(activeCategory === category)}
+                href={categoryHref(category)}
                 key={category}
-                onClick={() => onCategoryChange(activeCategory === category ? null : category)}
-                type="button"
               >
                 <span>{styleCategoryLabel(category, locale)}</span>
                 <span className="font-mono opacity-70">{count}</span>
-              </button>
+              </LocalizedLink>
             ))}
           </div>
         </section>
@@ -554,11 +555,13 @@ function CoreStyleCard({
   isSelected,
   onSelect,
   style,
+  styleDetailHref,
 }: {
   index: number;
   isSelected: boolean;
   onSelect: (slug: string) => void;
   style: DesignStyle;
+  styleDetailHref: string;
 }) {
   const locale = useLocale();
   const localizedStyle = designStyleForLocale(style, locale);
@@ -608,7 +611,7 @@ function CoreStyleCard({
             {isSelected ? "Applied" : "Apply"}
           </button>
           <div className="flex gap-1.5">
-            <LocalizedLink className="specimen-button specimen-button-sm specimen-button-quiet" href={`/styles/${style.slug}`}>
+            <LocalizedLink className="specimen-button specimen-button-sm specimen-button-quiet" href={styleDetailHref}>
               Detail
             </LocalizedLink>
             <LocalizedLink className="specimen-button specimen-button-sm specimen-button-quiet" href={`/studio?style=${style.slug}`}>
@@ -629,11 +632,13 @@ function CoreStyleRow({
   isSelected,
   onSelect,
   style,
+  styleDetailHref,
 }: {
   index: number;
   isSelected: boolean;
   onSelect: (slug: string) => void;
   style: DesignStyle;
+  styleDetailHref: string;
 }) {
   const locale = useLocale();
   const localizedStyle = designStyleForLocale(style, locale);
@@ -666,7 +671,7 @@ function CoreStyleRow({
         </button>
         <LocalizedLink
           className="specimen-button specimen-button-tiny specimen-button-quiet"
-          href={`/styles/${style.slug}`}
+          href={styleDetailHref}
         >
           Open
         </LocalizedLink>
@@ -705,4 +710,25 @@ function gridColumnControlLabel(columns: StyleGridColumns) {
 
 function gridColumnMetricLabel(columns: StyleGridColumns, locale: "en" | "ko") {
   return locale === "ko" ? `${columns}열 보기` : `${columns} columns`;
+}
+
+function withCatalogState(path: string, query: string) {
+  return query ? `${path}?${query}` : path;
+}
+
+function styleCategoryFilterHref(
+  category: string | null,
+  activeCategory: string,
+  searchParams: { toString(): string },
+) {
+  const next = new URLSearchParams(searchParams.toString());
+
+  if (!category || activeCategory === category) {
+    next.delete("category");
+  } else {
+    next.set("category", category);
+  }
+
+  const query = next.toString();
+  return query ? `/styles?${query}` : "/styles";
 }

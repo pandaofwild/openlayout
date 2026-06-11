@@ -178,11 +178,13 @@ export function SpecimenSideSection({
 export function SpecimenOptionRow({
   active = false,
   count,
+  href,
   label,
   onClick,
 }: {
   active?: boolean;
   count?: number;
+  href?: string;
   label: string;
   onClick?: () => void;
 }) {
@@ -207,6 +209,14 @@ export function SpecimenOptionRow({
       ) : null}
     </>
   );
+
+  if (href) {
+    return (
+      <LocalizedLink aria-pressed={active} className={className} href={href}>
+        {content}
+      </LocalizedLink>
+    );
+  }
 
   if (onClick) {
     return (

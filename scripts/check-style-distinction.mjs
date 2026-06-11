@@ -1,5 +1,6 @@
 // scripts/check-style-distinction.mjs
 import { readFileSync } from "node:fs";
+import { designStyles } from "../src/data/designStyles.ts";
 
 const rendererSource = readFileSync(
   new URL("../src/components/design-style/DesignStyleSampleRenderer.tsx", import.meta.url),
@@ -18,9 +19,293 @@ const glitchBody = functionBody("GlitchArtInterface");
 const neoBrutalistBody = functionBody("NeoBrutalistApp");
 const postmodernBody = functionBody("PostmodernArchivePortal");
 
+const categorySlugOrder = {
+  "모던 / 미니멀": [
+    "minimalism",
+    "modernism",
+    "swiss-design",
+    "international-style",
+    "scandinavian",
+    "japandi",
+    "warm-minimal",
+    "soft-minimal",
+    "high-end-minimal",
+  ],
+  "강렬 / 실험": [
+    "brutalism",
+    "new-brutalism",
+    "anti-design",
+    "maximalism",
+    "glitch-art",
+    "deconstructivism",
+    "avant-garde",
+    "postmodernism",
+  ],
+  "레트로 / 빈티지": [
+    "retro",
+    "vintage",
+    "seventies-retro",
+    "eighties-retro",
+    "nineties-graphic",
+    "y2k",
+    "retro-futurism",
+    "mid-century-modern",
+    "bauhaus",
+  ],
+  "미래 / 디지털": [
+    "futurism",
+    "cyberpunk",
+    "neon-noir",
+    "techwear",
+    "high-tech",
+    "ai-aesthetic",
+    "hologram-style",
+    "chromecore",
+    "metaverse-style",
+  ],
+  "럭셔리 / 클래식": [
+    "classic",
+    "neoclassic",
+    "luxury",
+    "old-money",
+    "art-deco",
+    "art-nouveau",
+    "baroque",
+    "rococo",
+    "gothic",
+  ],
+  "자연 / 수공예": [
+    "organic-design",
+    "natural",
+    "botanical",
+    "eco-design",
+    "rustic",
+    "kinfolk",
+    "handmade",
+    "craft",
+    "wabi-sabi",
+  ],
+  "귀여움 / 캐주얼": [
+    "kitsch",
+    "kawaii",
+    "dopamine-design",
+    "pop-art",
+    "comic-book-style",
+    "toy-design",
+    "playful-design",
+    "pastel-style",
+    "bubble-design",
+  ],
+  "스트리트 / 서브컬처": [
+    "streetwear",
+    "graffiti",
+    "hiphop-style",
+    "skate-culture",
+    "punk",
+    "grunge",
+    "indie-sleaze",
+    "rave-style",
+    "lo-fi",
+  ],
+  "편집 / 타이포그래피": [
+    "typography-focused",
+    "editorial-design",
+    "magazine-style",
+    "posterism",
+    "grid-system",
+    "collage",
+    "photomontage",
+    "experimental-type",
+    "newspaper-style",
+  ],
+  "UI / 웹": [
+    "flat-design",
+    "material-design",
+    "neumorphism",
+    "glassmorphism",
+    "claymorphism",
+    "dark-mode-design",
+    "saas-style",
+    "startup-landing-page",
+  ],
+};
+
+const styleSampleFunctions = {
+  minimalism: "MinimalismProductSystem",
+  modernism: "ModernismFunctionalGrid",
+  "swiss-design": "SwissInformationGrid",
+  "international-style": "InternationalSystemPortal",
+  scandinavian: "ScandinavianCommerceHome",
+  japandi: "JapandiSpatialLanding",
+  "warm-minimal": "WarmMinimalStudio",
+  "soft-minimal": "SoftMinimalService",
+  "high-end-minimal": "HighEndMinimalProduct",
+  brutalism: "RawBrutalistIndex",
+  "new-brutalism": "NeoBrutalistApp",
+  "anti-design": "AntiDesignLanding",
+  maximalism: "MaximalistPatternMarket",
+  "glitch-art": "GlitchArtInterface",
+  deconstructivism: "DeconstructiveExhibition",
+  "avant-garde": "AvantGardeEditorial",
+  postmodernism: "PostmodernArchivePortal",
+  retro: "RetroDinerShop",
+  vintage: "VintagePaperCatalog",
+  "seventies-retro": "SeventiesGroovyLanding",
+  "eighties-retro": "EightiesSynthConsole",
+  "nineties-graphic": "NinetiesGraphicZine",
+  y2k: "Y2KGlossPortal",
+  "retro-futurism": "RetroFuturismFlightDeck",
+  "mid-century-modern": "MidCenturyModernStudio",
+  bauhaus: "BauhausSchool",
+  futurism: "FuturismVelocity",
+  cyberpunk: "CyberpunkCity",
+  "neon-noir": "NeonNoirCinema",
+  techwear: "TechwearSystem",
+  "high-tech": "HighTechDashboard",
+  "ai-aesthetic": "AiAestheticStudio",
+  "hologram-style": "HologramInterface",
+  chromecore: "ChromecoreStudio",
+  "metaverse-style": "MetaverseWorld",
+  classic: "ClassicHeritageCommerce",
+  neoclassic: "NeoclassicHotelHome",
+  luxury: "LuxuryEditorialProduct",
+  "old-money": "OldMoneyClubShop",
+  "art-deco": "ArtDecoHotelPortal",
+  "art-nouveau": "ArtNouveauBotanicalShop",
+  baroque: "BaroqueGalleryCommerce",
+  rococo: "RococoSalonMarket",
+  gothic: "GothicCathedralArchive",
+  "organic-design": "OrganicDesignApothecary",
+  natural: "NaturalMarketShelf",
+  botanical: "BotanicalGlasshouse",
+  "eco-design": "EcoImpactSystem",
+  rustic: "RusticLodgeCommerce",
+  kinfolk: "KinfolkSlowJournal",
+  handmade: "HandmadePatchMarket",
+  craft: "CraftWorkshopLedger",
+  "wabi-sabi": "WabiSabiTeaGallery",
+  kitsch: "KitschNoveltyDrop",
+  kawaii: "KawaiiCharacterClub",
+  "dopamine-design": "DopamineRewardLoop",
+  "pop-art": "PopArtObjectArchive",
+  "comic-book-style": "ComicIssueDrop",
+  "toy-design": "ToyPlaysetBuilder",
+  "playful-design": "PlayfulOnboardFlow",
+  "pastel-style": "PastelSoftEdit",
+  "bubble-design": "BubbleFlowCapsules",
+  streetwear: "StreetwearDropEditorial",
+  graffiti: "GraffitiWallArchive",
+  "hiphop-style": "HipHopMixtapeConsole",
+  "skate-culture": "SkateCultureSpotBoard",
+  punk: "PunkZineDispatch",
+  grunge: "GrungeTapeArchive",
+  "indie-sleaze": "IndieSleazeFlashFeed",
+  "rave-style": "RaveStagePulse",
+  "lo-fi": "LoFiLoopDesk",
+  "typography-focused": "TypographyFocusedSpecimen",
+  "editorial-design": "EditorialLongformIndex",
+  "magazine-style": "MagazineIssueBrowser",
+  posterism: "PosterismPasteupWall",
+  "grid-system": "GridSystemManual",
+  collage: "CollageLayerDesk",
+  photomontage: "PhotomontageCampaign",
+  "experimental-type": "ExperimentalTypeLab",
+  "newspaper-style": "NewspaperEditionGrid",
+  "flat-design": "FlatDesignControlBoard",
+  "material-design": "MaterialDesignStateSheet",
+  neumorphism: "NeumorphismSoftPanel",
+  glassmorphism: "GlassmorphismDepthDesk",
+  claymorphism: "ClaymorphismAppWorkshop",
+  "dark-mode-design": "DarkModeOpsConsole",
+  "saas-style": "SaasStyleOperationsHome",
+  "startup-landing-page": "StartupLandingStory",
+};
+
+const requiredFamilyMarkers = {
+  minimalism: ["MINIMAL PRODUCT CANVAS", "negative-space product stage", "thin-rule material index"],
+  modernism: ["MODERNIST PROGRAM GRID", "function-led object index", "primary geometry modules"],
+  "swiss-design": ["SWISS BASELINE GRID", "multilingual public-service nav", "timetable information rail"],
+  "international-style": ["GLOBAL SYSTEM PORTAL", "2x component rail", "cross-market content matrix"],
+  scandinavian: ["NORDIC ROOM SHOP", "room-by-room category shelf", "soft utility product cards"],
+  japandi: ["LOW HORIZONTAL RESIDENCE", "shoji material index", "slow case-study sequence"],
+  "warm-minimal": ["WARM STUDIO PORTFOLIO", "terracotta consultation CTA", "linen project stack"],
+  "soft-minimal": ["SOFT SERVICE FLOW", "frosted consultation card", "low-contrast session rail"],
+  "high-end-minimal": ["QUIET COMMERCE FRAME", "severe product crop", "material provenance rail"],
+  brutalism: ["RAW WEB INDEX", "default submit queue", "institutional link map"],
+  "new-brutalism": ["CREATOR STOREFRONT KIT", "thick-border checkout", "hard-shadow toggle stack"],
+  "anti-design": ["OFF-GRID PORTFOLIO", "wrong-way project rail", "scribble navigation path"],
+  maximalism: ["PATTERN MARKET", "campaign tile stack", "ornamental category wall"],
+  "glitch-art": ["NET ART ERROR SURFACE", "ASCII rupture feed", "codec forensics rail"],
+  deconstructivism: ["STRUCTURAL FAULT", "fracture section index", "displaced project axis"],
+  "avant-garde": ["MANIFESTO PROGRAM", "critical lecture rail", "art-into-life agenda"],
+  postmodernism: ["CLASSICAL QUOTE", "mixed-era object index", "Memphis anti-functional shop"],
+  retro: ["RETRO BROADCAST SHOP", "time-travel media dial", "analog merch queue"],
+  vintage: ["PAPER CATALOG", "repair ticket ledger", "patina material register"],
+  "seventies-retro": ["GROOVY LANDING", "wavy campaign shelf", "corduroy product rhythm"],
+  "eighties-retro": ["SYNTH CONSOLE", "arcade control strip", "VHS mix queue"],
+  "nineties-graphic": ["DESKTOP ZINE", "sticker link grid", "halftone scrap wall"],
+  y2k: ["GLOSS PORTAL", "bubble widget stack", "sparkle guestbook rail"],
+  "retro-futurism": ["FLIGHT DECK", "destination poster rail", "chrome capsule timetable"],
+  "mid-century-modern": ["MIDCENTURY STUDIO", "walnut slat product rail", "Girard textile swatch wall"],
+  bauhaus: ["BAUHAUS SCHOOL", "workshop method grid", "circle square triangle lab"],
+  futurism: ["ORBITAL VELOCITY", "aerodynamic launch window", "carbon telemetry spine"],
+  "typography-focused": ["TYPE SCALE SPECIMEN", "baseline strips", "font pairing shelf"],
+  "editorial-design": ["LONGFORM EDIT DESK", "pull quote rail", "photo essay stack"],
+  "magazine-style": ["ISSUE BROWSER", "cover wall", "contents grid"],
+  posterism: ["POSTER WALL", "single-message field", "paste-up rail"],
+  "grid-system": ["GRID METHOD", "column ruler", "module matrix"],
+  collage: ["PAPER COLLAGE DESK", "tape layer stack", "cutout tray"],
+  photomontage: ["PHOTO MONTAGE ROOM", "image collision grid", "mask stack"],
+  "experimental-type": ["TYPE MUTATION LAB", "variable glyph field", "distortion rail"],
+  "newspaper-style": ["DAILY EDITION", "masthead bar", "headline stack"],
+  "flat-design": ["FLAT CONTROL BOARD", "solid fill modules", "no-depth buttons"],
+  "material-design": ["MATERIAL STATE SHEET", "elevation stack", "ripple state rail"],
+  neumorphism: ["SOFT EMBOSS PANEL", "inset controls", "double shadow wells"],
+  glassmorphism: ["FROSTED DEPTH DESK", "blurred weather map", "translucent cards"],
+  claymorphism: ["CLAY APP WORKSHOP", "puffy task cards", "soft 3D modules"],
+  "dark-mode-design": ["DARK MODE OPS", "contrast ladder", "focus ring audit"],
+  "saas-style": ["SAAS OPERATIONS HOME", "feature proof grid", "pricing matrix"],
+  "startup-landing-page": ["STARTUP CONVERSION STORY", "hero CTA ladder", "funnel sequence"],
+};
+
 const errors = [];
 function assert(condition, message) {
   if (!condition) errors.push(message);
+}
+
+for (const [category, expectedSlugs] of Object.entries(categorySlugOrder)) {
+  const actualSlugs = designStyles
+    .filter((style) => style.category === category)
+    .map((style) => style.slug);
+  assert(
+    JSON.stringify(actualSlugs) === JSON.stringify(expectedSlugs),
+    `${category} slug order changed: ${actualSlugs.join(", ")}`,
+  );
+}
+
+for (const style of designStyles) {
+  assert(styleSampleFunctions[style.slug], `style ${style.slug} has no required sample function entry`);
+}
+
+for (const slug of Object.keys(styleSampleFunctions)) {
+  assert(
+    designStyles.some((style) => style.slug === slug),
+    `sample function entry references unknown slug: ${slug}`,
+  );
+}
+
+for (const [slug, functionName] of Object.entries(styleSampleFunctions)) {
+  const body = functionBody(functionName);
+  assert(body, `${functionName} function is missing for ${slug}`);
+  assert(
+    rendererSource.includes(`style.slug === "${slug}"`) &&
+      rendererSource.includes(`<${functionName} {...props} />`),
+    `${slug} is not routed to ${functionName}; it may still be using a shared fallback template`,
+  );
+
+  for (const marker of requiredFamilyMarkers[slug] ?? []) {
+    assert(body.includes(marker), `${functionName} missing distinction marker "${marker}"`);
+  }
 }
 
 assert(cyberpunkBody, "CyberpunkCity function is missing");
@@ -65,4 +350,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log("style distinction check passed: cyberpunk/glitch and new-brutalism/postmodernism separated");
+console.log(`style distinction check passed: ${designStyles.length} styles use slug-specific samples`);
