@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import type { StyleReferenceSource } from "@/data/designStyles";
+import type { StyleMoodboard, StyleReferenceSource } from "@/data/designStyles";
+import { BackToStylesLink } from "@/components/design-style/BackToStylesLink";
 import { designStyles, getDesignStyleBySlug } from "@/data/designStyles";
+import { getStyleReferenceEntry } from "@/data/styleReferences";
 import { CopyTextButton } from "@/components/export/CopyTextButton";
 import { ColorPaletteGrid } from "@/components/design-style/ColorPaletteGrid";
 import { DesignStyleDetailSection } from "@/components/design-style/DesignStyleDetailSection";
 import { DesignStyleSampleRenderer } from "@/components/design-style/DesignStyleSampleRenderer";
 import { RelatedDesignStyles } from "@/components/design-style/RelatedDesignStyles";
-import { LocalizedLink } from "@/components/i18n/LocalizedLink";
 import { defaultLocale, type Locale } from "@/lib/i18n";
 import { designStyleForLocale } from "@/lib/localizedContent";
 
@@ -62,6 +64,9 @@ const detailText = {
     pages: "Best pages",
     cautions: "Cautions",
     imagePrompt: "Image prompt",
+    moodboard: "Moodboard",
+    moodboardKeywords: "Direction keywords",
+    moodboardPrompt: "Imagegen prompt",
     referenceGalleries: "Reference galleries",
     references: "References",
     referenceSites: "Reference sites",
@@ -79,6 +84,9 @@ const detailText = {
     pages: "어울리는 페이지",
     cautions: "사용 시 주의점",
     imagePrompt: "이미지 생성 프롬프트",
+    moodboard: "무드보드",
+    moodboardKeywords: "디렉션 키워드",
+    moodboardPrompt: "Imagegen 프롬프트",
     referenceGalleries: "레퍼런스 갤러리",
     references: "참고 레퍼런스",
     referenceSites: "실제 사이트",
@@ -96,14 +104,19 @@ export function DesignStyleDetailPageContent({
 }) {
   const localizedStyle = designStyleForLocale(style, locale);
   const t = detailText[locale];
+  const referenceEntry = getStyleReferenceEntry(style.slug);
+  const referenceSites = referenceEntry?.sites ?? style.research?.referenceSites ?? [];
+  const referenceGalleries = referenceEntry?.galleries ?? style.research?.referenceGalleries ?? [];
+  const hasReferences = referenceSites.length > 0 || referenceGalleries.length > 0;
+  const hasLongDisplayName = localizedStyle.nameKo.length >= 15;
 
   return (
     <main className="min-h-screen bg-background pt-28 text-[var(--specimen-ink)]">
       <div className="mx-auto max-w-[1720px] px-5 py-8 lg:px-8">
-        <LocalizedLink className="raw-label inline-flex items-center gap-2 text-[var(--specimen-signal)] underline-offset-4 hover:underline" href="/styles">
+        <BackToStylesLink className="raw-label inline-flex items-center gap-2 text-[var(--specimen-signal)] underline-offset-4 hover:underline">
           <span className="specimen-bullet" aria-hidden="true" />
           {t.back}
-        </LocalizedLink>
+        </BackToStylesLink>
 
         <header className="specimen-sheet mt-8 grid gap-8 p-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:p-7">
           <div className="min-w-0">
@@ -111,7 +124,14 @@ export function DesignStyleDetailPageContent({
               <span className="specimen-bullet" aria-hidden="true" />
               {localizedStyle.category}
             </p>
-            <h1 className="raw-display mt-4 max-w-full break-words text-[clamp(3.25rem,5vw,5.25rem)] leading-[0.82] text-[var(--specimen-ink)] [overflow-wrap:anywhere]">
+            <h1
+              className={[
+                "raw-display mt-4 max-w-full leading-[0.88] text-[var(--specimen-ink)] [overflow-wrap:break-word] [word-break:normal] sm:leading-[0.82]",
+                hasLongDisplayName
+                  ? "text-[clamp(1.95rem,8vw,4.45rem)] sm:text-[clamp(2.75rem,4.2vw,4.45rem)]"
+                  : "text-[clamp(2.25rem,10vw,5.25rem)] sm:text-[clamp(3.25rem,5vw,5.25rem)]",
+              ].join(" ")}
+            >
               {localizedStyle.nameKo}
             </h1>
             {localizedStyle.nameEn !== localizedStyle.nameKo ? (
@@ -143,6 +163,17 @@ export function DesignStyleDetailPageContent({
           </DesignStyleDetailSection>
         </section>
 
+        {style.moodboard ? (
+          <div className="mt-4">
+            <MoodboardBlock
+              keywordsLabel={t.moodboardKeywords}
+              moodboard={style.moodboard}
+              promptLabel={t.moodboardPrompt}
+              title={t.moodboard}
+            />
+          </div>
+        ) : null}
+
         <section className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           <ListBlock items={localizedStyle.visualFeatures} title={t.visual} />
           <ListBlock items={localizedStyle.typography} title={t.type} />
@@ -167,10 +198,10 @@ export function DesignStyleDetailPageContent({
           </DesignStyleDetailSection>
         </div>
 
-        {style.research ? (
+        {hasReferences ? (
           <section className="mt-4 grid gap-4 lg:grid-cols-2">
-            <ReferenceBlock items={style.research.referenceSites} title={t.referenceSites} />
-            <ReferenceBlock items={style.research.referenceGalleries} title={t.referenceGalleries} />
+            <ReferenceBlock items={referenceSites} title={t.referenceSites} />
+            <ReferenceBlock items={referenceGalleries} title={t.referenceGalleries} />
           </section>
         ) : null}
 
@@ -192,6 +223,63 @@ function ListBlock({ items, title }: { items: string[]; title: string }) {
           </li>
         ))}
       </ul>
+    </DesignStyleDetailSection>
+  );
+}
+
+function MoodboardBlock({
+  keywordsLabel,
+  moodboard,
+  promptLabel,
+  title,
+}: {
+  keywordsLabel: string;
+  moodboard: StyleMoodboard;
+  promptLabel: string;
+  title: string;
+}) {
+  return (
+    <DesignStyleDetailSection title={title}>
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
+        <figure className="min-w-0">
+          <div className="relative overflow-hidden border border-[var(--specimen-ink)] bg-[var(--specimen-ink)]">
+            <Image
+              alt={moodboard.alt}
+              className="aspect-[16/10] h-auto w-full object-cover"
+              height={1000}
+              priority={false}
+              src={moodboard.imageSrc}
+              width={1600}
+            />
+          </div>
+          <figcaption className="mt-3 max-w-3xl text-sm leading-6 text-[rgb(24_22_15_/_0.66)]">
+            {moodboard.caption}
+          </figcaption>
+        </figure>
+
+        <div className="grid content-start gap-4">
+          <div>
+            <p className="raw-label text-[var(--specimen-signal)]">{keywordsLabel}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {moodboard.directionKeywords.map((keyword) => (
+                <span
+                  className="border border-[var(--specimen-line)] bg-[rgb(251_250_246_/_0.72)] px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-[var(--specimen-ink-55)]"
+                  key={keyword}
+                >
+                  {keyword}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="raw-label text-[var(--specimen-signal)]">{promptLabel}</p>
+            <pre className="mt-3 whitespace-pre-wrap border border-[var(--specimen-line)] bg-[rgb(251_250_246_/_0.72)] p-3 font-mono text-[11px] leading-5 text-[rgb(24_22_15_/_0.7)]">
+              {moodboard.prompt}
+            </pre>
+          </div>
+        </div>
+      </div>
     </DesignStyleDetailSection>
   );
 }

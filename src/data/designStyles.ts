@@ -74,6 +74,15 @@ export type StyleResearchBrief = {
   tokenIntent: string;
 };
 
+export type StyleMoodboard = {
+  alt: string;
+  caption: string;
+  directionKeywords: string[];
+  generatedWith: "imagegen";
+  imageSrc: string;
+  prompt: string;
+};
+
 export type DesignStyle = {
   slug: string;
   nameKo: string;
@@ -92,6 +101,7 @@ export type DesignStyle = {
   related: string[];
   palette: DesignStylePalette;
   imagePrompt: string;
+  moodboard?: StyleMoodboard;
   research?: StyleResearchBrief;
   sampleType: DesignStyleSampleType;
   tokens: StyleTokens;
@@ -1124,7 +1134,7 @@ const styleSeedTuples: DesignStyleSeedTuple[] = [
   ["y2k", "Y2K", "Y2K", "레트로 / 빈티지", "크롬, 젤리색, 미래 낙관주의를 섞은 2000년대 초반 감성", ["y2k", "chrome", "bubble"], "cyber-dashboard"],
   ["retro-futurism", "레트로 퓨처리즘", "Retro Futurism", "레트로 / 빈티지", "과거가 상상한 미래를 현대적 화면으로 재해석하는 스타일", ["retro-future", "space", "optimistic"], "retro-commerce"],
   ["mid-century-modern", "미드센추리 모던", "Mid-Century Modern", "레트로 / 빈티지", "기하학과 따뜻한 색으로 세련된 20세기 중반 감각을 만드는 스타일", ["mid-century", "geometric", "warm"], "minimal-editorial"],
-  ["bauhaus", "바우하우스", "Bauhaus", "레트로 / 빈티지", "기본 도형과 원색, 기능주의를 결합한 조형 중심 디자인", ["bauhaus", "geometry", "primary"], "magazine-layout"],
+  ["bauhaus", "바우하우스", "Bauhaus", "레트로 / 빈티지", "circle square triangle lab과 workshop method grid로 기본 도형, 원색, 기능주의 교육 문법을 화면화하는 디자인", ["bauhaus", "geometry", "primary"], "magazine-layout"],
 
   ["futurism", "퓨처리즘", "Futurism", "미래 / 디지털", "속도감과 기술 낙관주의를 시각화하는 미래지향적 스타일", ["future", "speed", "tech"], "cyber-dashboard"],
   ["cyberpunk", "사이버펑크", "Cyberpunk", "미래 / 디지털", "어두운 도시, 네온, 디지털 반항성을 결합한 강한 테크 스타일", ["cyberpunk", "neon", "dark"], "cyber-dashboard"],
@@ -2199,7 +2209,7 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
     visualFeatures: ["둥근 배지와 굵은 색면이 향수를 만듭니다.", "상품 카드나 미디어 카드가 아날로그 포스터처럼 보입니다.", "따뜻한 오렌지, 청록, 크림 조합이 첫인상을 잡습니다."],
     colorPalette: ["크림과 머스터드를 기본으로 둡니다.", "레드 오렌지와 청록을 대표 포인트로 씁니다.", "갈색 텍스트로 인쇄물 같은 온도를 만듭니다."],
     typography: ["둥글고 굵은 제목이 레트로 분위기를 만듭니다.", "짧은 라벨과 배지 텍스트가 잘 어울립니다.", "본문은 현대적인 가독성을 유지해야 합니다."],
-    layoutTraits: ["미디어 플레이어, 컬렉션 카드, 상품 배지가 한 화면에 배치됩니다.", "곡선과 원형 요소를 사용하되 탐색 구조는 단순하게 둡니다.", "모바일에서는 큰 배지와 주요 카드가 먼저 보여야 합니다."],
+    layoutTraits: ["방송형 랜딩, 시대 선택 다이얼, 상품 큐가 한 화면에서 연결됩니다.", "곡선과 원형 요소를 사용하되 탐색 구조는 단순하게 둡니다.", "모바일에서는 큰 방송 배지, 다이얼, 상품 큐가 먼저 보여야 합니다."],
     useCases: ["음악 서비스", "카페/식음료", "굿즈 커머스", "브랜드 캠페인"],
     goodFor: ["친근한 향수를 주고 싶은 브랜드", "문화/음악/식음료 콘텐츠", "과거 감성을 현대적으로 판매하는 커머스", "밝고 쉽게 접근되는 이벤트 페이지"],
     cautions: ["70s, 80s, 90s처럼 특정 시대 스타일과 구분해야 합니다.", "낡은 UI를 그대로 쓰면 사용성이 떨어집니다.", "향수 요소보다 실제 콘텐츠 카드가 중심이어야 합니다."],
@@ -2207,8 +2217,8 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
       "A retro ecommerce website reference image with warm cream and mustard background, rounded badges, teal and red accents, analog media cards, nostalgic product modules, no logo, no watermark",
     research: {
       referenceSites: [
-        { title: "Poolside FM", url: "https://poolside.fm", note: "Retro web reference for nostalgia, playful media interface, warm color, and intentionally analog browsing cues." },
-        { title: "Radiooooo", url: "https://radiooooo.com", note: "Music experience reference for time-travel navigation, nostalgic color, map-like interaction, and retro audio discovery." },
+        { title: "Poolside FM", url: "https://poolside.fm", note: "Retro web reference for nostalgia, playful broadcast media interface, warm color, and intentionally analog browsing cues." },
+        { title: "Radiooooo", url: "https://radiooooo.com", note: "Music experience reference for time-travel decade navigation, nostalgic color, map-like interaction, and retro audio discovery." },
         { title: "Web Design Museum", url: "https://www.webdesignmuseum.org/", note: "Archive reference for historical web aesthetics, period UI patterns, typography, palettes, and layout conventions." },
       ],
       referenceGalleries: [
@@ -2216,10 +2226,10 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Retro Websites", url: "https://www.awwwards.com/websites/retro/", note: "Gallery reference for modern retro web executions, nostalgic imagery, period color, and contemporary interaction polish." },
         { title: "Dribbble - Retro Website", url: "https://dribbble.com/search/retro%20website", note: "UI reference for retro landing pages, badge systems, diner-style cards, and nostalgic product screens." },
       ],
-      representativeTraits: ["Warm nostalgic palette", "Rounded badges", "Analog media cards", "Simple commerce modules", "Friendly retro rhythm"],
+      representativeTraits: ["Warm nostalgic palette", "Broadcast shop header", "Time-travel media dial", "Analog merch queue", "Friendly retro rhythm"],
       avoidTraits: ["Specific 70s/80s/90s overcoding", "Aged vintage paper", "Y2K gloss"],
       tokenIntent:
-        "Use warm retro colors, rounded badges, medium borders, product/media cards, and friendly spacing so the style reads as general retro.",
+        "Use warm retro colors, rounded badges, medium borders, broadcast media cards, decade dials, analog product queues, and friendly spacing so the style reads as general retro.",
     },
   },
   vintage: {
@@ -2229,7 +2239,7 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
     visualFeatures: ["종이색 배경과 잉크 같은 텍스트가 오래된 느낌을 만듭니다.", "헤리티지 배지와 카탈로그 행이 브랜드 신뢰를 줍니다.", "사진 영역은 인쇄물처럼 단정한 프레임 안에 놓입니다."],
     colorPalette: ["베이지, 크림, 브라운을 기본으로 둡니다.", "딥 레드와 올리브 그린을 오래된 인쇄 포인트로 씁니다.", "새하얀 흰색보다 바랜 종이색이 잘 맞습니다."],
     typography: ["세리프 또는 세리프 느낌의 제목이 어울립니다.", "카탈로그 번호, 연도, 원산지 같은 작은 정보가 중요합니다.", "본문은 오래된 안내문처럼 안정적으로 읽혀야 합니다."],
-    layoutTraits: ["상품 카탈로그, 헤리티지 설명, 아카이브 리스트가 잘 맞습니다.", "장식보다 배지와 라벨이 브랜드의 시간감을 만듭니다.", "모바일에서는 카탈로그 표를 카드형으로 바꿔 읽기 쉽게 둡니다."],
+    layoutTraits: ["상품 카탈로그, 수선 티켓, 소재 등록부, 아카이브 리스트가 잘 맞습니다.", "장식보다 배지와 라벨, 표 행 구조가 브랜드의 시간감을 만듭니다.", "모바일에서는 카탈로그 표와 수선 기록을 세로 카드형으로 바꿔 읽기 쉽게 둡니다."],
     useCases: ["헤리티지 브랜드", "빈티지 숍", "아카이브 페이지", "클래식 제품 커머스"],
     goodFor: ["브랜드의 역사와 신뢰를 강조할 때", "제품 원산지와 재료 설명이 중요한 커머스", "아카이브 분위기의 콘텐츠", "새 제품을 오래된 가치로 보이게 할 때"],
     cautions: ["낡은 질감만 넣으면 실제 웹 구조가 약해집니다.", "Retro보다 더 차분하고 인쇄물에 가까워야 합니다.", "색 대비가 낮아져 읽기 어려워지지 않게 합니다."],
@@ -2237,8 +2247,8 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
       "A vintage heritage catalog website reference image with aged paper background, ink brown serif headings, product archive rows, heritage badges, muted red olive accents, no logo, no watermark",
     research: {
       referenceSites: [
-        { title: "Filson", url: "https://www.filson.com", note: "Heritage retail reference for rugged catalog rhythm, aged neutrals, serif accents, and practical vintage product storytelling." },
-        { title: "Levi's", url: "https://www.levi.com", note: "Heritage apparel reference for archival denim tone, classic commerce modules, and vintage Americana brand cues." },
+        { title: "Filson", url: "https://www.filson.com", note: "Heritage retail reference for rugged category navigation, materials such as Tin Cloth and Rugged Twill, repairs/guarantee support, aged neutrals, and practical vintage product storytelling." },
+        { title: "Levi's", url: "https://www.levi.com", note: "Heritage apparel reference for archival denim tone, 501 history, mended product stories, classic commerce modules, and vintage Americana brand cues." },
         { title: "Web Design Museum", url: "https://www.webdesignmuseum.org/", note: "Archive reference for older web layouts, historic graphics, period typography, and document-like page structure." },
       ],
       referenceGalleries: [
@@ -2246,10 +2256,10 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Retro Websites", url: "https://www.awwwards.com/websites/retro/", note: "Closest gallery reference for vintage and retro web executions, heritage color, editorial pacing, and archival atmosphere." },
         { title: "Dribbble - Vintage Website", url: "https://dribbble.com/search/vintage%20website", note: "UI reference for vintage catalogs, badges, serif headings, paper-like cards, and heritage product pages." },
       ],
-      representativeTraits: ["Aged paper", "Heritage catalog", "Muted ink palette", "Archive rows", "Vintage badges"],
+      representativeTraits: ["Aged paper", "Heritage catalog", "Muted ink palette", "Repair ticket ledger", "Patina material register"],
       avoidTraits: ["Bright general retro", "70s psychedelic warmth", "Luxury minimal polish"],
       tokenIntent:
-        "Use aged neutrals, serif display type, paper-like grain, catalog rows, and muted heritage accents so the style reads as vintage.",
+        "Use aged neutrals, serif display type, paper-like grain, heritage catalog rows, repair ticket ledgers, patina material registers, and muted ink accents so the style reads as vintage.",
     },
   },
   "seventies-retro": {
@@ -2259,7 +2269,7 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
     visualFeatures: ["오렌지와 머스터드가 화면의 기본 온도를 만듭니다.", "곡선, 물결, 둥근 배지가 70년대 감각을 드러냅니다.", "상품이나 이벤트 카드가 느긋한 라이프스타일처럼 보입니다."],
     colorPalette: ["머스터드, 오렌지, 크림을 넓게 사용합니다.", "아보카도 그린과 먼지 낀 핑크를 보조색으로 둡니다.", "텍스트는 짙은 브라운으로 인쇄물 같은 안정감을 줍니다."],
     typography: ["둥글고 굵은 제목이 잘 어울립니다.", "라벨과 버튼은 부드러운 알약 형태와 맞춥니다.", "본문은 너무 복고적이지 않게 읽기 쉬운 산세리프를 유지합니다."],
-    layoutTraits: ["히어로, 컬렉션, 이벤트/상품 카드가 느긋하게 이어집니다.", "직선 그리드 안에 곡선 배지를 섞어 시대감을 냅니다.", "모바일에서는 큰 곡선 장식보다 카드 내용을 우선합니다."],
+    layoutTraits: ["히어로, 물결형 캠페인 선반, corduroy/walnut/amber 제품 리듬이 느긋하게 이어집니다.", "직선 그리드 안에 아치형 카드와 곡선 배지를 섞어 시대감을 냅니다.", "모바일에서는 큰 곡선 장식보다 캠페인 제목, 제품 리듬, 소재 칩을 우선합니다."],
     useCases: ["라이프스타일 브랜드", "음악/이벤트", "식음료", "굿즈 커머스"],
     goodFor: ["따뜻하고 즐거운 브랜드 첫인상", "음악/카페/홈 제품 캠페인", "너무 세련된 느낌보다 인간적인 분위기", "계절 프로모션"],
     cautions: ["Retro와 구분하려면 70s 색과 곡선을 분명히 해야 합니다.", "패턴이 과하면 Maximalism으로 흐릅니다.", "곡선 장식이 CTA를 가리지 않게 해야 합니다."],
@@ -2267,8 +2277,8 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
       "A 1970s retro lifestyle website reference image with mustard and orange background, avocado green accents, groovy rounded badges, wavy product cards, warm campaign layout, no logo, no watermark",
     research: {
       referenceSites: [
-        { title: "Houseplant", url: "https://www.houseplant.com", note: "Lifestyle commerce reference for warm 70s color, rounded typography, product character, and relaxed editorial modules." },
-        { title: "Rolling Stone", url: "https://www.rollingstone.com", note: "Media reference for 70s cultural heritage, strong editorial identity, music nostalgia, and bold magazine hierarchy." },
+        { title: "Houseplant", url: "https://www.houseplant.com", note: "Lifestyle commerce reference for warm 70s color, rounded typography, product character, collection navigation, product carousel rhythm, and relaxed story modules." },
+        { title: "Rolling Stone", url: "https://www.rollingstone.com", note: "Media reference for 70s cultural heritage, strong editorial identity, music nostalgia, and bold magazine-style hierarchy." },
         { title: "Web Design Museum", url: "https://www.webdesignmuseum.org/", note: "Archive reference for period web interpretation, old interface rhythm, nostalgic graphics, and historical color cues." },
       ],
       referenceGalleries: [
@@ -2276,10 +2286,10 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Retro Websites", url: "https://www.awwwards.com/websites/retro/", note: "Gallery reference for contemporary retro sites that reinterpret 70s color, soft shapes, and nostalgic campaign structure." },
         { title: "Dribbble - 70s Website Design", url: "https://dribbble.com/search/70s%20website%20design", note: "UI reference for 70s landing pages, groovy badges, wavy modules, and warm product cards." },
       ],
-      representativeTraits: ["Warm orange palette", "Groovy curves", "Rounded promo cards", "Lifestyle nostalgia", "Relaxed campaign rhythm"],
+      representativeTraits: ["Warm orange palette", "Groovy curves", "Wavy campaign shelf", "Corduroy product rhythm", "Relaxed lifestyle commerce"],
       avoidTraits: ["Generic retro badges", "80s neon grid", "Vintage paper archive"],
       tokenIntent:
-        "Use warm 70s colors, rounded shapes, soft badges, normal spacing, and lifestyle commerce cards so the style reads as seventies retro.",
+        "Use warm 70s colors, rounded shapes, soft badges, wavy campaign shelves, corduroy product rhythm, walnut/amber material chips, and relaxed lifestyle commerce cards so the style reads as seventies retro.",
     },
   },
   "eighties-retro": {
@@ -2289,7 +2299,7 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
     visualFeatures: ["짙은 남색 배경 위에 핑크와 사이언 네온이 떠오릅니다.", "그리드, 콘솔, 미디어 패널이 신스웨이브 분위기를 만듭니다.", "버튼과 상태값은 아케이드 UI처럼 명확합니다."],
     colorPalette: ["다크 네이비와 보라빛 배경을 사용합니다.", "마젠타, 사이언, 전기 노랑을 고대비 포인트로 씁니다.", "흰색 텍스트를 과하게 쓰지 않고 핵심 정보에 집중합니다."],
     typography: ["모노스페이스나 각진 산세리프가 잘 맞습니다.", "제목은 크게 쓰되 네온 효과보다 가독성을 우선합니다.", "라벨은 짧고 콘솔처럼 기능적으로 둡니다."],
-    layoutTraits: ["미디어 콘솔, 이벤트 티켓, 게임/음악 패널에 어울립니다.", "어두운 화면 안에서 카드 경계를 빛으로 나눕니다.", "모바일에서는 네온 장식보다 컨트롤 크기를 우선합니다."],
+    layoutTraits: ["미디어 콘솔, VHS mix queue, 아케이드 컨트롤 스트립이 한 화면에서 보입니다.", "어두운 화면 안에서 카드 경계를 네온과 검은 플라스틱 패널로 나눕니다.", "모바일에서는 네온 장식보다 콘솔 라벨, 큐 목록, 컨트롤 크기를 우선합니다."],
     useCases: ["음악 이벤트", "게임 캠페인", "아케이드 바", "레트로 테크 제품"],
     goodFor: ["밤, 음악, 전자적 에너지를 강조할 때", "신스웨이브나 아케이드 코드가 필요한 브랜드", "짧고 강한 이벤트 랜딩", "다크 테마 기반 프로모션"],
     cautions: ["Cyberpunk와 구분하려면 도시/디스토피아보다 80s 미디어 콘솔을 강조합니다.", "네온 대비가 과하면 눈이 피로합니다.", "텍스트가 어두운 배경에서 흐려지지 않게 합니다."],
@@ -2306,20 +2316,20 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Retro Websites", url: "https://www.awwwards.com/websites/retro/", note: "Gallery reference for retro-futurist and 80s-inspired sites, neon motion, dark stages, and nostalgic interaction cues." },
         { title: "Dribbble - Synthwave Website", url: "https://dribbble.com/search/synthwave%20website", note: "UI reference for synthwave dashboards, neon panels, arcade buttons, and dark retro digital layouts." },
       ],
-      representativeTraits: ["Neon synth grid", "Dark media console", "Arcade controls", "Magenta cyan contrast", "Electric event energy"],
+      representativeTraits: ["Neon synth grid", "Dark media console", "VHS mix queue", "Arcade control strip", "Black plastic status bay"],
       avoidTraits: ["General warm retro", "Glitch corruption", "Y2K glossy plastic"],
       tokenIntent:
-        "Use dark backgrounds, neon accents, mono labels, glow shadows, and console panels so the style reads as eighties retro.",
+        "Use a SYNTH CONSOLE header, VHS mix queue, arcade control strip, black plastic status bay, neon grid perspective, mono labels, and magenta/cyan glow shadows so the style reads as eighties retro rather than warm retro, 90s graphic, or Y2K gloss.",
     },
   },
   "nineties-graphic": {
     summary: "90년대 그래픽은 초기 웹, 데스크톱 창, 스티커 같은 그래픽, 강한 패턴을 섞어 활기 있는 디지털 향수를 만듭니다.",
     description:
       "90년대 그래픽은 Y2K보다 덜 광택 있고 더 거칠고 그래픽합니다. Space Jam 1996, Windows 93, Web Design Museum처럼 창 프레임, 굵은 스티커, 패턴 배경, 이미지 중심 네비게이션이 실제 웹 페이지처럼 보여야 합니다.",
-    visualFeatures: ["창 프레임과 스티커형 라벨이 초기 웹 느낌을 만듭니다.", "청록, 보라, 형광 노랑 같은 색이 강하게 충돌합니다.", "패턴과 작은 그래픽 조각이 배경과 카드에 섞입니다."],
+    visualFeatures: ["창 프레임과 스티커형 라벨이 초기 웹 느낌을 만듭니다.", "청록, 보라, 형광 노랑 같은 색이 강하게 충돌합니다.", "하프톤, 체크보드, 찢어진 종이 조각이 실제 링크와 콘텐츠 영역을 만듭니다."],
     colorPalette: ["청록과 노랑을 넓은 배경/표면에 사용합니다.", "보라, 오렌지, 형광 라임을 스티커 포인트로 씁니다.", "검정 선으로 요소를 명확히 묶습니다."],
     typography: ["굵고 압축되지 않은 산세리프가 잘 맞습니다.", "작은 윈도우 타이틀과 버튼 라벨이 시대감을 줍니다.", "본문은 짧고 그래픽 블록 안에 배치합니다."],
-    layoutTraits: ["데스크톱 창, 메뉴 바, 스티커 카드, 링크 그리드가 함께 보입니다.", "비정형적이지만 실제 클릭 가능한 화면처럼 구성합니다.", "모바일에서는 창을 겹치기보다 세로 카드로 정리합니다."],
+    layoutTraits: ["DESKTOP ZINE 창, sticker link grid, halftone scrap wall이 함께 보입니다.", "비정형적이지만 실제 클릭 가능한 초기 웹 캠페인 화면처럼 구성합니다.", "모바일에서는 창을 겹치기보다 핵심 포스터, 링크 격자, 방문자 푸터 순서로 정리합니다."],
     useCases: ["문화 캠페인", "음악/패션 드롭", "청소년 브랜드", "레트로 디지털 이벤트"],
     goodFor: ["밝고 거친 디지털 향수", "초기 웹/데스크톱 감성을 쓰는 브랜드", "스티커와 패턴 자산이 많은 캠페인", "Y2K보다 더 그래픽하고 덜 광택 있는 분위기"],
     cautions: ["Space Jam식 초기 웹을 그대로 복제하면 사용성이 떨어집니다.", "Y2K와 구분하려면 크롬 광택보다 창/스티커/패턴을 강조합니다.", "패턴이 텍스트를 방해하지 않게 합니다."],
@@ -2336,20 +2346,20 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Retro Websites", url: "https://www.awwwards.com/websites/retro/", note: "Gallery reference for modern retro sites that reinterpret 90s web energy, collage density, and graphic nostalgia." },
         { title: "Dribbble - 90s Website Design", url: "https://dribbble.com/search/90s%20website%20design", note: "UI reference for 90s landing pages, desktop windows, bold stickers, and high-energy graphic modules." },
       ],
-      representativeTraits: ["Desktop window cards", "Sticker graphics", "Loud pattern", "Early web navigation", "Teal-purple energy"],
+      representativeTraits: ["DESKTOP ZINE window", "Sticker link grid", "Halftone scrap wall", "Loud checker pattern", "Early web campaign navigation"],
       avoidTraits: ["Y2K chrome gloss", "80s neon synth grid", "Vintage paper catalog"],
       tokenIntent:
-        "Use loud 90s colors, thick window borders, sticker labels, compact cards, and patterned blocks so the style reads as nineties graphic.",
+        "Use a DESKTOP ZINE browser frame, sticker link grid, halftone scrap wall, torn-paper shapes, checkerboard texture, visitor counter, and saturated teal/violet/orange/acid accents so the style reads as nineties graphic rather than 80s neon or Y2K chrome.",
     },
   },
   y2k: {
     summary: "Y2K는 크롬 광택, 젤리 같은 색, 버블 패널, 초기 인터넷의 미래 낙관주의를 결합한 2000년대 초반 웹 스타일입니다.",
     description:
       "Y2K는 90년대 그래픽보다 더 매끈하고 미래적인 광택이 중요합니다. Web Design Museum의 Y2K 아카이브, Blingee, Windows 93처럼 반짝이는 버튼, 둥근 포털 카드, 파스텔 사이버 색, 장식적 위젯이 실제 웹 포털로 구성되어야 합니다.",
-    visualFeatures: ["버블형 패널과 글로시한 표면이 핵심 신호입니다.", "파스텔 블루, 핑크, 라임이 밝은 미래감을 만듭니다.", "포털, 프로필, 위젯 같은 작은 모듈이 화면을 채웁니다."],
+    visualFeatures: ["버블형 패널과 글로시한 표면이 핵심 신호입니다.", "파스텔 블루, 핑크, 라임이 밝은 미래감을 만듭니다.", "포털, 프로필, 위젯, 게스트북 같은 작은 모듈이 화면을 채웁니다."],
     colorPalette: ["아이스 블루와 흰색을 밝은 기본으로 둡니다.", "핑크와 라임을 장식/상태 포인트로 씁니다.", "테두리는 회청색으로 살짝 기술적인 느낌을 줍니다."],
     typography: ["굵고 둥근 제목이 잘 어울립니다.", "작은 위젯 라벨과 버튼 텍스트는 또렷해야 합니다.", "긴 본문보다 짧은 포털 메뉴와 상태 텍스트가 효과적입니다."],
-    layoutTraits: ["포털 대시보드, 프로필 카드, 위젯, 배너가 함께 보입니다.", "카드는 둥글고 반짝이는 표면처럼 처리합니다.", "모바일에서는 위젯을 2열 이하로 줄여 가독성을 지킵니다."],
+    layoutTraits: ["GLOSS PORTAL 헤더, bubble widget stack, sparkle guestbook rail이 함께 보입니다.", "카드는 둥글고 반짝이는 젤리/캡슐 표면처럼 처리합니다.", "모바일에서는 포털 히어로, 위젯 스택, 젤리 캡슐 도크 순서가 명확해야 합니다."],
     useCases: ["음악/패션 캠페인", "커뮤니티 포털", "레트로 테크 브랜드", "Z세대 이벤트"],
     goodFor: ["초기 인터넷과 미래 낙관주의를 함께 보여줄 때", "밝고 장식적인 디지털 브랜드", "작은 위젯이 많은 랜딩", "Y2K 패션/음악/콘텐츠 캠페인"],
     cautions: ["90s Graphic과 구분하려면 스티커보다 광택/버블/포털을 강조합니다.", "반짝임이 과하면 주요 정보가 묻힙니다.", "낮은 대비의 파스텔 텍스트는 피해야 합니다."],
@@ -2366,20 +2376,20 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Y2K Websites", url: "https://www.awwwards.com/websites/y2k/", note: "Gallery reference for contemporary Y2K web executions, glossy gradients, nostalgic interfaces, and cyber-pop visual systems." },
         { title: "Dribbble - Y2K Website", url: "https://dribbble.com/search/y2k%20website", note: "UI reference for Y2K landing pages, shiny cards, bubble navigation, chrome-like widgets, and playful web portals." },
       ],
-      representativeTraits: ["Glossy bubble panels", "Early web portal", "Pastel cyber color", "Chrome buttons", "Widget density"],
-      avoidTraits: ["90s sticker windows", "80s neon darkness", "General retro warmth"],
+      representativeTraits: ["GLOSS PORTAL header", "Bubble widget stack", "Sparkle guestbook rail", "Jelly capsule dock", "Pastel cyber gloss"],
+      avoidTraits: ["90s sticker windows", "80s neon darkness", "Chromecore hardware stage"],
       tokenIntent:
-        "Use glossy rounded panels, pastel cyber accents, gradient effect, medium spacing, and widget-like portal cards so the style reads as Y2K.",
+        "Use a GLOSS PORTAL header, bubble widget stack, sparkle guestbook rail, jelly capsule dock, translucent gloss, pastel cyber accents, glitter-profile cues, and rounded early-web portal cards so the style reads as Y2K rather than 90s Graphic or Chromecore.",
     },
   },
   "retro-futurism": {
     summary: "레트로 퓨처리즘은 과거가 상상한 미래를 Space Age 여행 광고, 원자/별burst 모티프, 낙관적인 기술 색감으로 재구성하는 스타일입니다.",
     description:
       "레트로 퓨처리즘은 미래 콘솔을 어둡게 그리는 것보다, 1950-60년대 사람들이 꿈꾼 밝은 미래를 현대 웹으로 옮기는 쪽에 가깝습니다. NASA JPL의 Visions of the Future, Googie/Atomic Age, Paleofuture 아카이브처럼 행성 여행 포스터, 부메랑 형태, 원자 궤도, 별burst, 티켓형 일정표가 한 화면에서 실제 랜딩 페이지처럼 작동해야 합니다.",
-    visualFeatures: ["Space Age 여행 포스터처럼 큰 목적지 패널과 짧은 광고 문구가 중심이 됩니다.", "별burst, 원자 궤도, 부메랑, 플라잉소서 같은 미드센추리 미래 모티프가 식별자가 됩니다.", "코랄, 터쿼이즈, 크림, 골드, 네이비가 낙관적인 과거 미래 팔레트를 만듭니다."],
+    visualFeatures: ["FLIGHT DECK처럼 Space Age 여행 포스터와 실제 예약 화면이 결합된 구조가 중심이 됩니다.", "destination poster rail, 별burst, 원자 궤도, 부메랑, 플라잉소서 같은 과거 미래 모티프가 식별자가 됩니다.", "chrome capsule timetable과 코랄, 터쿼이즈, 크림, 골드, 네이비가 낙관적인 여행 웹 팔레트를 만듭니다."],
     colorPalette: ["크림과 옅은 골드를 밝은 포스터 배경처럼 사용합니다.", "코랄 오렌지와 터쿼이즈를 목적지, CTA, 궤도 표시색으로 씁니다.", "네이비는 밤하늘보다 인쇄 잉크와 정보 구조를 잡는 색으로 제한합니다."],
     typography: ["굵고 둥근 미드센추리 산세리프 느낌의 제목이 잘 맞습니다.", "시간표와 좌석 정보는 모노스페이스보다 여행 티켓 라벨처럼 짧고 단정하게 둡니다.", "큰 포스터 헤드라인과 작은 일정표 라벨의 대비가 중요합니다."],
-    layoutTraits: ["행성 여행 랜딩, 엑스포/전시 페이지, 미래형 제품 티저에 어울립니다.", "상단은 여행 광고, 하단/측면은 실제 예약 카드와 목적지 리스트로 구성합니다.", "모바일에서는 포스터, 목적지 카드, 출발 CTA 순서가 명확해야 합니다."],
+    layoutTraits: ["행성 여행 랜딩, 엑스포/전시 페이지, 미래형 제품 티저에 어울립니다.", "상단은 travel bureau header와 FLIGHT DECK 포스터, 측면은 destination poster rail과 chrome capsule timetable로 구성합니다.", "모바일에서는 포스터, 목적지 카드, 출발 CTA 순서가 명확해야 합니다."],
     useCases: ["테크 캠페인", "전시 랜딩", "게임/엔터테인먼트", "미래형 제품 티저"],
     goodFor: ["미래적이지만 따뜻하고 낙관적인 브랜드", "우주/교통/기술 은유가 필요한 랜딩", "아카이브와 현대 서비스를 연결하는 프로젝트", "레트로와 미래를 함께 보여줘야 하는 캠페인"],
     cautions: ["Cyberpunk처럼 어둡고 디스토피아적으로 가면 방향이 달라집니다.", "일반 Retro와 구분하려면 원자/우주/미래 교통 모티프가 보여야 합니다.", "장식적 행성만 있으면 실제 웹 화면처럼 보이지 않으므로 예약/목적지/CTA 모듈이 필요합니다."],
@@ -2397,10 +2407,10 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Retro Websites", url: "https://www.awwwards.com/websites/retro/", note: "Closest gallery reference for retro-futurist web execution, nostalgic future visuals, playful motion, and modern polish." },
         { title: "Dribbble - Retro Futurism Website", url: "https://dribbble.com/search/retro%20futurism%20website", note: "UI reference for space-age landing pages, rocket dashboards, rounded control panels, and future-nostalgia product screens." },
       ],
-      representativeTraits: ["Space Age travel poster", "Atomic starburst motifs", "Boomerang geometry", "Optimistic coral-turquoise palette", "Ticket-style destination CTA"],
+      representativeTraits: ["FLIGHT DECK poster landing", "Destination poster rail", "Chrome capsule timetable", "Atomic starburst motifs", "Optimistic coral-turquoise palette"],
       avoidTraits: ["Cyberpunk dystopia", "Generic retro badges", "Y2K plastic gloss"],
       tokenIntent:
-        "Use bright cream poster surfaces, coral and turquoise accents, navy ink, rounded ticket cards, atomic motifs, boomerang geometry, and travel-bureau modules so the style reads as retro futurism instead of dark sci-fi.",
+        "Use a FLIGHT DECK poster landing, destination poster rail, chrome capsule timetable, bright cream poster surfaces, coral and turquoise accents, navy ink, atomic motifs, boomerang geometry, and travel-bureau modules so the style reads as retro futurism instead of dark sci-fi, Y2K gloss, or live futurist telemetry.",
     },
   },
   "mid-century-modern": {
@@ -2408,10 +2418,10 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
     description:
       "미드센추리 모던은 막연한 빈티지 감성이 아니라 실제 가구와 인테리어 물성에서 출발해야 합니다. Eames Lounge Chair의 성형 합판과 가죽 쿠션, Nelson Platform Bench의 직선 목재 슬랫, Noguchi Coffee Table의 유기적인 유리와 목재 다리, Alexander Girard의 색과 패턴처럼 기능적인 구조와 따뜻한 장식이 함께 보여야 웹 화면에서도 스타일이 분명해집니다.",
     visualFeatures: [
-      "성형 합판처럼 둥글게 휜 목재 면과 어두운 쿠션이 대표 신호가 됩니다.",
-      "벤치나 선반처럼 반복되는 얇은 목재 슬랫은 수평 리듬을 만듭니다.",
-      "유리 테이블, 가느다란 금속 다리, 원형 시계 모티프가 화면을 가볍게 합니다.",
-      "직물 패턴은 큰 배경보다 작은 패널이나 스와치로 제한할 때 실제 인테리어처럼 보입니다.",
+      "MIDCENTURY STUDIO처럼 성형 합판 라운지 체어와 생활감 있는 쇼룸 이미지가 중심 신호가 됩니다.",
+      "walnut slat product rail은 Nelson bench처럼 반복되는 목재 슬랫과 제품 레일의 수평 리듬을 만듭니다.",
+      "Noguchi식 유리 테이블, 가느다란 금속 다리, 원형 시계 모티프가 화면을 가볍게 합니다.",
+      "Girard textile swatch wall은 전체 배경이 아니라 작은 직물 샘플과 색면으로 제한할 때 실제 인테리어처럼 보입니다.",
     ],
     colorPalette: [
       "크림과 오래된 종이색을 배경으로 두고 화면을 따뜻하게 시작합니다.",
@@ -2426,8 +2436,8 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
     ],
     layoutTraits: [
       "큰 가구 실루엣 하나와 작은 오브젝트 카탈로그를 나란히 배치하면 실제 쇼룸 같은 구조가 됩니다.",
-      "수평 선반, 벤치, 하단 레일을 활용해 화면 아래쪽에 안정감을 줍니다.",
-      "패턴은 전체 배경이 아니라 작은 직물 샘플, 카드, 배지로 써야 과해지지 않습니다.",
+      "walnut slat product rail, 벤치, 하단 레일을 활용해 화면 아래쪽에 안정감을 줍니다.",
+      "Girard textile swatch wall은 전체 배경이 아니라 작은 직물 샘플, 카드, 배지로 써야 과해지지 않습니다.",
       "모바일에서는 가구 실루엣, 핵심 라벨, 컬렉션 항목 순서로 단순화합니다.",
     ],
     useCases: ["가구 쇼룸", "라이프스타일 브랜드", "인테리어 포트폴리오", "레트로 제품 랜딩"],
@@ -2451,10 +2461,10 @@ const styleContentOverrides: Record<string, StyleContentOverride> = {
         { title: "Awwwards - Retro Websites", url: "https://www.awwwards.com/websites/retro/", note: "Gallery reference for contemporary retro web execution, motion restraint, product staging, and polished nostalgic layouts." },
         { title: "Dribbble - Mid-Century Modern Website Design", url: "https://dribbble.com/search/Mid-Century%20Modern%20website%20design", note: "UI reference for mid-century landing pages, furniture cards, warm palettes, geometric motifs, and compact catalog modules." },
       ],
-      representativeTraits: ["Molded plywood shells", "Walnut slat rhythm", "Organic glass table", "Girard-like textile color", "Catalog-like product labels"],
+      representativeTraits: ["MIDCENTURY STUDIO showroom", "Walnut slat product rail", "Noguchi glass table index", "Girard textile swatch wall", "Catalog-like product labels"],
       avoidTraits: ["General sepia vintage", "70s groovy overload", "Bauhaus primary-color poster"],
       tokenIntent:
-        "Use cream paper surfaces, espresso text, walnut primary color, tomato orange, deep teal, mustard accents, thin borders, restrained radius, no heavy shadows, and grain so the style reads as real mid-century furniture and textile design.",
+        "Use a MIDCENTURY STUDIO showroom, walnut slat product rail, Noguchi glass table index, Girard textile swatch wall, cream paper surfaces, espresso text, walnut primary color, tomato orange, deep teal, mustard accents, thin borders, restrained radius, no heavy shadows, and grain so the style reads as real mid-century furniture and textile design.",
     },
   },
 };
@@ -3194,6 +3204,801 @@ const styleTokenOverrides: Record<string, DeepPartial<Omit<StyleTokens, "color">
 
 export const tunedStyleTokenSlugs = Object.keys(styleTokenOverrides).sort();
 
+const styleMoodboards: Partial<Record<string, StyleMoodboard>> = {
+  minimalism: {
+    alt: "Minimalism moodboard with warm white research prints, architectural photo crops, paper swatches, neutral color chips, tape, cotton fabric, and stone.",
+    caption: "Quiet reduction: use real research artifacts, generous blank space, tactile neutral materials, and precise crop rhythm so the page feels intentional instead of empty.",
+    directionKeywords: ["real research board", "large negative space", "thin-rule hierarchy", "neutral tactile materials", "quiet architectural crops"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/minimalism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Minimalism in web design. The board should look like a real designer's research board photographed from above on a warm white studio table. Include sparse printed website layout references with large blank space, thin-rule editorial grids, off-white paper samples, matte packaging blanks, neutral color chips, one small natural stone object, a folded cotton fabric swatch, and cropped architectural or product photography fragments. Use tape corners, slight paper curl, varied paper thickness, pin marks, soft shadows, subtle dust, and uneven crop edges. Palette: warm white, ivory, stone, greige, graphite, muted olive. No readable text, no logos, no brand names, no fake interface text, no floating cards, no decorative clutter, no sterile AI mockup look.",
+  },
+  modernism: {
+    alt: "Modernism moodboard with taped grid studies, modernist architecture crops, primary color cards, metal samples, ruler, pen, and industrial product fragments.",
+    caption: "Functional geometry: combine rational printed layouts, primary accent blocks, modernist architecture, and industrial materials so the style reads as system-led and useful.",
+    directionKeywords: ["real research board", "functional geometry", "primary color accents", "modernist architecture", "industrial material logic"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/modernism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Modernism in web design. The board should look like a real designer's research board photographed from above on an ivory studio table. Include printed rational grid-based website layouts, cropped modernist architecture photographs, industrial product photography fragments, modular paper blocks, primary-color swatches, black rule-line studies, thin alignment strips, metal and glass material samples, and clean composition studies. Use tape corners, slight paper curl, pin marks, varied paper thickness, subtle dust, and measured spacing. Palette: ivory, black, neutral grey, primary red, cobalt blue, warm yellow, brushed steel. No readable text, no logos, no brand names, no fake labels, no floating cards, no decorative collage chaos, no retro poster typography.",
+  },
+  "swiss-design": {
+    alt: "Swiss Design moodboard with taped modular print grids, red signal bars, grayscale architecture crops, ruler edges, crop marks, and baseline studies.",
+    caption: "Typographic order without decoration: let real print proofs, grid overlays, red signal marks, and measured spacing carry the visual language.",
+    directionKeywords: ["real print proofs", "baseline structure", "modular columns", "red signal bars", "institutional clarity"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/swiss-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Swiss Design in web design. The board should look like a real designer's print layout research board photographed from above on a bright white archive table. Include printed modular website grids, baseline grid overlays on translucent paper, strict column studies, grayscale architecture and museum-page crop references, red signal bars, abstract black typographic blocks with no readable text, thin rule systems, ruler edges, crop marks, paper strips, and neutral print samples. Use tape, pin marks, subtle paper curl, slight hand placement misalignment, dust, and varied paper thickness. Palette: white, black, light grey, medium grey, signal red, muted photo grey. No readable text, no logos, no brand names, no fake labels, no playful decoration, no messy collage.",
+  },
+  "international-style": {
+    alt: "International Style moodboard with universal information panels, blue wayfinding modules, airport architecture crops, map-like grids, acrylic, glass, and steel samples.",
+    caption: "Universal clarity: standardize the page with neutral information modules, transport-blue hierarchy, objective spacing, and durable public-system materials.",
+    directionKeywords: ["real standards board", "universal information system", "transport blue", "standardized modules", "public-system materials"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/international-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for International Style in web design. The board should look like a real designer's standards manual review board photographed from above on a cool grey-white design office table. Include printed universal information system references, neutral website layout modules, wayfinding-style panels without readable text, abstract icon placeholder cards, transport-blue strips, black and grey information bars, stainless steel swatches, frosted acrylic samples, glass edge samples, adhesive tabs, map-like grid fragments without labels, and standardized component spacing studies. Use tape corners, pin holes, paper curl, subtle dust, varied paper thickness, and soft realistic shadows. Palette: white, pale grey, charcoal, transport blue, steel, frosted acrylic, small amber accent. No readable text, no logos, no brand names, no national flags, no decorative motifs.",
+  },
+  scandinavian: {
+    alt: "Scandinavian moodboard with birch wood, linen, wool, ceramic, Nordic interior photo crops, product cards, soft blue and sage chips, and taped paper modules.",
+    caption: "Nordic practicality: pair useful product-commerce references with light wood, textiles, ceramics, and soft functional color so the interface feels livable.",
+    directionKeywords: ["real lifestyle board", "bright Nordic utility", "light wood warmth", "home product commerce", "soft functional color"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/scandinavian-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Scandinavian style in web design. The board should look like a real designer's research board photographed from above on a pale birch wood studio table, with soft northern daylight and light linen at one edge. Include printed home-product website references, cropped Nordic interior photographs, simple ecommerce product card studies without text, light wood samples, wool and linen fabric swatches, ceramic object, pale blue and sage color chips, rounded paper modules, soft utility control studies, and natural lifestyle image fragments. Use tape corners, paper curl, pin marks, varied paper thickness, textile fibers, soft shadows, and subtle dust. Palette: warm white, birch wood, oatmeal, pale blue, sage green, soft grey, charcoal accent. No readable text, no logos, no brand names, no luxury glamour, no childish stickers, no sterile UI-only composition.",
+  },
+  japandi: {
+    alt: "Japandi moodboard with low horizontal web references, shoji-like paper panels, ceramic bowls, ash wood, woven textiles, stone chips, and black ink accents.",
+    caption: "Quiet utility: combine low geometry, tactile natural materials, paper-like transparency, and muted contrast so the interface feels calm and grounded.",
+    directionKeywords: ["real tactile board", "low horizontal rhythm", "translucent paper panels", "ash wood and ceramic", "muted quiet utility"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/japandi-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Japandi in web design. The board should look like a real designer's research board photographed from above on a low warm-grey plaster studio table. Include printed low-horizontal website layout references, shoji-inspired translucent paper panels, muted interior photography crops, ash wood samples, hand-thrown ceramic object, woven textile swatches, stone grey color chips, soft beige paper strips, small black ink accent cards, quiet product detail studies without text, and tactile material fragments. Use tape corners, pin marks, paper curl, uneven crop edges, varied paper thickness, subtle dust, and natural shadows. Palette: warm grey, rice paper, ash wood, clay beige, charcoal, muted moss, stone. No readable text, no logos, no brand names, no overt Japanese motifs, no bright Scandinavian blue, no decorative clutter, no sterile UI-only composition.",
+  },
+  "warm-minimal": {
+    alt: "Warm Minimal moodboard with cream landing page references, beige packaging blanks, terracotta chips, brass samples, clay objects, warm product crops, and taped papers.",
+    caption: "Warm restraint: use cream space, soft product hierarchy, tactile neutral materials, and small terracotta or brass accents to feel premium but approachable.",
+    directionKeywords: ["real brand board", "warm neutral field", "soft product hierarchy", "terracotta brass accents", "approachable premium"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/warm-minimal-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Warm Minimal in web design. The board should look like a real designer's research board photographed from above on a cream plaster studio table. Include printed premium brand landing page references, soft product hierarchy layout crops, warm neutral content modules without text, cream paper samples, beige packaging blanks, terracotta color chips, brushed brass detail samples, clay object, soft editorial product photography fragments, warm plaster texture swatches, and rounded paper forms. Use tape corners, pin marks, subtle paper curl, uneven crop edges, varied paper thickness, soft dust, and tactile material overlap. Palette: cream, oat, sand, warm grey, terracotta, muted brass, soft charcoal. No readable text, no logos, no brand names, no old-money styling, no rustic craft clutter, no pink pastel cuteness, no sterile UI-only composition.",
+  },
+  "soft-minimal": {
+    alt: "Soft Minimal moodboard with low-contrast web references, rounded paper cards, pill controls, frosted vellum, acetate, soft textiles, and pale grey-blue chips.",
+    caption: "Low-tension minimalism: reduce contrast, round the rhythm, and combine frosted surfaces with soft material samples so the interface feels calm and reassuring.",
+    directionKeywords: ["real soft UI board", "low contrast panels", "rounded gentle rhythm", "frosted vellum layers", "reassuring surfaces"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/soft-minimal-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Soft Minimal in web design. The board should look like a real designer's research board photographed from above on a pale mist-grey studio surface. Include printed low-contrast website references, rounded content card studies without text, pill-shaped control studies, frosted vellum paper layers, translucent acetate samples, pale blue-grey product blanks, soft lavender-grey color chips, gentle shadow tests on paper, matte fabric swatches, rounded paper cutouts, and calm editorial photography fragments. Use tape corners, pin marks, slight paper curl, subtle dust, varied paper thickness, and soft physical overlap. Palette: mist grey, soft white, cloud blue, pale lavender grey, muted taupe, graphite, translucent white. No readable text, no logos, no brand names, no candy palette, no childish sticker motifs, no strong black outlines, no warm terracotta branding.",
+  },
+  "high-end-minimal": {
+    alt: "High-End Minimal moodboard with luxury product page references, black and ivory packaging, marble, black stone, brushed metal, glass, satin, and exact crop marks.",
+    caption: "Luxury by subtraction: rely on gallery spacing, premium surfaces, disciplined black-ivory contrast, and precise product crop rhythm instead of decoration.",
+    directionKeywords: ["real luxury board", "gallery spacing", "premium material restraint", "black ivory contrast", "quiet commerce"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/high-end-minimal-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for High-End Minimal in web design. The board should look like a real designer's research board photographed from above on an off-white gallery table. Include printed luxury product detail page references without text, large whitespace layout crops, black and ivory packaging blanks, black stone and pale marble samples, brushed champagne metal edge pieces, clear glass object, satin textile crop, exact crop marks on paper, monochrome color chips, fine paper samples, and restrained product photography fragments. Use precise tape placement, pin marks, slight paper curl, subtle dust, varied paper thickness, soft shadows, and disciplined spacing. Palette: ivory, black, cool white, stone grey, champagne metal, deep charcoal, pale marble. No readable text, no logos, no brand names, no ornate luxury decoration, no gold overload, no lifestyle scene, no fashion model, no sterile UI-only composition.",
+  },
+  brutalism: {
+    alt: "Brutalism moodboard with raw website index proofs, default controls, table rows, concrete, photocopied paper, link-blue strips, and red warning tabs.",
+    caption: "Raw web evidence: expose default controls, document rows, concrete texture, photocopied proofs, and stark link signals before any decoration.",
+    directionKeywords: ["real raw web board", "default controls", "photocopied proof texture", "link blue warning red", "concrete monochrome"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/brutalism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Brutalism in web design. The board should look like a real designer's research board photographed from above on a raw concrete studio table. Include printed raw website index references, stark black-and-white layout proofs, default form control studies, table row fragments, underlined link-blue strips, red warning tabs, photocopied paper blocks, exposed grid notes without readable text, rough masking tape, matte black card stock, grey board samples, metal ruler edge, and rough folded paper. Use hard physical shadows, tape corners, pin marks, scuffed paper edges, slight paper curl, varied paper thickness, subtle dust, and imperfect crop alignment. Palette: concrete grey, white, black, photocopy grey, link blue, warning red, dull metal. No readable text, no brand names, no logos, no watermarks, no fake UI gibberish, no cute decoration, no glossy app mockups, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "new-brutalism": {
+    alt: "New Brutalism moodboard with chunky product UI proofs, thick black outlines, flat color panels, hard offset shadows, sliders, toggles, and paper mockups.",
+    caption: "Chunky product directness: make the UI feel physical with thick outlines, flat color cards, hard shadows, and obvious control shapes.",
+    directionKeywords: ["real product UI board", "thick black outlines", "flat color panels", "hard offset shadows", "oversized controls"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/new-brutalism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for New Brutalism in web design. The board should look like a real designer's research board photographed from above on a white laminate studio table. Include printed chunky product UI references, thick black outline card studies, flat color paper panels, hard offset shadow tests made from layered paper, oversized toggle and slider studies, abstract pricing-card layout blocks with no currency symbols, large form field studies with empty rectangles only, bright sticky color chips, matte plastic samples, black tape, fluorescent acrylic pieces, and rough paper mockups. Use tape corners, pin marks, slight paper curl, varied paper thickness, hard crisp shadows, small alignment imperfections, and visible cut edges. Palette: white, black, butter yellow, acid green, hot pink, electric blue, flat red, matte plastic. Absolutely no readable text, no letters, no numbers, no currency symbols, no icons, no brand names, no logos, no watermarks, no fake UI gibberish, no glossy glassmorphism, no soft gradients, no delicate luxury styling, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "anti-design": {
+    alt: "Anti-Design moodboard with off-grid portfolio proofs, awkward crops, torn paper, acetate overlays, neon marker gestures, rough tape, and clashing chips.",
+    caption: "Intentional disorder: break alignment with torn scraps, awkward crops, acetate, and neon gestures while keeping the board curated enough to guide a page.",
+    directionKeywords: ["real experimental board", "off-grid portfolio shell", "awkward crop logic", "neon marker gestures", "torn acetate layers"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/anti-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Anti-Design in web design. The board should look like a real designer's experimental research board photographed from above on a white studio table. Include printed off-grid portfolio page references without readable text, awkwardly cropped hero panels, intentionally misaligned card layouts, torn paper scraps, acetate overlays, neon marker gesture swatches, rough tape, photocopied image fragments, clashing color chips, irregular black paper shapes, skewed layout proofs, and small registration marks drawn as abstract symbols only. The board should feel intentionally wrong but still curated and useful for a design team. Use tape corners, pin marks, folded paper, ripped edges, uneven crop edges, varied paper thickness, subtle dust, and real shadows. Palette: white, black, acidic lime, neon pink, cobalt, dirty grey, off-red. Absolutely no readable text, no letters, no numbers, no brand names, no logos, no watermarks, no fake UI gibberish, no pretty balanced grid, no decorative poster filler, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  maximalism: {
+    alt: "Maximalism moodboard with dense campaign proofs, product-card grids, jewel color chips, saturated textile swatches, ornate badge shapes, ribbons, and glossy samples.",
+    caption: "Abundant but directed: stack pattern, product cards, color, ribbon, and ornament around a clear campaign-commerce rhythm.",
+    directionKeywords: ["real campaign board", "dense commerce rhythm", "jewel color layering", "textile pattern density", "ornamental hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/maximalism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Maximalism in web design. The board should look like a real designer's research board photographed from above on a charcoal studio table. Make it feel like a maximalist web campaign and ecommerce reference board, not a luxury decor board. Include printed dense website layout references without readable text, layered product-card studies, category grid fragments, campaign tile arrangements, saturated textile swatches, bold floral and geometric pattern samples, jewel-tone color chips, glossy lacquer color samples, ribbon strips, ornate abstract badge silhouettes with no letters, sticker-like paper shapes, decorative border studies, packaging color blanks, and abundant layered paper cutouts. The composition should feel abundant but curated, with a clear commerce rhythm and hierarchy. Use tape corners, pin marks, folded paper, slight paper curl, varied paper thickness, fabric texture, glossy reflections, subtle dust, and real shadows. Palette: emerald, ruby, cobalt, deep violet, saffron, ivory, black, small metallic accent. Absolutely no readable text, no letters, no numbers, no brand names, no logos, no watermarks, no fake UI gibberish, no human faces, no fashion model, no old luxury interior, no classical palace imagery, no plain minimal composition, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "glitch-art": {
+    alt: "Glitch Art moodboard with diagnostic interface proofs, corrupted image cells, RGB acetate layers, scanline strips, macroblocks, and anti-static material.",
+    caption: "System damage, not neon scenery: build the interface from compression artifacts, channel drift, diagnostic panels, and physical signal-loss samples.",
+    directionKeywords: ["real media damage board", "RGB channel drift", "compression macroblocks", "scanline acetate", "dark diagnostic panels"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/glitch-art-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Glitch Art in web design. The board should look like a real designer's media-damage research board photographed from above on a dark graphite studio table. Include printed diagnostic interface references without readable text, corrupted image-cell studies, RGB channel-offset transparent film layers, compression macroblock samples, scanline acetate strips, waveform-like abstract blocks with no labels, dark UI panel fragments, distorted photo crops, signal-loss color chips, translucent red green blue overlays, matte black paper, and small electronic material fragments such as cable sheathing or anti-static plastic. Use tape corners, pin marks, paper curl, acetate reflections, dust, varied paper thickness, physical overlap, and real shadows. Palette: black, graphite, cyan, magenta, acid green, deep blue, signal red, static grey. Absolutely no readable text, no letters, no numbers, no brand names, no logos, no watermarks, no cyberpunk city, no neon skyline, no fake data labels, no floating holograms, no decorative poster filler. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  deconstructivism: {
+    alt: "Deconstructivism moodboard with fractured web proofs, angular architecture crops, tracing-paper construction lines, concrete samples, blue blocks, and red markers.",
+    caption: "Controlled instability: fracture the grid with architectural crops, skewed modules, tracing overlays, and red-blue construction tension.",
+    directionKeywords: ["real architectural board", "fractured layout proofs", "displaced structural grid", "tracing-paper overlays", "red-blue construction tension"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/deconstructivism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Deconstructivism in web design. The board should look like a real designer's architectural research board photographed from above on a pale concrete studio table. Include printed fractured website layout references without readable text, displaced structural grid studies, angular paper fragments, exposed construction-line overlays on tracing paper, concrete texture samples, blueprint-colored blocks with no labels, red collision marker strips, cut architectural photo crops, skewed navigation module studies, torn vellum, graphite pencil marks, steel ruler edge, and pinned geometry scraps. The board should feel engineered and unstable, not random. Use tape corners, pin marks, paper curl, torn edges, varied paper thickness, translucent overlay shadows, dust, and real material texture. Palette: pale concrete, white, black, blueprint blue, red marker, graphite, steel grey. Absolutely no readable text, no letters, no numbers, no brand names, no logos, no watermarks, no fake UI gibberish, no chaotic craft collage, no decorative poster filler, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "avant-garde": {
+    alt: "Avant-Garde moodboard with experimental web proofs, constructivist red and black planes, photomontage fragments, diagonal studies, and program modules.",
+    caption: "Cultural provocation: use disciplined asymmetry, constructivist planes, abstract manifesto blocks, and program modules to push the page forward.",
+    directionKeywords: ["real cultural program board", "constructivist planes", "disciplined asymmetry", "abstract manifesto blocks", "photomontage fragments"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/avant-garde-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Avant-Garde in web design. The board should look like a real designer's cultural-program research board photographed from above on an ivory archive table. Include printed experimental website layout references without readable text, constructivist red black ivory blue and yellow paper planes, abstract manifesto-scale type blocks represented only as unreadable black rectangles, photomontage fragments, museum and event page layout crops with no labels, diagonal composition studies, program-card modules with empty bars, bold geometric cut paper, transparent grid overlays, red tape strips, and archival paper samples. The board should feel provocative, cultural, and disciplined rather than decorative. Use tape corners, pin marks, paper curl, rough crop edges, varied paper thickness, dust, overlap, and real shadows. Palette: ivory, black, constructivist red, cobalt, warm yellow, photo grey. Absolutely no readable text, no letters, no numbers, no brand names, no logos, no watermarks, no fake UI gibberish, no propaganda symbols, no national flags, no decorative poster filler, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  postmodernism: {
+    alt: "Postmodernism moodboard with mixed-era web proofs, classical column fragments, terrazzo, laminate, Memphis color chips, product cards, and archival scraps.",
+    caption: "Historical remix: combine classical quotation, Memphis accents, object culture, and modern web modules without losing the page structure.",
+    directionKeywords: ["real cultural commerce board", "mixed-era object index", "classical quotation", "terrazzo laminate samples", "Memphis accent shapes"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/postmodernism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Postmodernism in web design. The board should look like a real designer's cultural-commerce research board photographed from above on a warm neutral studio table. Include printed mixed-era website layout references without readable text, classical column and arch photo fragments, terrazzo and laminate samples, Memphis-inspired color chips and abstract shapes, mismatched product-card studies, playful navigation module crops, archival photo scraps, sculptural object fragments, patterned paper, irregular color cards, and layout studies that combine historical quotation with contemporary web components. The board should feel witty and mixed, not chaotic. Use tape corners, pin marks, slight paper curl, varied paper thickness, imperfect crop edges, material texture, subtle dust, and real shadows. Palette: ivory, black, dusty pink, teal, mustard, terracotta, lavender, terrazzo grey. Absolutely no readable text, no letters, no numbers, no brand names, no logos, no watermarks, no fake UI gibberish, no palace luxury styling, no flat Memphis poster only, no plain minimal composition, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  retro: {
+    alt: "Retro moodboard with nostalgic ecommerce proofs, faded color-block cards, halftone paper, analog product crops, cassette-shaped blanks, and warm chips.",
+    caption: "Nostalgic commerce: use faded product modules, analog ephemera, halftone grain, and warm color blocks so the style feels familiar but still usable online.",
+    directionKeywords: ["real nostalgic campaign board", "faded commerce modules", "halftone paper texture", "analog product crops", "warm retro color blocking"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/retro-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Retro in web design. The board should look like a real designer's nostalgic web campaign research board photographed from above on a warm off-white studio table. Include printed retro ecommerce and landing page layout references without readable text, faded color-block product card studies, vintage advertising crop fragments with no people or brand marks, old magazine paper samples, halftone print texture swatches, rounded badge silhouettes with no letters, warm color chips, striped paper tabs, analog interior and product photo crops, cassette-label shaped blank paper with no text, and small physical objects like plain aged tape, blank translucent plastic strips, and paper ephemera. The visual language should feel nostalgic, colorful, and commercially useful, not like a generic vintage poster. Use tape corners, pin marks, slight paper curl, uneven crop edges, faded ink grain, varied paper thickness, subtle dust, and real shadows. Palette: cream, faded red, mustard, teal, chocolate brown, soft orange, dusty blue, warm black. Absolutely no readable text, no letters, no numbers, no currency, no labels, no license plates, no ruler markings, no people, no faces, no brand names, no logos, no watermarks, no fake UI gibberish, no floating cards, no sterile UI kit, no overly clean AI mockup look. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  vintage: {
+    alt: "Vintage moodboard with aged editorial proofs, foxed paper, sepia archive crops, letterpress texture, cloth fragments, tarnished brass, and wood samples.",
+    caption: "Patina-led interface mood: build from aged print matter, archive crops, foxed edges, cloth, brass, and dark wood instead of simple retro color blocking.",
+    directionKeywords: ["real archive board", "aged print patina", "foxed paper edges", "sepia editorial crops", "tarnished material samples"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/vintage-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Vintage in web design. The board should look like a real designer's aged print and archive research board photographed from above on a worn wooden studio table. Include printed vintage editorial and shop layout references without readable text, aged book paper samples, foxed paper edges, sepia photo crops with no people or labels, letterpress texture swatches with abstract blocks only, faded packaging blanks, cloth-bound cover fragments, tarnished brass and dark wood material samples, muted color chips, torn deckled paper, old receipt-shaped blank slips with no writing, and taped archival fragments. The visual language should communicate time, patina, print tactility, and quiet nostalgia for web pages, not generic retro color blocking. Use tape corners, pin marks, paper curl, stains, scuffed ink, uneven crop edges, varied paper thickness, dust, and soft realistic shadows. Palette: aged ivory, sepia, tobacco brown, faded burgundy, olive drab, charcoal ink, tarnished brass, warm grey. Absolutely no readable text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no fresh glossy poster look, no bright 80s neon, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "seventies-retro": {
+    alt: "70s Retro moodboard with warm landing page proofs, rounded product cards, wavy stripes, corduroy, woven textiles, walnut, amber plastic, and sunburst shapes.",
+    caption: "Groovy warmth: combine rounded commerce modules, wavy paper rhythm, corduroy texture, walnut, and amber plastic for an approachable 70s web tone.",
+    directionKeywords: ["real groovy campaign board", "rounded commerce rhythm", "wavy stripe papers", "corduroy walnut amber", "warm 70s palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/seventies-retro-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for 70s Retro in web design. The board should look like a real designer's warm groovy web campaign research board photographed from above on a tan cork studio table. Include printed 1970s-inspired landing page and ecommerce layout references without readable text, rounded product-card studies, wavy stripe paper samples, sunburst and circle cut-paper shapes, warm textile swatches, corduroy and woven fabric samples, amber translucent plastic, walnut veneer sample, retro interior photo crops with no people or labels, curved badge silhouettes with no letters, and saturated warm color chips. The visual language should communicate soft curves, warmth, analog lifestyle, and groovy commercial rhythm for web pages, not generic vintage distress or 80s neon. Use tape corners, pin marks, slight paper curl, uneven crop edges, textile fibers, faded print grain, varied paper thickness, subtle dust, and real shadows. Palette: burnt orange, mustard, avocado, cream, walnut brown, rust red, muted teal, amber. Absolutely no readable text, no letters, no numbers, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no disco typography, no neon grid, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "eighties-retro": {
+    alt: "80s Retro moodboard with synth-era web proofs, neon grid studies, magenta and cyan acetate, chrome chips, black plastic, VHS blanks, and pixel swatches.",
+    caption: "Synth-era interface energy: use neon grid perspective, glossy black plastic, chrome chips, acetate, and dark product modules without turning into cyberpunk scenery.",
+    directionKeywords: ["real synth interface board", "neon grid perspective", "magenta cyan acetate", "glossy black plastic", "chrome retro tech"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/eighties-retro-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for 80s Retro in web design. The board should look like a real designer's synth-era web interface research board photographed from above on a dark matte studio table. Include printed 1980s-inspired landing page and dashboard layout references without readable text, neon grid paper studies, chrome gradient color chips, magenta and cyan acetate overlays, black glossy plastic samples, VHS-case shaped blank cards with no labels, arcade button color chips without icons, pixel pattern swatches, sunset stripe paper, dark product-card studies, geometric triangle and circle cutouts, and retro tech photo crops with no logos or labels. The visual language should communicate neon contrast, synthetic optimism, grid perspective, and glossy analog electronics for web pages, not cyberpunk city scenery or modern glassmorphism. Use tape corners, pin marks, paper curl, acetate reflections, glossy plastic highlights, dust, varied paper thickness, and real shadows. Palette: black, deep purple, hot magenta, cyan, electric blue, violet, chrome silver, small neon orange. Absolutely no readable text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no skyline, no car poster, no floating holograms, no sterile UI kit. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "nineties-graphic": {
+    alt: "90s Graphic moodboard with zine-like web proofs, checkerboards, halftone textures, grunge paper, bright chips, plastic folder scraps, and torn arrows.",
+    caption: "Loud early-digital collage: layer halftone, checkerboard, photocopy grain, saturated chips, torn shapes, and rough product tiles without slipping into Y2K chrome.",
+    directionKeywords: ["real 90s graphic board", "zine-like web proofs", "checkerboard halftone", "early desktop blanks", "loud saturated collage"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/nineties-graphic-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for 90s Graphic in web design. The board should look like a real designer's 1990s graphic web campaign research board photographed from above on a light grey studio table. Include printed 1990s-inspired website and zine-like layout references without readable text, bold pattern swatches, checkerboard fragments, halftone abstract texture crops with no people, abstract sticker silhouettes with no letters, grunge paper textures, early desktop-window-inspired blank rectangles with no title bars and no control icons, saturated color chips, photocopied collage pieces, transparent plastic folder scraps, torn paper arrows with no symbols, and rough product tile studies with empty bars only. The visual language should communicate loud graphic layering, early digital energy, print collage, and youth-culture pattern for web pages, not 80s neon or Y2K chrome. Use tape corners, pin marks, paper curl, torn edges, ink grain, scuffed plastic, varied paper thickness, subtle dust, and real shadows. Palette: black, white, acid green, violet, orange, cyan, red, photocopy grey. Absolutely no readable text, no letters, no numbers, no title bars, no window controls, no labels, no brand names, no logos, no watermarks, no people, no faces, no eyes, no fake UI gibberish, no 80s grid horizon, no shiny chrome bubbles, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  y2k: {
+    alt: "Y2K moodboard with glossy interface proofs, rounded capsule cards, chrome swatches, jelly plastic, iridescent film, acrylic bubbles, and pastel acetate.",
+    caption: "Early-2000s gloss: combine chrome, jelly plastic, capsule UI, pearly surfaces, and holographic chips so the page feels playful and future-optimistic.",
+    directionKeywords: ["real Y2K interface board", "chrome jelly plastic", "capsule card studies", "pearlescent tech optimism", "holographic pastel layers"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/y2k-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Y2K in web design. The board should look like a real designer's early-2000s digital optimism research board photographed from above on a glossy pale silver studio table. Include printed Y2K-inspired web landing page and interface layout references without readable text, rounded capsule card studies, chrome gradient swatches, translucent jelly plastic pieces, iridescent film, bubble-like acrylic shapes, frosted blue and pink acetate overlays, glossy product crop fragments with no logos, pixel-sparkle pattern samples, pearl and holographic color chips, blank disc-shaped inserts with no markings, and soft futuristic button studies with empty bars only. The visual language should communicate playful tech optimism, glossy surfaces, translucent layers, chrome, and bubble UI for web pages, not 80s neon grid or modern glassmorphism SaaS. Use tape corners, pin marks, paper curl, reflective highlights, acetate reflections, varied paper thickness, subtle dust, and real shadows. Palette: pearl white, chrome silver, icy blue, bubblegum pink, aqua, lavender, holographic green, soft black. Absolutely no readable text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no cyberpunk skyline, no black neon grid, no floating holograms, no sterile app mockup. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "retro-futurism": {
+    alt: "Retro Futurism moodboard with space-age web proofs, capsule interfaces, vintage spacecraft crops, chrome, aluminum, starfield paper, acrylic domes, and orbit shapes.",
+    caption: "Past-imagined future: use space-age architecture, analog tech crops, capsule modules, chrome, orbit shapes, and optimistic color to make future nostalgia useful.",
+    directionKeywords: ["real space-age board", "capsule interface studies", "past future optimism", "chrome aluminum acrylic", "orbit-line composition"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/retro-futurism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Retro Futurism in web design. The board should look like a real designer's space-age web campaign research board photographed from above on a pale blue-grey studio table. Include printed retro-futurist landing page and product layout references without readable text, space-age architecture crops, curved capsule interface studies, vintage spacecraft and control-panel photo fragments with no labels, starfield paper samples, chrome and brushed aluminum swatches, orange and teal color chips, orbit-line cut paper shapes with no symbols, domed acrylic samples, raygun-era product silhouettes as blank shapes, and optimistic future poster crops with no text. The visual language should communicate the future imagined from the past, space-age optimism, aerodynamic forms, and analog technology for web pages, not pure sci-fi movie poster or modern cyberpunk. Use tape corners, pin marks, slight paper curl, glossy highlights, metal reflections, uneven crop edges, varied paper thickness, subtle dust, and real shadows. Palette: pale blue-grey, cream, chrome, tomato orange, teal, navy, warm yellow, black. Absolutely no readable text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no cyberpunk city, no dark neon grid, no floating holograms, no sterile UI kit. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "mid-century-modern": {
+    alt: "Mid-Century Modern moodboard with walnut product-page proofs, modular grids, geometric paper, woven and boucle swatches, brass, warm interiors, and muted chips.",
+    caption: "Warm modern product rhythm: combine walnut, woven texture, organic geometry, brass, restrained pattern, and clean modular commerce layouts.",
+    directionKeywords: ["real mid-century product board", "walnut warm interiors", "organic geometric modules", "woven boucle texture", "restrained commerce grid"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/mid-century-modern-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Mid-Century Modern in web design. The board should look like a real designer's mid-century product and interiors web research board photographed from above on a warm walnut studio table. Include printed mid-century-inspired landing page and product grid references without readable text, clean modular layout studies, geometric circle and rectangle paper shapes, walnut veneer samples, woven and boucle fabric swatches, muted color chips, brass detail samples, warm architectural and interior photo crops with no people or labels, simple furniture product-card studies with empty bars, textured paper, and restrained pattern fragments. The visual language should communicate elegant 1950s and 1960s modernity, organic geometry, warm materials, and practical product presentation for web pages, not generic 70s groovy retro or Bauhaus primary geometry. Use tape corners, pin marks, slight paper curl, paper grain, fabric fibers, soft natural shadows, varied paper thickness, subtle dust, and real surface texture. Palette: walnut brown, cream, olive, mustard, burnt orange, muted teal, charcoal, brass. Absolutely no readable text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no disco patterns, no neon, no floating cards, no sterile UI kit. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  bauhaus: {
+    alt: "Bauhaus moodboard with functional web proofs, primary-color geometry, circle triangle square modules, strict grids, black rules, workshop crops, and paper swatches.",
+    caption: "Functional geometry: let primary shapes, strict grids, black rules, workshop material, and disciplined composition exercises drive the web layout language.",
+    directionKeywords: ["real design-school board", "primary geometry", "circle triangle square modules", "functional grid proofs", "disciplined experimentation"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/bauhaus-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Bauhaus in web design. The board should look like a real designer's functional geometry and design-school research board photographed from above on a clean off-white studio table. Include printed Bauhaus-inspired website layout references without readable text, primary-color geometric composition studies, circle triangle square cut-paper modules, strict grid layout proofs, black rule-line studies, functional product-card studies with empty bars only, matte paper swatches, red blue yellow color chips, grey board samples, transparent grid overlays, simple furniture and workshop photo crops with no people or labels, and pinned composition exercises. The visual language should communicate basic geometry, functional clarity, primary color, and disciplined experimentation for web pages, not Swiss corporate typography or playful Memphis postmodernism. Use tape corners, pin marks, slight paper curl, crop marks without numbers, varied paper thickness, subtle dust, measured spacing, and real shadows. Palette: off-white, black, primary red, cobalt blue, warm yellow, neutral grey, small natural wood accent. Absolutely no readable text, no letters, no numbers, no labels, no ruler, no measuring tape, no measurement markings, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no national flags, no decorative poster filler, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  futurism: {
+    alt: "Futurism moodboard with speed-focused web proofs, aerodynamic product crops, motion-blur fragments, blue acetate, aluminum, carbon fiber, and capsule UI studies.",
+    caption: "Forward-motion optimism: build from aerodynamic crops, speed-line studies, aluminum, carbon fiber, cool blue acetate, and precise capsule interface modules.",
+    directionKeywords: ["real speed tech board", "aerodynamic web references", "motion-blur fragments", "aluminum carbon fiber", "cool blue precision"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/futurism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Futurism in web design. The board should look like a real designer's speed-and-technology research board photographed from above on a cool white aluminum studio table. Include printed futuristic landing page and dashboard layout references without readable text, aerodynamic product photo crops with no logos, motion-blur abstract image fragments, speed-line paper studies, translucent blue acetate overlays, brushed aluminum and carbon fiber swatches, white polymer samples, electric blue and silver color chips, curved capsule interface studies with empty bars only, and small physical objects like blank metallic discs and clear acrylic strips. The visual language should communicate speed, technical optimism, precision, and forward motion for web pages, not retro futurism or cyberpunk city darkness. Use tape corners, pin marks, slight paper curl, metal reflections, acetate highlights, varied paper thickness, subtle dust, and real shadows. Palette: cool white, aluminum silver, electric blue, icy cyan, graphite, black, small signal orange. Absolutely no readable text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no city skyline, no neon noir mood, no floating holograms, no sterile pure UI kit. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  cyberpunk: {
+    alt: "Cyberpunk moodboard with dark urban web proofs, wet asphalt crops, neon magenta and acid green acetate, circuit samples, black rubber, and hardware fragments.",
+    caption: "Underground digital tension: combine dark dense panels, wet city texture, neon acetate, circuit material, black hardware, and glitch crops without becoming a skyline poster.",
+    directionKeywords: ["real dark urban tech board", "wet asphalt reflections", "neon magenta acid green", "dense abstract panels", "black hardware fragments"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/cyberpunk-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Cyberpunk in web design. The board should look like a real designer's dark urban tech research board photographed from above on a scratched black metal studio table. Include printed cyberpunk landing page and dashboard layout references made only of empty rectangles, solid bars, blocks, and image crops, with no micro text at all. Include cropped night-city texture photos with no signs or logos, wet asphalt and rain-on-glass photo fragments, neon magenta and acid green acetate strips, circuit-board material samples with no markings, black rubber and dark acrylic swatches, warning-color chips, glitch media damage crops with no labels, dense panel layout studies with abstract blocks only, cable sheathing, transparent tape, and small black hardware fragments. The visual language should communicate underground tech, neon tension, dense digital systems, and dark rebellion for web pages, not generic sci-fi spaceship or clean high-tech SaaS. Use tape corners, pin marks, paper curl, wet-look reflections, scuffed surfaces, dust, varied paper thickness, and real shadows. Palette: black, charcoal, neon magenta, acid green, cyan, toxic yellow, dirty violet, small warning red. Absolutely no readable text, no tiny text, no fake text, no letters, no numbers, no signs, no labels, no brand names, no logos, no watermarks, no people, no faces, no city skyline poster, no futuristic spaceship, no floating holograms, no clean corporate interface. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "neon-noir": {
+    alt: "Neon Noir moodboard with nocturnal web proofs, rain-streaked glass, noir light fragments, magenta and cyan reflections, smoky vellum, mirror acrylic, and dark panels.",
+    caption: "Cinematic shadow: use noir lighting, wet glass, neon reflection, smoky translucent layers, and dark editorial panels instead of dense cyberpunk hardware.",
+    directionKeywords: ["real nocturnal light board", "rain-streaked glass", "noir neon reflections", "smoky translucent layers", "cinematic dark panels"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/neon-noir-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Neon Noir in web design. The board should look like a real designer's nocturnal light-and-shadow research board photographed from above on a black glass studio table. Include printed neon-noir landing page and editorial layout references without readable text, moody black content panels with empty bars only, rain-streaked window photo crops with no signs, noir alley light fragments with no people, magenta and cyan neon reflection strips, smoky translucent vellum, dark glossy paper, black leather-like swatches, mirror acrylic fragments, deep violet and red color chips, cinematic crop studies, and small physical objects like a blank black film slide frame and clear glass shard. The visual language should communicate noir atmosphere, low-key lighting, neon reflections, suspense, and cinematic contrast for web pages, not dense cyberpunk hardware or clean high-tech dashboards. Use tape corners, pin marks, slight paper curl, glass reflections, soft haze, dust, varied paper thickness, and real shadows. Palette: black, deep charcoal, neon magenta, cyan, violet, blood red, smoke grey, wet glass. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no signs, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no city skyline poster, no circuit-board clutter, no floating holograms. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  techwear: {
+    alt: "Techwear moodboard with utility product-page proofs, black ripstop nylon, waterproof fabric, carbon fiber, matte rubber, buckles, zippers, reflective tape, and grid paper.",
+    caption: "Functional utility: translate protective fabric, modular pockets, buckles, zippers, carbon fiber, reflective tape, and tactical chips into a web layout system.",
+    directionKeywords: ["real utility material board", "black ripstop nylon", "modular product panels", "industrial hardware", "reflective tactical accents"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/techwear-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Techwear in web design. The board should look like a real designer's functional utility and material research board photographed from above on a dark grey technical fabric studio surface. Include printed techwear-inspired product page and dashboard layout references without readable text, modular utility card studies with empty bars only, black ripstop nylon swatches, waterproof fabric samples, matte rubber, carbon fiber, black metal buckles, zipper pulls with no brand marks, translucent smoky plastic, reflective tape strips, grid overlay paper, pocket-panel crop studies, tactical color chips, and cropped technical garment details with no people or logos. The visual language should communicate utility, protection, modularity, weather resistance, and industrial precision for web pages, not cyberpunk neon city or outdoor hiking catalog. Use tape corners, pin marks, paper curl, fabric fibers, scuffed hardware, varied paper thickness, subtle dust, and real shadows. Palette: black, charcoal, slate grey, asphalt, reflective silver, muted olive, safety orange, cool white. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no mannequins, no fake UI gibberish, no neon skyline, no floating cards, no fashion model. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "high-tech": {
+    alt: "High-Tech moodboard with precision dashboard proofs, abstract data panels, technical grids, sensor crops, dark glass, brushed titanium, circuits, and status chips.",
+    caption: "Engineered control: use unlabeled data blocks, sensor details, dark glass, titanium, circuit texture, and cool status color to project advanced systems confidence.",
+    directionKeywords: ["real precision systems board", "abstract data panels", "sensor equipment crops", "dark glass titanium", "status blue green"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/high-tech-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for High-Tech in web design. The board should look like a real designer's precision interface and advanced systems research board photographed from above on a matte graphite engineering table. Include printed high-tech dashboard and SaaS interface layout references made only of empty rectangles, abstract bars, unlabeled circles, unlabeled graphs, and image crops, with no micro text at all. Include technical grid overlays with no numbers, sensor-array photo crops with no labels, laboratory equipment detail crops with no logos, micro-pattern paper samples, dark glass, brushed titanium, circuit texture with no markings, cool blue and green status color chips, modular card studies with empty bars only, and transparent alignment sheets. The visual language should communicate precision, advanced instrumentation, data confidence, and engineered control for web pages, not cyberpunk grit or neon noir atmosphere. Use tape corners, pin marks, slight paper curl, acetate reflections, metal sheen, dust, varied paper thickness, and real shadows. Palette: graphite, black, titanium grey, cool white, electric blue, status green, cyan, small amber. Absolutely no readable text, no tiny text, no fake text, no letters, no numbers, no data labels, no axis labels, no tick labels, no brand names, no logos, no watermarks, no people, no faces, no city scenery, no glowing fantasy holograms, no messy collage. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "ai-aesthetic": {
+    alt: "AI Aesthetic moodboard with generative web proofs, luminous gradients, abstract pattern printouts, mesh fields, vellum layers, frosted acrylic, and pearly chips.",
+    caption: "Computational softness: combine generative pattern crops, luminous mesh gradients, translucent vellum, frosted acrylic, and rounded modules without robot cliches.",
+    directionKeywords: ["real generative system board", "luminous gradient studies", "abstract neural patterns", "frosted acrylic vellum", "soft intelligent automation"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/ai-aesthetic-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for AI Aesthetic in web design. The board should look like a real designer's generative visual-system research board photographed from above on a soft white studio table. Include printed AI-inspired landing page and product layout references without readable text, luminous gradient studies, algorithmic pattern printouts with no code or symbols, generated abstract image crops, soft mesh color fields, neural-network-like line studies drawn as abstract dots and curves with no labels, translucent vellum layers, frosted acrylic, iridescent film, glassy color chips, pearly paper samples, and rounded interface module studies with empty bars only. The visual language should communicate computational softness, generative patterns, luminous gradients, and intelligent automation for web pages, not Y2K chrome or hologram spectacle. Use tape corners, pin marks, slight paper curl, soft reflections, translucent overlaps, varied paper thickness, subtle dust, and real shadows. Palette: white, pearl, lavender, icy blue, soft cyan, warm pink, pale violet, graphite accent. Absolutely no readable text, no tiny text, no code, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no robot character, no floating holograms, no cyberpunk darkness. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "hologram-style": {
+    alt: "Hologram Style moodboard with translucent web proofs, iridescent film, diffraction foil, clear acrylic, prismatic chips, vellum, acetate, and glass edges.",
+    caption: "Spectral depth: rely on transparent layers, diffraction foil, prismatic chips, refracted highlights, and glass-edge samples instead of chrome or Y2K plastic.",
+    directionKeywords: ["real spectral light board", "iridescent film sheets", "transparent interface panels", "prismatic color chips", "glass acrylic depth"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/hologram-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Hologram Style in web design. The board should look like a real designer's spectral light and transparent interface research board photographed from above on a pale grey glass studio table. Include printed hologram-inspired web layout references without readable text, translucent interface panel studies with empty bars only, iridescent film sheets, diffraction foil samples, clear acrylic plates, prismatic color chips, frosted vellum, rainbow light reflection photo crops, transparent rounded module studies, layered acetate in cyan pink violet and green, glass edge samples, and small physical objects like clear optical discs with no markings and prism-like acrylic blocks. The visual language should communicate translucent depth, spectral color, light interference, and weightless digital surfaces for web pages, not Y2K jelly plastic or chrome metal luxury. Use tape corners, pin marks, slight paper curl, refracted highlights, soft shadows, acetate reflections, varied paper thickness, subtle dust, and real glass texture. Palette: clear, pearl white, icy cyan, prism pink, violet, mint green, pale silver, soft black accent. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no floating holograms in space, no dark cyberpunk scene, no metallic chrome dominance. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  chromecore: {
+    alt: "Chromecore moodboard with reflective product-page proofs, chrome detail crops, polished metal swatches, liquid-metal fragments, black card, steel strips, and chrome discs.",
+    caption: "Polished metal tension: make reflection, mirror surfaces, liquid-metal crops, black contrast, and cold blue accents carry the futuristic product language.",
+    directionKeywords: ["real reflective metal board", "mirror-polished chrome", "liquid metal product crops", "black cold contrast", "futuristic luxury surface"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/chromecore-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Chromecore in web design. The board should look like a real designer's reflective metal and futuristic product research board photographed from above on a dark neutral studio table. Include printed chromecore landing page and luxury product layout references without readable text, chrome product-detail crop fragments with no logos, mirror-polished metal swatches, liquid metal abstract photo crops, reflective silver paper, black glossy card stock, rounded chrome button studies with empty bars only, cold blue and black color chips, brushed steel strips, clear acrylic spacers, distorted reflection studies, and small physical objects like blank chrome discs and smooth metal capsules. The visual language should communicate metallic gloss, reflection, futuristic luxury, and polished surface tension for web pages, not Y2K jelly plastic or hologram rainbow film. Use tape corners, pin marks, slight paper curl, mirror reflections, metal highlights, soft dust, varied paper thickness, and real shadows. Palette: chrome silver, black, cold white, graphite, icy blue, gunmetal, small cobalt accent. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no colorful hologram dominance, no cyberpunk city, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "metaverse-style": {
+    alt: "Metaverse Style moodboard with 3D platform web proofs, isometric virtual-space crops, avatar tokens, grid studies, low-poly objects, VR controller details, and foam blocks.",
+    caption: "Immersive spatial UI: translate virtual rooms, avatar tokens, isometric grids, low-poly objects, foam blocks, and translucent interface cards into web structure.",
+    directionKeywords: ["real virtual world board", "isometric spatial UI", "abstract avatar tokens", "3D grid studies", "miniature foam blocks"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/metaverse-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Metaverse Style in web design. The board should look like a real designer's virtual world and 3D interface research board photographed from above on a neutral light grey studio table. Include printed metaverse-inspired landing page and 3D platform layout references without readable text, isometric virtual-space crops with no logos, abstract avatar silhouette tokens with no faces, 3D grid paper studies, low-poly object photo crops, VR controller detail crops with no brand marks, translucent purple and blue acetate, miniature foam blocks, matte plastic samples, spatial UI card studies with empty bars only, virtual room color chips, and wireframe overlay sheets with no numbers. The visual language should communicate immersive space, avatar systems, 3D navigation, and playful virtual presence for web pages, not gaming battle scenes or corporate VR stock imagery. Use tape corners, pin marks, slight paper curl, small physical shadows from foam blocks, acetate reflections, varied paper thickness, subtle dust, and real surface texture. Palette: soft grey, white, violet, electric blue, mint, black, soft pink, translucent cyan. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no real people, no faces, no fake UI gibberish, no game characters, no weapons, no city skyline, no floating holograms. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  classic: {
+    alt: "Classic moodboard with balanced editorial web proofs, classical architecture crops, ivory papers, marble samples, dark wood, muted chips, brass strips, and black ribbon.",
+    caption: "Timeless proportion: combine balanced grids, archival architecture, serif-like black blocks, fine papers, marble, dark wood, and restrained brass for stable brand clarity.",
+    directionKeywords: ["real timeless editorial board", "balanced classical proportion", "ivory paper grain", "marble dark wood", "restrained brass detail"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/classic-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Classic in web design. The board should look like a real designer's timeless editorial and brand research board photographed from above on a warm ivory studio table. Include printed classic website layout references without readable text, balanced editorial grid studies, traditional serif typography represented only as black unreadable blocks, cream and ivory paper samples, symmetrical product-page modules with empty bars only, cropped classical architecture details with no people or labels, marble paper samples, dark wood swatches, muted color chips, thin gold rule strips, archival photography fragments, and small physical objects like a blank brass paperweight and black ribbon. The visual language should communicate proportion, trust, permanence, balanced hierarchy, and timeless brand clarity for web pages, not ornate baroque drama or minimal modern luxury. Use tape corners, pin marks, slight paper curl, fine paper grain, soft shadows, varied paper thickness, subtle dust, and real material texture. Palette: ivory, cream, black, charcoal, muted navy, warm grey, dark wood, restrained brass. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no excessive ornament, no fashion model, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  neoclassic: {
+    alt: "Neoclassic moodboard with modern classical web proofs, column and arch crops, plaster relief, pale marble, fluted strips, vellum, cream packaging, and soft gold rules.",
+    caption: "Classical restraint with modern air: pair columns, plaster, fluting, marble, vellum, and generous white space so ornament stays refined and current.",
+    directionKeywords: ["real modern classical board", "pale stone restraint", "fluted plaster details", "modern whitespace", "soft gold rules"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/neoclassic-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Neoclassic in web design. The board should look like a real designer's modern classical brand research board photographed from above on a pale stone studio table. Include printed neoclassical website and luxury landing page layout references without readable text, spacious modern grid studies, cropped classical columns and arch details with no people or labels, plaster relief fragments, pale marble samples, fluted paper strips, modern cream packaging blanks, thin black serif-like title blocks with no letters, soft gold rule samples, vellum overlays, muted color chips, and product detail crops arranged with generous whitespace. The visual language should communicate classical restraint, modern spacing, elegant symmetry, and refined ornament for web pages, not ornate baroque richness or plain high-end minimalism. Use tape corners, pin marks, slight paper curl, marble texture, plaster dust, vellum shadows, varied paper thickness, and real shadows. Palette: stone white, ivory, pale marble, soft gold, charcoal, muted taupe, powder grey, black accent. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fake UI gibberish, no excessive gilding, no palace scene, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  luxury: {
+    alt: "Luxury moodboard with premium product web proofs, black and ivory packaging, satin, marble, polished stone, champagne metal, jewelry crops, and glossy black card.",
+    caption: "Material-led exclusivity: let black lacquer, ivory paper, satin, marble, champagne metal, jewelry-like crops, and disciplined spacing carry the premium product story.",
+    directionKeywords: ["real premium product board", "black ivory packaging", "champagne metal stone", "satin glossy surfaces", "disciplined product commerce"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/luxury-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Luxury in web design. The board should look like a real designer's premium product and brand research board photographed from above on a black lacquer studio table. Include printed luxury ecommerce and product-detail layout references without readable text, gallery-like product crop studies, black and ivory packaging blanks, glossy black card stock, fine cream paper, champagne metal and brushed gold swatches, polished stone and marble samples, satin or silk fabric crop, perfume-bottle and jewelry-detail photo fragments with no logos, restrained monochrome color chips, thin metallic rule strips, and product-card modules with empty bars only. The visual language should communicate premium material, disciplined spacing, sensual surface quality, and controlled exclusivity for web pages, not old-money heritage or ornate classic decoration. Use tape corners, pin marks, slight paper curl, mirror reflections, satin highlights, varied paper thickness, subtle dust, and real shadows. Palette: black, ivory, champagne gold, deep charcoal, pearl, marble grey, warm metal, soft beige. Absolutely no readable text, no tiny text, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fashion model, no fake UI gibberish, no excessive ornament, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "old-money": {
+    alt: "Old Money moodboard with quiet heritage web proofs, private library and estate crops, tweed, wool, green leather, walnut, brass patina, tortoiseshell, and stationery blanks.",
+    caption: "Quiet inherited quality: build from heritage architecture, library interiors, tweed, leather, walnut, brass patina, stationery, and restrained commerce modules.",
+    directionKeywords: ["real quiet heritage board", "private library atmosphere", "tweed wool leather", "walnut brass patina", "restrained old-money palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/old-money-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Old Money in web design. The board should look like a real designer's quiet heritage and private-club brand research board photographed from above on a dark walnut studio table. Include printed old-money website and editorial commerce layout references without readable text, restrained product and archive page studies, heritage architecture and library interior photo crops with no people or labels, tweed and wool fabric swatches, dark green leather-like sample, cream stationery blanks, engraved-border paper samples with no letters, tortoiseshell and horn-like material chips, brass and walnut samples, muted color chips, black ribbon, and classic product-card modules with empty bars only. The visual language should communicate inherited quality, restraint, tradition, and quiet confidence for web pages, not flashy luxury or ornate palace decoration. Use tape corners, pin marks, slight paper curl, fabric fibers, wood grain, brass patina, varied paper thickness, subtle dust, and warm realistic shadows. Palette: dark walnut, cream, oxblood, forest green, navy, camel, brass, charcoal. Absolutely no readable text, no tiny text, no monograms, no crests, no letters, no numbers, no labels, no brand names, no logos, no watermarks, no people, no faces, no fashion model, no fake UI gibberish, no gold overload, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "art-deco": {
+    alt: "Art Deco moodboard with symmetrical web proofs, stepped geometric borders, fan patterns, black lacquer, ivory card, champagne foil, brass, marble, and emerald chips.",
+    caption: "Geometric glamour: use stepped symmetry, fan motifs, black lacquer, marble, champagne metal, and vertical rhythm for polished hospitality or event commerce.",
+    directionKeywords: ["real luxury geometry board", "stepped symmetry", "fan sunburst patterns", "black lacquer brass", "hospitality web glamour"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/art-deco-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Art Deco in web design. The board should look like a real designer's luxury geometry and hospitality web research board photographed from above on a deep black lacquer studio table. Include printed Art Deco-inspired website layout references without readable text, symmetrical hero layout studies, stepped geometric border studies, fan and sunburst pattern paper samples, black and ivory card stock, champagne-gold foil strips, polished brass swatches, dark marble fragments, glossy product photography crops with no logos, cream color chips, and small physical objects like a blank brass ruler and faceted black glass tile. The visual language should communicate geometric glamour, vertical rhythm, polished hospitality, and premium event-commerce hierarchy for web pages, not old-money heritage, baroque ornament, or generic luxury minimalism. Use real-world imperfections: slight paper curl, tape corners, pin marks, soft reflections, subtle dust, uneven crop edges, varied paper thickness, lacquer shine, and real shadows. Palette: black, ivory, champagne gold, deep emerald, warm cream, dark marble grey, polished brass. No readable text, no tiny text, no letters, no numbers, no logos, no brand names, no watermarks, no fake interface text, no floating cards, no decorative clutter, no sterile AI mockup look. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "art-nouveau": {
+    alt: "Art Nouveau moodboard with flowing web proofs, botanical linework samples, curved borders, stained-glass chips, pressed flowers, pearlescent card, bronze, and amber glass.",
+    caption: "Organic ornament: guide pages with flowing asymmetry, botanical curves, stained-glass color, pearlescent paper, and warm bronze rather than stepped Deco geometry.",
+    directionKeywords: ["real organic ornament board", "flowing asymmetry", "botanical linework", "stained glass chips", "warm bronze details"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/art-nouveau-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Art Nouveau in web design. The board should look like a real designer's organic ornamental brand and editorial web research board photographed from above on a warm ivory studio table. Include printed Art Nouveau-inspired website layout references without readable text, flowing asymmetric hero layout studies, botanical linework paper samples with no letters, curved border studies, stained-glass color chips, cream and sage papers, pressed flower fragments, pearlescent card stock, bronze and aged brass swatches, cropped architectural ironwork photos with no people or labels, and small physical objects like a blank curved brass bookmark and translucent amber glass tile. The visual language should communicate flowing botanical geometry, elegant asymmetry, hand-crafted ornament, and soft cultural-event storytelling for web pages, not Art Deco stepped geometry, baroque excess, or rustic craft branding. Use real-world imperfections: slight paper curl, tape corners, pin marks, uneven crop edges, paper fibers, pressed-petal texture, soft natural shadows, varied paper thickness, subtle dust, and real table texture. Palette: ivory, sage green, muted teal, amber glass, dusty rose, warm bronze, soft black. No readable text, no tiny text, no letters, no numbers, no logos, no brand names, no watermarks, no fake interface text, no floating cards, no decorative clutter, no sterile AI mockup look. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  baroque: {
+    alt: "Baroque moodboard with dramatic web proofs, heavy frame studies, scrollwork papers, burgundy velvet, gilded edges, marble, brocade, and chiaroscuro crops.",
+    caption: "Theatrical richness: combine deep shadow, gilded frame logic, velvet, marble, brocade, and dramatic hero crops for ornate cultural storytelling.",
+    directionKeywords: ["real dramatic ornament board", "gilded frame logic", "burgundy velvet", "chiaroscuro hierarchy", "rich cultural venue"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/baroque-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Baroque in web design. The board should look like a real designer's dramatic ornamental web and cultural-venue research board photographed from above on a dark burgundy velvet-covered studio table. Include printed baroque-inspired website layout references without readable text, dramatic editorial hero crop studies, heavy frame and scrollwork paper samples, deep red and black color chips, gilded edge samples, embossed cream paper, marble fragments, velvet and brocade fabric swatches, chiaroscuro photography crops with no people or labels, ornate but blank button and card shape studies, and small physical objects like a blank aged-gold frame corner and dark wax-like seal with no symbols. The visual language should communicate theatrical depth, rich ornament, dramatic hierarchy, and cultural luxury storytelling for web pages, not Art Deco geometry, Rococo pastel lightness, or restrained classic branding. Use real-world imperfections: slight paper curl, tape corners, pin marks, soft velvet lint, gilded edge wear, uneven crop edges, varied paper thickness, subtle dust, and strong but realistic directional shadows. Palette: deep burgundy, black, antique gold, ivory, dark walnut, marble grey, oxblood, shadow brown. No readable text, no tiny text, no letters, no numbers, no logos, no brand names, no watermarks, no fake interface text, no floating cards, no decorative clutter, no sterile AI mockup look. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  rococo: {
+    alt: "Rococo moodboard with airy boutique web proofs, curved frame samples, shell cutouts, pastel chips, pearl card, silk ribbon, porcelain, pale gold, and floral crops.",
+    caption: "Light ornament: use pastel curves, shell-like frames, pearl surfaces, ribbon, porcelain, and delicate product rhythm without becoming childish or heavy.",
+    directionKeywords: ["real light ornament board", "pastel boutique rhythm", "curved shell frames", "pearl silk porcelain", "delicate commerce"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/rococo-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Rococo in web design. The board should look like a real designer's light ornamental boutique and beauty web research board photographed from above on a pale blush studio table. Include printed rococo-inspired website layout references without readable text, airy product landing page studies, curved frame paper samples, shell and scroll motif cutouts with no letters, pastel color chips, pearl card stock, cream deckled paper, silk ribbon, porcelain-like white material sample, soft gilded edge strips, delicate floral photography fragments with no labels, and small physical objects like a blank cameo-shaped card, pearl buttons, and a pale gold frame corner. The visual language should communicate playful refinement, pastel ornament, delicate curves, and light boutique commerce for web pages, not heavy Baroque drama, Art Nouveau botanical linework, or childish kawaii styling. Use real-world imperfections: slight paper curl, tape corners, pin marks, ribbon fibers, pearl sheen, uneven crop edges, subtle dust, varied paper thickness, and soft natural shadows. Palette: blush pink, cream, pearl white, powder blue, pale mint, soft gold, warm ivory, muted mauve. No readable text, no tiny text, no letters, no numbers, no logos, no brand names, no watermarks, no fake interface text, no floating cards, no decorative clutter, no sterile AI mockup look. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  gothic: {
+    alt: "Gothic moodboard with dark vertical web proofs, pointed-arch cutouts, cathedral stone crops, black and bone papers, crimson chips, smoked glass, oxidized metal, and parchment.",
+    caption: "Vertical shadow: shape pages with pointed arches, stone texture, bone-on-black contrast, crimson accents, smoked glass, and solemn editorial hierarchy.",
+    directionKeywords: ["real dark architecture board", "pointed arch layouts", "cathedral stone ironwork", "bone black crimson", "vertical editorial drama"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/gothic-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Gothic in web design. The board should look like a real designer's dark architectural editorial and music-culture web research board photographed from above on a charcoal stone studio table. Include printed gothic-inspired website layout references without readable text, tall vertical hero studies, pointed-arch layout cutouts, blackletter-like typography represented only as unreadable black blocks, cathedral stone and ironwork photo crops with no people or labels, black and bone paper samples, dark red color chips, smoked glass, oxidized metal swatches, rough parchment fragments, lace-like black textile, and small physical objects like a blank black wax seal, iron ring, and narrow stone tile. The visual language should communicate vertical drama, shadow, medieval architecture, solemn contrast, and dark editorial hierarchy for web pages, not cyberpunk neon, grunge dirt, or ornate Baroque theater. Use real-world imperfections: slight paper curl, tape corners, pin marks, rough paper fibers, stone dust, uneven crop edges, varied paper thickness, subtle dust, and moody realistic shadows. Palette: black, charcoal, bone white, dark crimson, oxidized silver, stone grey, parchment beige. No readable text, no tiny text, no letters, no numbers, no logos, no brand names, no watermarks, no fake interface text, no floating cards, no decorative clutter, no sterile AI mockup look. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "organic-design": {
+    alt: "Organic Design moodboard with flowing blank web proofs, recycled papers, cork, linen, raw cotton, pebble, clay, botanical crops, earth chips, and natural form cutouts.",
+    caption: "Living-form warmth: use curved asymmetry, tactile natural samples, cork, clay, linen, and relaxed content rhythm to avoid generic beige minimalism.",
+    directionKeywords: ["real organic form board", "flowing asymmetry", "tactile natural materials", "wellness commerce warmth", "earth green palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/organic-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Organic Design in web design. Photograph a real designer's organic form and wellness web research board from above on a warm clay studio table. Include printed website layout references made only of blank blocks, empty rounded bars, abstract image areas, and flowing shapes with absolutely no text marks. Include flowing asymmetrical content rhythm studies, rounded natural form cutouts, recycled paper samples, cork, linen, raw cotton, pebble and clay material swatches, botanical photography crops with no labels, muted green and earth color chips, soft product-card studies with empty bars only, and small physical objects like a smooth stone and unmarked seed pod. The visual language should communicate living forms, tactile natural materials, relaxed hierarchy, and wellness-commerce warmth for web pages, not rustic farmhouse, botanical illustration, or generic beige minimalism. Use tape corners, pin marks, slight paper curl, uneven crop edges, textile fibers, subtle dust, varied paper thickness, and soft natural shadows. Palette: warm clay, oat, moss green, sage, raw cotton, cork brown, stone grey, charcoal accent. Absolutely no readable text, no micro text, no fake text, no text-like marks, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards, no decorative clutter. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  natural: {
+    alt: "Natural moodboard with blank lifestyle web proofs, landscape crops, uncoated cream paper, raw linen, pale wood, leaf shadows, river stone, sand texture, and green-blue chips.",
+    caption: "Open-air calm: use landscape fragments, pale wood, linen, stone, sand, and breathable grids so the page feels natural without becoming botanical or rustic.",
+    directionKeywords: ["real nature lifestyle board", "open air hierarchy", "leaf shadow studies", "pale wood linen", "soft green blue"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/natural-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Natural style in web design. Photograph a real designer's nature-led lifestyle and brand web research board from above on a light stone studio table. Include printed website layout references made only of blank image blocks and empty bars, landscape photography fragments with no labels, uncoated cream paper, raw linen, pale wood veneer, leaf shadow studies, river-stone and sand-texture samples, muted green and sky color chips, breathable editorial grid studies, simple product modules with no text, and small physical objects like a smooth twig, unmarked seed packet blank, and stone. The visual language should communicate open air, quiet natural light, simple ecology, and relaxed lifestyle hierarchy for web pages, not dense botanical pattern, eco campaign signage, or rustic farmhouse texture. Use tape corners, pin marks, slight paper curl, soft outdoor-like shadows, uneven crop edges, paper grain, varied paper thickness, subtle dust, and tactile surface texture. Palette: cream, pale stone, leaf green, soft sky blue, sand beige, warm wood, moss, charcoal accent. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  botanical: {
+    alt: "Botanical moodboard with blank plant-commerce web proofs, leaf and stem crops, pressed plants, tracing paper, herbarium grid studies, glassine blanks, terracotta, and green chips.",
+    caption: "Plant specificity: build from leaf structure, pressed samples, glassine layers, herbarium-like blank grids, and chlorophyll greens instead of broad nature imagery.",
+    directionKeywords: ["real plant research board", "pressed botanical samples", "herbarium grid rhythm", "glassine layers", "chlorophyll green"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/botanical-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Botanical style in web design. Photograph a real designer's plant-focused editorial commerce research board from above on a soft white greenhouse worktable. Include printed botanical website layout references made only of blank cards and empty bars, close-up leaf and stem photography fragments with no labels, pressed plant samples, translucent tracing paper overlays, herbarium-like grid studies without any text, deep green and chlorophyll color chips, uncoated cream paper, glassine envelope blanks, linen swatches, pale terracotta, and small physical objects like unmarked plant tags turned blank-side up and a small clay pot shard. The visual language should communicate plant specificity, layered leaves, fresh growth, and curated botanical shopping or editorial structure for web pages, not broad natural landscape, eco campaign signage, or rustic craft texture. Use tape corners, pin marks, slight paper curl, leaf shadows, paper fibers, varied paper thickness, subtle dust, real plant texture, and soft natural greenhouse light. Palette: cream, chlorophyll green, deep leaf green, sage, pale terracotta, glassine white, soil brown, soft black. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "eco-design": {
+    alt: "Eco Design moodboard with blank sustainable web proofs, recycled paper, corrugated cardboard, molded pulp, hemp, cork, bioplastic, circular diagram studies, and green earth chips.",
+    caption: "Practical sustainability: use recycled fibers, molded pulp, cork, bioplastic, and unlabeled circular-system studies so the interface feels responsible and concrete.",
+    directionKeywords: ["real sustainability board", "recycled material system", "molded pulp cork", "circular diagram shapes", "trustworthy eco hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/eco-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Eco Design in web design. Photograph a real designer's sustainable product and climate-conscious web research board from above on a recycled kraft-paper studio surface. Include printed eco website layout references made only of blank blocks and empty bars, sustainability dashboard-like modules with no text or numbers, recycled paper samples, corrugated cardboard, molded pulp, hemp fabric, cork, bioplastic translucent swatches, repair-label shapes turned blank, green and earth color chips, circular-system diagram studies made of unlabeled arrows and shapes, nature and product-material photo crops with no labels, and small physical objects like blank compostable packaging tabs. The visual language should communicate responsible systems, circular material thinking, practical sustainability, and trustworthy product hierarchy for web pages, not generic nature lifestyle, rustic nostalgia, or activist poster typography. Use tape corners, pin marks, slight paper curl, rough fiber texture, cardboard edges, subtle dust, varied paper thickness, and soft realistic shadows. Palette: kraft brown, recycled cream, forest green, algae green, muted blue, cardboard tan, charcoal, off white. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no certifications, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  rustic: {
+    alt: "Rustic moodboard with blank local-brand web proofs, weathered wood, burlap, linen, kraft, torn cream paper, clay, leather, twine, ceramic shard, and faded earth chips.",
+    caption: "Honest local warmth: combine weathered wood, torn fiber, burlap, clay, leather, and rough product grids for approachable hospitality or food commerce.",
+    directionKeywords: ["real rustic material board", "weathered wood grain", "burlap linen kraft", "rough local commerce", "warm earth palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/rustic-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Rustic style in web design. Photograph a real designer's rustic local-brand and hospitality web research board from above on a weathered wood studio table. Include printed rustic website layout references made only of blank image blocks and empty bars, rough product grid studies, reclaimed wood samples, burlap and linen swatches, kraft paper, torn cream paper, clay and leather fragments, warm brown and faded green color chips, countryside interior and handmade product photo crops with no labels, rough border studies, and small physical objects like a blank wooden tag, twine, and an unmarked ceramic shard. The visual language should communicate honest material warmth, rough edges, local craft, and approachable hospitality or food-commerce hierarchy for web pages, not polished organic wellness, modern eco systems, or vintage poster nostalgia. Use tape corners, pin marks, slight paper curl, torn edges, wood grain, fabric fibers, scuffs, varied paper thickness, subtle dust, and warm realistic shadows. Palette: weathered wood, kraft brown, cream, clay, faded olive, charcoal, leather tan, warm grey. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  kinfolk: {
+    alt: "Kinfolk moodboard with blank slow-lifestyle web proofs, magazine grids, soft interior crops, matte cream paper, oatmeal chips, linen, pale wood, ceramic, and blank stationery.",
+    caption: "Slow editorial living: use natural light, matte neutrals, linen, pale wood, ceramics, and generous magazine rhythm for quiet lifestyle commerce.",
+    directionKeywords: ["real slow lifestyle board", "soft natural light", "quiet magazine grids", "linen ceramic wood", "oatmeal neutrals"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/kinfolk-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Kinfolk style in web design. Photograph a real designer's slow-lifestyle editorial web research board from above on an off-white linen-covered studio table. Include printed Kinfolk-inspired website layout references made only of blank image blocks and empty bars, quiet magazine-style grid studies, soft natural-light interior and table-scene photo crops with no people or labels, matte cream paper, oatmeal and beige color chips, linen and cotton fabric swatches, pale wood, ceramic fragments, negative-space product layout studies, blank stationery cards, and small physical objects like an unmarked ceramic cup, folded linen napkin, and smooth pebble. The visual language should communicate slow living, editorial calm, soft natural light, and curated lifestyle commerce for web pages, not rustic roughness, minimal luxury, or generic Scandinavian product design. Use tape corners, pin marks, slight paper curl, fabric fibers, soft shadows, uneven crop edges, varied paper thickness, subtle dust, and quiet material texture. Palette: oatmeal, warm white, cream, beige, pale wood, soft grey, muted olive, charcoal accent. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  handmade: {
+    alt: "Handmade moodboard with blank maker-shop web proofs, torn papers, deckled stationery, cotton thread, linen, canvas, clay, stitched samples, buttons, spool, and muted chips.",
+    caption: "Human touch: let torn fibers, small irregularities, thread, stitch texture, clay, and imperfect product grids make the shop feel personal and small-batch.",
+    directionKeywords: ["real handmade shop board", "irregular product grids", "torn deckled paper", "thread stitch texture", "small batch warmth"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/handmade-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Handmade style in web design. Photograph a real designer's handmade shop and maker-portfolio web research board from above on a warm neutral craft table. Include printed handmade ecommerce layout references made only of blank blocks and empty bars, product-grid studies with irregular crop edges, hand-torn paper, deckled stationery, cotton thread, linen and canvas swatches, clay and ceramic fragments, hand-stitched sample, pencil sketch marks as abstract non-letter lines, muted color chips, craft process photo crops with no people, no hands, and no labels, plus small physical objects like a blank wooden button, spool with no label, and unmarked clay bead. The visual language should communicate human touch, small-batch production, imperfect alignment, tactile materials, and approachable maker commerce for web pages, not polished craft-brand luxury, rustic hospitality, or childish DIY decoration. Use tape corners, pin marks, slight paper curl, torn fibers, stitch texture, pencil smudges, uneven crop edges, varied paper thickness, subtle dust, and real shadows. Palette: warm cream, raw canvas, clay, muted coral, olive, soft brown, charcoal, off white. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  craft: {
+    alt: "Craft moodboard with blank artisan web proofs, process grids, handmade paper, leather, wood, clay, brass, woven textile, canvas, tool crops, rivets, thread, and wood offcut.",
+    caption: "Material process: use durable workshop surfaces, leather, wood, clay, brass, woven samples, and unlabeled process grids for practical artisan storytelling.",
+    directionKeywords: ["real artisan process board", "workbench material studies", "leather wood clay brass", "durable product story", "tool detail crops"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/craft-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Craft style in web design. Photograph a real designer's material-process and artisan web research board from above on a workbench surface. Include printed craft brand website layout references made only of blank image areas and empty bars, process-step grid studies with no text or numbers, heavy handmade paper, leather, wood, clay, brass, woven textile and canvas swatches, tool-detail photography crops with no brand marks, material test strips, earthy color chips, modular product-card studies with empty bars only, and small physical objects like an unmarked awl handle, blank brass rivets, thread, and a small wood offcut. The visual language should communicate material knowledge, maker process, durable craft, and practical product storytelling for web pages, not soft handmade charm, rustic hospitality, or eco-system diagrams. Use tape corners, pin marks, slight paper curl, scuffed edges, sawdust, fiber texture, leather grain, varied paper thickness, subtle dust, and real workshop shadows. Palette: walnut, raw canvas, leather tan, clay, brass, charcoal, cream, muted green. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "wabi-sabi": {
+    alt: "Wabi-Sabi moodboard with blank quiet web proofs, low horizontal studies, irregular paper, cracked ceramic, weathered wood, stone, linen, ash paper, and muted earth chips.",
+    caption: "Time-worn restraint: use cracks, torn fibers, patina, ash neutrals, asymmetry, and soft shadow to guide a quiet page without becoming polished Japandi.",
+    directionKeywords: ["real imperfect quiet board", "low horizontal rhythm", "cracked ceramic patina", "torn ash paper", "muted asymmetry"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/wabi-sabi-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Wabi-Sabi in web design. Photograph a real designer's imperfect quietness and contemplative web research board from above on a muted grey plaster studio table. Include printed wabi-sabi website layout references made only of blank image fields and empty bars, low horizontal composition studies, irregular handmade paper, torn deckled edges, cracked ceramic fragments, weathered wood, stone, linen, ash paper, muted earth color chips, soft shadow photography fragments with no people or labels, quiet product-detail modules with empty bars only, and small physical objects like an unmarked repaired ceramic shard, smooth stone, and folded raw cloth. The visual language should communicate imperfection, patina, silence, asymmetry, and time-worn restraint for web pages, not Japandi polish, rustic warmth, or minimal luxury precision. Use tape corners, pin marks, slight paper curl, torn fibers, cracks, stains, uneven crop edges, varied paper thickness, subtle dust, and soft natural shadows. Palette: ash grey, rice paper, clay beige, weathered wood, charcoal, stone, faded olive, warm off white. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  kitsch: {
+    alt: "Kitsch moodboard with blank novelty-commerce web proofs, mismatched cards, loud patterns, plastic flowers, candy acrylic, shiny vinyl, souvenir shapes, charms, and clashing chips.",
+    caption: "Joyful bad taste: use mismatched novelty objects, glossy plastic, loud patterns, and clashing chips so the page feels knowingly excessive rather than cute.",
+    directionKeywords: ["real novelty board", "intentional bad taste", "clashing candy palette", "glossy plastic souvenirs", "mismatched commerce cards"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/kitsch-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Kitsch in web design. Photograph a real designer's kitsch campaign and novelty-commerce research board from above on a glossy white studio table. Include printed kitsch website layout references made only of blank image blocks and empty bars, mismatched product-card studies, loud pattern paper, fake souvenir shapes with no text, plastic floral fragments, candy-colored acrylic chips, shiny vinyl swatches, clashing color chips, retro novelty photo crops with no labels or people, wavy badge silhouettes with no letters, and small physical objects like blank novelty magnets, plastic charms, and a tiny unmarked ceramic figurine. The visual language should communicate joyful bad taste, intentional excess, novelty, and playful commerce hierarchy for web pages, not clean kawaii softness, pop-art comic graphics, or maximalist luxury density. Use tape corners, pin marks, slight paper curl, glossy reflections, uneven crop edges, plastic scuffs, varied paper thickness, subtle dust, and real shadows. Palette: candy red, banana yellow, turquoise, bubblegum pink, white, lime, glossy black, lavender. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  kawaii: {
+    alt: "Kawaii moodboard with blank rounded app proofs, pastel chips, soft foam, silicone, puffy blank shapes, plush fabric, translucent plastic, rounded charms, and tiny product crops.",
+    caption: "Small-scale cuteness: rely on pastel softness, plush fibers, puffy blank shapes, and rounded controls without drifting into kitsch clutter or toy blocks.",
+    directionKeywords: ["real cute app board", "soft rounded controls", "pastel plush silicone", "small scale cuteness", "gentle friendly hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/kawaii-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Kawaii in web design. Photograph a real designer's cute mobile app and soft commerce research board from above on a clean pastel pink studio table. Include printed kawaii website and app layout references made only of blank rounded cards and empty pill bars, small rounded UI control studies, pastel color chips, soft foam and silicone swatches, puffy sticker-like blank shapes with no icons or faces, rounded paper cutouts, soft plush fabric samples, translucent candy-colored plastic, tiny product photography crops with no labels, and small physical objects like blank star beads, smooth capsules, and rounded charms with no characters. The visual language should communicate small-scale cuteness, soft rounded forms, gentle friendliness, and approachable app hierarchy for web pages, not chaotic kitsch, dopamine color shock, or toy-store 3D plastic. Use tape corners, pin marks, slight paper curl, soft shadows, rounded cut edges, plush fibers, varied paper thickness, subtle dust, and real surface texture. Palette: pastel pink, cream, baby blue, butter yellow, mint, lavender, soft coral, warm grey. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no faces, no characters, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "dopamine-design": {
+    alt: "Dopamine Design moodboard with blank color-block web proofs, oversized CTA shapes, glossy acrylic, neon strips, saturated chips, candy plastic, and high-contrast crops.",
+    caption: "Instant color joy: use saturated blocks, glossy acrylic, neon paper, and oversized blank action shapes to make hierarchy energetic without becoming pastel or kitsch.",
+    directionKeywords: ["real saturated color board", "oversized action shapes", "glossy acrylic neon", "instant joy hierarchy", "high contrast palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/dopamine-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Dopamine Design in web design. Photograph a real designer's high-energy color and conversion web research board from above on a bright white studio table. Include printed dopamine-style landing page references made only of blank blocks and empty bars, bold color-block layout studies, oversized CTA shape studies with no text, glossy acrylic swatches, neon paper strips, saturated gradient chips, candy plastic samples, playful product photography fragments with no labels or people, high-contrast pattern crops, rounded badge silhouettes with no letters, and small physical objects like unmarked colorful clips and translucent blocks. The visual language should communicate instant joy, saturated color, energetic hierarchy, and positive action for web pages, not soft kawaii pastels, chaotic kitsch clutter, or flat pop-art comic language. Use tape corners, pin marks, slight paper curl, glossy reflections, crisp shadows, uneven crop edges, varied paper thickness, subtle dust, and real surface texture. Palette: hot pink, electric orange, lemon yellow, cobalt blue, lime green, violet, white, glossy black. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "pop-art": {
+    alt: "Pop Art moodboard with blank campaign web proofs, halftone papers, bold comic crop studies, primary chips, thick black outlines, glossy ink, and speech-bubble blanks.",
+    caption: "Mass-culture punch: combine halftone print texture, primary blocks, thick outlines, and product-poster crops for bold campaign clarity.",
+    directionKeywords: ["real pop print board", "halftone product energy", "primary color blocks", "thick outline cards", "campaign commerce clarity"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/pop-art-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Pop Art in web design. Photograph a real designer's pop-art campaign and product web research board from above on a white studio table. Include printed pop-art website layout references made only of blank blocks and empty bars, halftone dot paper samples, bold comic-panel crop studies with no text, primary color chips, thick black outline card studies, glossy ink swatches, flat product photo fragments with no logos or labels, speech-bubble-shaped blanks with no letters, offset print registration color strips without symbols, and small physical objects like blank enamel color tiles and a black marker cap. The visual language should communicate mass culture, punchy graphic contrast, halftone print energy, and campaign-commerce clarity for web pages, not kitsch novelty clutter, comic-book storytelling panels, or dopamine gradient UI. Use tape corners, pin marks, slight paper curl, printed ink texture, uneven crop edges, varied paper thickness, subtle dust, and crisp studio shadows. Palette: white, black, primary red, cobalt blue, lemon yellow, hot pink, cyan, flat cream. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "comic-book-style": {
+    alt: "Comic Book Style moodboard with blank panel web proofs, sequential grids, speech balloon blanks, thick outlines, halftone papers, burst shapes, and ink swatches.",
+    caption: "Sequential energy: use panel grids, blank speech shapes, thick ink outlines, burst forms, and halftone papers to guide story-driven navigation.",
+    directionKeywords: ["real comic layout board", "sequential panel rhythm", "blank speech balloons", "bold ink outline", "campaign storytelling"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/comic-book-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Comic Book Style in web design. Photograph a real designer's comic-book interface and story-commerce research board from above on a clean white drafting table. Include printed comic-inspired website layout references made only of blank panels and empty bars, sequential panel grid studies with no text, speech balloon and caption box blanks with no letters, thick black outline samples, halftone papers, action-burst paper shapes with no symbols, inked line texture swatches, red yellow blue color chips, cropped comic-style illustration fragments without characters, faces, or words, and small physical objects like black tape, blank bristol board, and colored ink swatches. The visual language should communicate panel rhythm, bold outline, sequential storytelling, and energetic campaign navigation for web pages, not pop-art product posters, kitsch novelty objects, or childish toy design. Use tape corners, pin marks, slight paper curl, ink texture, uneven crop edges, varied paper thickness, subtle dust, and crisp shadows. Palette: white, black, primary red, yellow, cobalt blue, cyan, cream paper, small magenta accent. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no faces, no characters, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "toy-design": {
+    alt: "Toy Design moodboard with blank rounded ecommerce proofs, chunky product grids, soft 3D cutouts, matte plastic, rubber, foam, toy blocks, beads, and capsules.",
+    caption: "Tactile play: make commerce feel chunky and safe with molded plastic, foam, rubber, wooden beads, blocks, and large rounded product modules.",
+    directionKeywords: ["real toy product board", "chunky rounded commerce", "matte plastic foam", "safe playful objects", "primary pastel mix"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/toy-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Toy Design in web design. Photograph a real designer's tactile toy-product and playful ecommerce research board from above on a pale blue studio table. Include printed toy-inspired website layout references made only of blank rounded cards and empty bars, chunky product grid studies, soft 3D shape paper cutouts, matte plastic samples, rubber and foam swatches, primary and pastel color chips, toy-block photography fragments with no labels or characters, molded packaging blanks, simple interaction control studies with no icons, and small physical objects like unmarked building blocks, smooth wooden beads, rounded plastic capsules, and a blank toy tag. The visual language should communicate tactile play, chunky proportions, safe rounded forms, and product-commerce joy for web pages, not kawaii plush softness, kitsch novelty clutter, or claymorphism UI-only cards. Use tape corners, pin marks, slight paper curl, molded plastic highlights, foam texture, soft shadows, varied paper thickness, subtle dust, and real surface texture. Palette: sky blue, butter yellow, tomato red, mint, soft pink, cream, warm wood, graphite accent. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no faces, no characters, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "playful-design": {
+    alt: "Playful Design moodboard with blank friendly web proofs, interaction state studies, motion-arc strips, rounded cards, sticker-like blanks, foam, rubber, and colorful tokens.",
+    caption: "Friendly interaction: use motion arcs, blank controls, rounded forms, paper tabs, and light color to signal play through behavior rather than toy objects.",
+    directionKeywords: ["real interaction board", "motion arc studies", "friendly blank controls", "clear user flow", "light playful palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/playful-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Playful Design in web design. Photograph a real designer's playful interaction and friendly web research board from above on a warm white studio table. Include printed playful website layout references made only of blank blocks and empty bars, interactive state studies with no icons or text, bouncing path and motion-arc paper strips, rounded cards, modular color chips, soft sticker-like blank shapes, paper tabs, lightweight illustration crops with no characters or letters, foam and rubber swatches, cheerful product detail fragments with no labels, and small physical objects like colorful blank push pins, curved paper sliders, and smooth tokens. The visual language should communicate approachable interaction, light motion, friendly surprise, and clear user flow for web pages, not kawaii cuteness, toy product styling, or dopamine color overload. Use tape corners, pin marks, slight paper curl, cut-paper edges, soft shadows, varied paper thickness, subtle dust, and real surface texture. Palette: warm white, coral, sky blue, leaf green, sunny yellow, lavender, soft black, light grey. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no faces, no characters, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "pastel-style": {
+    alt: "Pastel Style moodboard with blank soft brand web proofs, low-contrast content studies, pastel paper, vellum, frosted acrylic, cotton, felt, pale gradients, and translucent tiles.",
+    caption: "Gentle color harmony: keep the page low-pressure with matte pastel papers, vellum, frosted acrylic, cotton, and pale gradients rather than character cuteness.",
+    directionKeywords: ["real pastel brand board", "low contrast hierarchy", "vellum frosted acrylic", "soft color harmony", "gentle product rhythm"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/pastel-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Pastel Style in web design. Photograph a real designer's soft pastel brand and app research board from above on a pale cream studio table. Include printed pastel website layout references made only of blank cards and empty bars, low-contrast content studies, soft color-chip rows, translucent vellum overlays, matte pastel papers, frosted acrylic, cotton and felt swatches, gentle product photography crops with no labels or people, rounded form studies, pale gradient samples, and small physical objects like unmarked pastel clips, blank tags, and soft translucent tiles. The visual language should communicate softness, approachable calm, gentle color harmony, and low-pressure product hierarchy for web pages, not kawaii cuteness, soft minimal restraint, or dopamine saturation. Use tape corners, pin marks, slight paper curl, vellum shadows, frosted reflections, soft material fibers, varied paper thickness, subtle dust, and calm natural shadows. Palette: powder pink, baby blue, mint, pale lavender, butter cream, peach, soft grey, warm white. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no faces, no characters, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  "bubble-design": {
+    alt: "Bubble Design moodboard with blank inflated interface proofs, circular studies, blob cutouts, translucent gel, glossy plastic, silicone, reflection crops, domes, and gel beads.",
+    caption: "Buoyant volume: use glossy gel, domes, pearl highlights, round modules, and inflated blank controls so the style reads as bubbly rather than merely pastel.",
+    directionKeywords: ["real bubbly interface board", "inflated rounded cards", "translucent gel reflections", "aqua pearl palette", "buoyant soft depth"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/bubble-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Bubble Design in web design. Photograph a real designer's bubbly rounded interface and casual product web research board from above on a glossy pale aqua studio table. Include printed bubble-style website layout references made only of blank inflated cards and empty rounded bars, circular module studies, soft blob paper cutouts, translucent gel samples, glossy plastic and silicone swatches, soap-bubble reflection photo crops with no labels, round color chips, inflated button shape studies with no icons or text, soft shadow tests, and small physical objects like clear acrylic domes, smooth round tokens, and unmarked gel beads. The visual language should communicate buoyant volume, soft rounded depth, light reflections, and casual friendly UI structure for web pages, not pastel flat softness, toy-product blocks, or glassmorphism panels. Use tape corners, pin marks, slight paper curl, glossy highlights, gel reflections, soft shadows, varied paper thickness, subtle dust, and real surface texture. Palette: aqua, milky white, bubblegum pink, soft lavender, clear blue, mint, pearl, graphite accent. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no watermarks, no faces, no characters, no fake UI gibberish, no floating cards. Landscape 16:10 composition, high-resolution editorial photography, realistic top-down flat lay.",
+  },
+  streetwear: {
+    alt: "Streetwear moodboard with blank fashion-drop web proofs, black garment swatches, nylon, denim, hang tags, reflective tape, sneaker crops, and safety-color chips.",
+    caption: "Drop-commerce attitude: use apparel material, blank hang tags, black product grids, reflective tape, and sharp accent chips rather than spray-wall graphics.",
+    directionKeywords: ["real fashion drop board", "black garment material", "limited ecommerce rhythm", "reflective tape accents", "urban product hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/streetwear-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Streetwear in web design. Photograph a real designer's fashion drop and streetwear ecommerce research board from above on a black rubberized studio table. Include printed streetwear product-drop website layouts made only of blank image blocks and empty bars, drop-calendar card studies with no text or numbers, black garment fabric swatches, nylon, denim, blank hang tags, sticker-shaped blanks, bold color chips, sneaker-detail photo crops with no logos, packaging tissue, reflective tape, and small physical objects like unmarked zipper pulls and blank woven labels. The visual language should communicate limited drops, urban fashion commerce, bold product hierarchy, and tactile apparel material, not graffiti wall art, punk photocopy, or skate sticker clutter. Use tape corners, pin marks, paper curl, fabric fibers, rubber texture, varied paper thickness, subtle dust, and real shadows. Palette: black, concrete grey, white, safety orange, cobalt, acid green, denim blue, silver. Absolutely no readable text, no micro text, no letters, no numbers, no labels, no logos, no brand names, no faces, no people, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  graffiti: {
+    alt: "Graffiti moodboard with blank street campaign proofs, spray textures, wall crops, layered sticker blanks, paint swatches, stencil shapes, spray caps, and concrete chips.",
+    caption: "Wall energy: make spray texture, overspray, concrete, sticker layers, and stencil blanks carry the campaign mood without readable tags or apparel cues.",
+    directionKeywords: ["real spray wall board", "overspray texture", "layered sticker blanks", "concrete campaign surface", "neon street palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/graffiti-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Graffiti in web design. Photograph a real designer's graffiti culture and street campaign research board from above on a paint-splattered concrete studio surface. Include printed graffiti-inspired website layout references made only of blank blocks and empty bars, spray-paint texture samples, wall fragment photo crops with no readable tags, layered sticker blanks, drippy paint swatches, rough paper masks, neon and black color chips, stencil shape studies with no letters, marker stroke samples as abstract marks only, and small physical objects like unmarked spray caps, masking tape, and paint chips. The visual language should communicate wall energy, spray texture, layered urban surface, and raw campaign hierarchy for web pages, not streetwear product drops, punk xerox protest, or grunge dirt. Use tape corners, pin marks, paper curl, overspray, scuffed concrete, varied paper thickness, subtle dust, and real shadows. Palette: concrete grey, black, white, spray red, acid green, cobalt, chrome silver, hot pink. Absolutely no readable text, no tags, no letters, no numbers, no labels, no logos, no brand names, no faces, no people, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "hiphop-style": {
+    alt: "Hip-Hop Style moodboard with blank artist-commerce web proofs, album grid studies, stage-light crops, gold and chrome swatches, vinyl texture, speaker mesh, and metal rings.",
+    caption: "Music confidence: use vinyl, speaker mesh, stage light, gold, chrome, and bold blank album grids for rhythm and artist-commerce presence.",
+    directionKeywords: ["real music culture board", "album grid rhythm", "gold chrome material", "stage light crops", "bold artist commerce"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/hiphop-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Hip-Hop Style in web design. Photograph a real designer's music culture and artist-commerce research board from above on a dark studio table with brushed metal and black paper. Include printed hip-hop website layout references made only of blank blocks and empty bars, album-cover grid studies without text, stage-light photo crops with no performers or labels, gold and chrome material swatches, black vinyl texture, speaker mesh, chain-like metal sample, bold red and gold color chips, high-contrast poster crop studies with no letters, and small physical objects like a blank vinyl center label, unmarked cassette shell, and metal rings. The visual language should communicate rhythm, confidence, music commerce, and bold cultural presence for web pages, not graffiti walls, streetwear product drops, or rave neon events. Use tape corners, pin marks, paper curl, metallic highlights, vinyl dust, varied paper thickness, subtle scratches, and real shadows. Palette: black, gold, chrome, deep red, cream, charcoal, royal blue, warm white. Absolutely no readable text, no micro text, no letters, no numbers, no labels, no logos, no brand names, no people, no faces, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "skate-culture": {
+    alt: "Skate Culture moodboard with blank skate-shop web proofs, sticker blanks, deck cutouts, grip tape, wheel chips, scuffed concrete crops, checker strips, and bearing parts.",
+    caption: "Board-surface movement: use grip tape, plywood, sticker blanks, wheel color, checker strips, and scuffed concrete for youth-commerce rhythm.",
+    directionKeywords: ["real skate shop board", "deck shape studies", "grip tape texture", "sticker sheet blanks", "scuffed youth commerce"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/skate-culture-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Skate Culture in web design. Photograph a real designer's skate shop and youth-culture web research board from above on a scratched plywood ramp-like studio surface. Include printed skate website layout references made only of blank blocks and empty bars, sticker-sheet blanks, deck-shape paper cutouts, grip tape samples, wheel urethane color chips, scuffed concrete and asphalt photo crops with no labels, board graphic crop studies with no words or logos, bold product grid studies, checker strips, and small physical objects like unmarked wheel, bearing, blank deck tag, and torn tape. The visual language should communicate movement, stickers, board material, youth energy, and drop-commerce rhythm for web pages, not streetwear apparel, graffiti walls, or punk zine protest. Use tape corners, pin marks, paper curl, scratched plywood, grip texture, scuffed edges, varied paper thickness, subtle dust, and real shadows. Palette: plywood tan, black, white, asphalt grey, deck red, cobalt, urethane yellow, mint. Absolutely no readable text, no micro text, no letters, no numbers, no logos, no brand names, no people, no faces, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  punk: {
+    alt: "Punk moodboard with blank zine web proofs, torn xerox paper, cutout shapes, safety pins, black tape, ripped poster fragments, staples, and red-black chips.",
+    caption: "Zine urgency: use torn photocopy grain, staples, black tape, safety pins, and red-black contrast for aggressive campaign hierarchy.",
+    directionKeywords: ["real punk zine board", "torn xerox paper", "safety pins staples", "red black urgency", "anti establishment campaign"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/punk-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Punk in web design. Photograph a real designer's punk zine and anti-establishment campaign web research board from above on a dirty off-white photocopy table. Include printed punk website layout references made only of blank blocks and empty bars, torn black-and-white xerox paper, ransom-note-like cutout shapes with absolutely no letters, safety pin and black tape samples, ripped poster fragments with no readable marks, red and black color chips, stapled paper studies, rough collage composition studies, photocopy noise swatches, and small physical objects like blank pins, staples, torn tape, and a scuffed metal ring. The visual language should communicate rebellion, zine roughness, torn urgency, and aggressive campaign hierarchy for web pages, not graffiti spray walls, grunge music texture, or polished anti-design art. Use tape corners, pin marks, staples, paper curl, ripped fibers, photocopy grain, scuffs, varied paper thickness, subtle dust, and hard shadows. Palette: black, off white, blood red, dirty grey, safety yellow, metal silver. Absolutely no readable text, no micro text, no fake text, no letters, no numbers, no labels, no logos, no brand names, no people, no faces, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  grunge: {
+    alt: "Grunge moodboard with blank distressed music web proofs, smudged charcoal paper, faded plaid, torn dark paper, scratched film, cassette case, rusted washer, and muted chips.",
+    caption: "Analog decay: use stains, scratched film, faded plaid, dark torn paper, and worn music artifacts for loose editorial texture rather than punk contrast.",
+    directionKeywords: ["real distressed music board", "analog decay texture", "scratched film cassette", "faded plaid stains", "moody loose hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/grunge-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Grunge in web design. Photograph a real designer's distressed music and underground editorial web research board from above on a dark stained wood studio table. Include printed grunge website layout references made only of blank blocks and empty bars, distressed photo crop studies with no people or labels, smudged charcoal paper, faded plaid fabric, torn dark paper, scratched film strips with no frames of faces, muted brown and grey color chips, photocopy noise, weathered tape, dirty texture swatches, and small physical objects like a blank cassette case, rusted washer, and scuffed black card. The visual language should communicate worn texture, analog decay, moody music culture, and loose editorial hierarchy for web pages, not punk protest contrast, graffiti spray color, or lo-fi cozy calm. Use tape corners, pin marks, paper curl, stains, scratches, torn edges, varied paper thickness, subtle dust, and heavy realistic shadows. Palette: dirty black, charcoal, faded brown, olive grey, rust, cream, muted burgundy, dust grey. Absolutely no readable text, no micro text, no letters, no numbers, no labels, no logos, no brand names, no people, no faces, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "indie-sleaze": {
+    alt: "Indie Sleaze moodboard with blank nightlife web proofs, harsh flash crops, glossy club textures, smudged black paper, silver foil, leopard fabric, wristband blanks, and hot pink chips.",
+    caption: "Flash nightlife mess: combine harsh glare, glossy smudges, leopard or sequin texture, foil, wristband blanks, and cramped grids without grunge decay.",
+    directionKeywords: ["real flash nightlife board", "glossy club texture", "smudged black foil", "hot pink dirty palette", "ironic culture grid"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/indie-sleaze-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Indie Sleaze in web design. Photograph a real designer's flash-photo nightlife and messy culture web research board from above on a scratched black laminate table. Include printed indie-sleaze website layout references made only of blank blocks and empty bars, harsh flash photography fragments with no people, faces, or labels, glossy club-floor texture crops, smudged black paper, silver foil, disposable-camera-like blank photo borders, leopard or sequin fabric swatches, neon pink and dirty black color chips, compact editorial grid studies, and small physical objects like an unmarked wristband blank, clear plastic card, black cable loop, and scuffed compact mirror. The visual language should communicate flash glare, nightlife mess, ironic glamour, and cramped editorial culture for web pages, not grunge decay, rave event neon, or luxury fashion polish. Use tape corners, pin marks, paper curl, fingerprint smudges, glossy reflections, uneven crop edges, varied paper thickness, dust, and hard flash-like shadows. Palette: black, dirty white, flash silver, hot pink, leopard tan, acid green, denim blue, wine red. Absolutely no readable text, no micro text, no letters, no numbers, no labels, no logos, no brand names, no people, no faces, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "rave-style": {
+    alt: "Rave Style moodboard with blank electronic-event web proofs, fluorescent strips, UV acrylic, laser crops, mesh, reflective vinyl, wristband blanks, and acid color chips.",
+    caption: "Dark-room energy: use fluorescent wayfinding, UV acrylic, laser crops, reflective vinyl, and rhythmic blank ticketing modules without cyberpunk scenery.",
+    directionKeywords: ["real rave event board", "fluorescent ticketing rhythm", "laser dark-room light", "UV acrylic chips", "acid neon palette"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/rave-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Rave Style in web design. Photograph a real designer's electronic music event and nightlife web research board from above on a matte black studio table under colored edge light. Include printed rave event website layout references made only of blank blocks and empty bars, event lineup module studies with no text or numbers, fluorescent paper strips, UV-reactive acrylic chips, laser-light photo crops with no people or labels, mesh fabric, reflective vinyl, glow-stick-like translucent objects with no markings, acid color chips, waveform-like abstract shapes with no labels, and small physical objects like blank wristband strips and unmarked plastic tokens. The visual language should communicate high-energy electronic events, fluorescent wayfinding, dark-room light, and rhythmic ticketing hierarchy for web pages, not cyberpunk city, indie-sleaze flash mess, or graffiti street texture. Use tape corners, pin marks, paper curl, neon reflections, dark surface dust, varied paper thickness, and real shadows. Palette: black, acid green, laser violet, hot pink, cyan, electric blue, white, reflective silver. Absolutely no readable text, no micro text, no letters, no numbers, no labels, no logos, no brand names, no people, no faces, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "lo-fi": {
+    alt: "Lo-Fi moodboard with blank analog web proofs, low-resolution crops, cassette texture, faded paper, grain fragments, scanline cards, cardboard, sticky notes, and dusty muted chips.",
+    caption: "Cozy low fidelity: use faded paper, cassette shells, scanline texture, film grain, warm cardboard, and muted modules instead of grunge decay or rave darkness.",
+    directionKeywords: ["real analog calm board", "low resolution crops", "cassette scanline texture", "warm muted palette", "relaxed content hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/lo-fi-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Lo-Fi in web design. Photograph a real designer's analog calm and low-resolution web research board from above on a warm grey desk. Include printed lo-fi website layout references made only of blank blocks and empty bars, low-resolution image crop studies with no people or labels, cassette and tape texture samples with no writing, faded paper, muted color chips, soft grain photo fragments, CRT scanline texture cards with no symbols, notebook paper turned blank-side up, warm cardboard, matte plastic, relaxed playlist-like module studies without text, and small physical objects like an unmarked cassette shell, pencil stub, blank sticky notes, and a soft cloth swatch. The visual language should communicate analog warmth, low-fidelity texture, gentle nostalgia, and relaxed content hierarchy for web pages, not grunge decay, retro-commerce posters, or rave neon darkness. Use tape corners, pin marks, paper curl, dust, film grain, faded edges, varied paper thickness, soft shadows, and real desk texture. Palette: warm grey, faded beige, dusty blue, muted peach, olive, off white, graphite, tape brown. Absolutely no readable text, no micro text, no letters, no numbers, no labels, no logos, no brand names, no people, no faces, no fake UI gibberish, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "typography-focused": {
+    alt: "Typography Focused moodboard with blank type-scale web proofs, black hierarchy blocks, baseline strips, column cards, crop marks, neutral chips, and studio paper tools.",
+    caption: "Type hierarchy first: use scale blocks, baseline rhythm, column measures, and black-on-ivory contrast so structure comes from typography rather than imagery.",
+    directionKeywords: ["real type hierarchy board", "scale contrast blocks", "baseline rhythm", "column measure studies", "black ivory typography"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/typography-focused-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Typography Focused web design. Photograph a real designer's type-scale and hierarchy research board from above on a clean white typography studio table. Include printed website layout references made only of large and small black unreadable rectangles, type-scale rhythm studies with no letters, baseline strips, font-weight block samples represented as abstract bars, column measure cards, black and ivory paper, crop marks without numbers, neutral color chips, layout spacing studies, and small physical objects like a metal ruler, blank pencil, and paper tabs. The visual language should communicate typographic hierarchy, scale contrast, rhythm, and reading structure for web pages, not Swiss institutional grids, magazine photography, or poster campaign drama. Use tape corners, pin marks, slight paper curl, paper grain, measured alignment, varied paper thickness, subtle dust, and real shadows. Palette: white, ivory, black, graphite, warm grey, muted red accent. Absolutely no readable text, no fake text, no letterforms, no numbers, no labels, no logos, no brand names, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "editorial-design": {
+    alt: "Editorial Design moodboard with blank article web proofs, feature spread studies, pull-quote blocks, photo essay crops, column overlays, magazine paper, and muted chips.",
+    caption: "Longform pacing: combine image-text rhythm, blank pull-quote blocks, column overlays, and quiet paper stock for credible article hierarchy.",
+    directionKeywords: ["real article layout board", "longform image rhythm", "blank pull quote blocks", "publishing credibility", "warm paper table"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/editorial-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Editorial Design in web design. Photograph a real designer's article-layout and publishing web research board from above on a warm off-white paper table. Include printed editorial website references made only of blank image blocks and unreadable bars, feature article spread studies, pull-quote blocks represented as empty rectangles, caption strips with no letters, photo essay crop fragments with no people or labels, column grid overlays with no numbers, cream and black paper samples, muted accent chips, magazine paper swatches, binder clips, blank note tabs, and transparent acetate grid sheets with no markings. Do not include rulers or measuring tools. The visual language should communicate article pacing, image-text rhythm, longform hierarchy, and publishing credibility for web pages, not magazine cover spectacle, newspaper density, or pure typography specimens. Use tape corners, pin marks, paper curl, crop edges, varied paper thickness, paper grain, subtle dust, and real shadows. Palette: warm white, cream, black, graphite, muted blue, faded red, newsprint grey. Absolutely no readable text, no fake text, no letterforms, no numbers, no measurement marks, no labels, no logos, no brand names, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "magazine-style": {
+    alt: "Magazine Style moodboard with blank cover web proofs, contents grids, glossy paper, feature crops, spine strips, issue color chips, binder clips, and page tabs.",
+    caption: "Issue browsing: use cover impact, contents grids, glossy paper, spine strips, and modular image rhythm so the page feels like a digital magazine system.",
+    directionKeywords: ["real magazine issue board", "cover impact blocks", "contents grid studies", "glossy matte papers", "editorial browsing rhythm"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/magazine-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Magazine Style in web design. Photograph a real designer's magazine cover and contents-page web research board from above on a bright editorial studio table. Include printed magazine-style website layouts made only of blank image blocks, solid rectangles, and empty bars. Include cover composition studies with large blank masthead blocks but no letters, contents-grid studies made only of rectangles, feature-photo crops with no people or labels, glossy and matte magazine paper swatches, color chips for issue systems, spine-like paper strips with no text, image-cropping guides with no numbers, binder clips, blank bookmarks, and transparent page tabs. The visual language should communicate issue structure, cover impact, editorial image rhythm, and content browsing for web pages, not newspaper columns, longform editorial calm, or posterism single-message drama. Use tape corners, pin marks, paper curl, glossy highlights, crop edges, varied paper thickness, subtle dust, and real shadows. Palette: white, black, glossy red, cobalt, cream, photo grey, yellow accent. Absolutely no readable text, no micro text, no fake text, no text-like marks, no letterforms, no numbers, no labels, no logos, no brand names, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  posterism: {
+    alt: "Posterism moodboard with blank campaign landing proofs, huge headline blocks, oversized color fields, thick borders, folded poster paper, wheatpaste texture, and tape rolls.",
+    caption: "One-shot impact: build from large blank fields, direct composition, poster folds, paste texture, and signal color rather than browsing systems.",
+    directionKeywords: ["real poster campaign board", "single message scale", "oversized color fields", "folded poster paper", "direct landing hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/posterism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Posterism in web design. Photograph a real designer's poster-like campaign landing page research board from above on a stark white studio table. Include printed posterism web layouts made only of huge blank headline blocks, large image fields, and empty bars, single-message hero studies with no text, oversized color fields, bold crop studies, thick border samples, folded poster paper, wheatpaste texture, red black and yellow chips, dramatic diagonal composition studies, and small physical objects like blank poster tabs, tape rolls, and paper weights. The visual language should communicate one-shot impact, campaign focus, scale, and direct visual hierarchy for web pages, not magazine browsing, punk zine texture, or typography specimen systems. Use tape corners, pin marks, paper curl, folded poster edges, paste texture, varied paper thickness, subtle dust, and crisp shadows. Palette: white, black, signal red, poster yellow, cobalt, cream, graphite. Absolutely no readable text, no fake text, no letterforms, no numbers, no labels, no logos, no brand names, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "grid-system": {
+    alt: "Grid System moodboard with blank modular web proofs, column grid sheets, acetate overlays, square paper blocks, black rule samples, acrylic squares, and pale blue grid tint.",
+    caption: "Modular order: use blank grid sheets, acetate overlays, repeated modules, rule samples, and alignment tabs for structure without typographic personality.",
+    directionKeywords: ["real modular grid board", "blank column systems", "acetate grid overlays", "repeatable proportions", "information order"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/grid-system-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Grid System in web design. Photograph a real designer's layout system and modular web research board from above on a white drafting table. Include printed grid-system website references made only of blank modules and empty bars, column grid sheets with no numbers or tick marks, modular spacing studies, transparent acetate overlays with plain blue grid lines only, baseline strips without marks, square and rectangle paper blocks, black rule samples, neutral chips, alignment tabs, crop guides with no labels, frosted acrylic squares, and blank metal paper weights. Do not include rulers, measuring tools, numbers, or measurement marks. The visual language should communicate structure, repeatability, modular proportion, and information order for web pages, not Swiss red typographic identity, magazine image rhythm, or typography-scale drama. Use tape corners, pin marks, slight paper curl, precise alignment, paper grain, varied paper thickness, subtle dust, and real shadows. Palette: white, black, light grey, graphite, pale blue grid tint, small red accent. Absolutely no readable text, no fake text, no letterforms, no numbers, no measurement marks, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  collage: {
+    alt: "Collage moodboard with blank mixed-paper web proofs, torn photo fragments, overlapping papers, cut shapes, tape, acetate scraps, fabric texture, and rough edge studies.",
+    caption: "Layered mixed media: use torn edges, overlapping paper, tape, fabric and acetate scraps, and irregular grids for discovery without becoming photomontage.",
+    directionKeywords: ["real paper collage board", "mixed media layers", "torn photo fragments", "irregular discovery grid", "visible tape edges"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/collage-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Collage in web design. Photograph a real designer's mixed-paper collage and editorial web research board from above on a neutral grey studio table. Include printed collage-style website layouts made only of blank image blocks and empty bars, torn photo fragments with no people or labels, overlapping colored papers, cut paper shapes, tape samples, transparent acetate scraps, fabric and newsprint-like texture without text, irregular grid studies, muted and bright color chips, rough edge studies, and small physical objects like scissors closed, blank paper tabs, and masking tape. The visual language should communicate layered paper composition, mixed media, context switching, and editorial discovery for web pages, not photomontage surreal image collision, punk zine anger, or maximalist decoration. Use tape corners, pin marks, paper curl, torn fibers, uneven crop edges, varied paper thickness, subtle dust, and real shadows. Palette: paper white, graphite, muted red, cobalt, kraft, pale yellow, dusty blue, black. Absolutely no readable text, no fake text, no letterforms, no numbers, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  photomontage: {
+    alt: "Photomontage moodboard with blank campaign web proofs, cut photographic fragments, architecture and object crops, sharp masks, acetate overlays, photo papers, and color chips.",
+    caption: "Photographic collision: use hard image cuts, mask shapes, contact-sheet crops, acetate overlays, and campaign fragments instead of paper-craft collage.",
+    directionKeywords: ["real photographic montage board", "sharp image collision", "mask overlay sheets", "campaign storytelling", "photo paper contrast"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/photomontage-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Photomontage in web design. Photograph a real designer's photographic composite and campaign research board from above on a dark neutral studio table. Include printed website layouts made only of blank image fields and empty bars, cut photographic fragments of architecture, objects, sky, water, product details, and shadows with no people, no faces, no labels, no typography, no letters, and no symbols. Include sharp mask shapes, photo contact-sheet crops with blank borders, transparent overlay sheets, black tape, blank photo corners, high-contrast matte and glossy photo papers, red and pale blue color chips, and composite studies where images collide visually through cropping and layering. The visual language should communicate photographic collision, montage editing, constructed meaning, and campaign storytelling for web pages, not paper collage craft, magazine browsing, punk zine texture, or experimental typography. Use tape corners, pin marks, paper curl, cut photo edges, acetate reflections, varied paper thickness, subtle dust, and real shadows. Palette: black, white, photo grey, deep red, pale blue, cream, graphite. Absolutely no readable text, no micro text, no fake text, no letterforms, no alphabet shapes, no numbers, no labels, no logos, no people, no faces, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "experimental-type": {
+    alt: "Experimental Type moodboard with abstract non-letter web proofs, warped black forms, sliced curves, ink textures, distortion sheets, motion-blur crops, and bright accent chips.",
+    caption: "Type-like energy without words: use warped forms, sliced curves, distortion sheets, and ink rhythm so the page feels expressive but not readable.",
+    directionKeywords: ["real abstract type board", "non alphabet forms", "warped visual rhythm", "ink distortion sheets", "expressive hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/experimental-type-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Experimental Type in web design. Photograph a real designer's abstract form and expressive hierarchy web research board from above on a matte black and white studio surface. Include printed experimental web layouts made only of non-alphabet abstract shapes, blank bars, and image blocks. Include warped black paper forms, stretched geometric blocks, sliced curves, ink texture swatches, transparent distortion sheets, motion-blur abstract form crops, high-contrast paper samples, bright accent chips, and blank paper tabs. The forms should suggest visual rhythm and type-like energy without becoming any real letter, word, symbol, or number. The visual language should communicate expressive visual rhythm, form experimentation, and type-as-material thinking for web pages, not normal typography hierarchy, poster campaign scale, or anti-design chaos. Use tape corners, pin marks, paper curl, cut edges, acetate reflections, varied paper thickness, subtle dust, and real shadows. Palette: black, white, graphite, electric blue, hot red, acid yellow, pale grey. Absolutely no readable text, no micro text, no fake text, no real letters, no alphabet, no letter-like marks, no words, no numbers, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "newspaper-style": {
+    alt: "Newspaper Style moodboard with blank news web proofs, empty columns, headline bars, folded newsprint samples, monochrome photo crops, rule lines, archive cards, and ink chips.",
+    caption: "Dense news cadence: use multi-column modules, headline bars, newsprint grain, rule lines, and archive blanks for authority without magazine glamour.",
+    directionKeywords: ["real news layout board", "dense column hierarchy", "folded newsprint grain", "monochrome archive rhythm", "information heavy web"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/newspaper-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Newspaper Style in web design. Photograph a real designer's news layout and information-heavy web research board from above on a pale newsprint studio table. Include printed newspaper-style website layouts made only of blank headline bars, empty columns, and image boxes, multi-column page studies with no letters or numbers, folded newsprint paper samples without text, monochrome photo crops with no people or labels, rule-line samples, section-grid blocks, muted ink and paper color chips, archive-card blanks, and small physical objects like blank clipping tabs, paper weights, and folded paper corners. The visual language should communicate dense but readable information hierarchy, news cadence, monochrome authority, and archive browsing for web pages, not magazine cover glamour, editorial longform spaciousness, or typography specimen work. Use tape corners, pin marks, paper curl, folded newsprint edges, ink grain, varied paper thickness, subtle dust, and real shadows. Palette: newsprint grey, off white, black, ink blue, faded red, warm beige, graphite. Absolutely no readable text, no fake text, no letterforms, no numbers, no labels, no logos, no brand names, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "flat-design": {
+    alt: "Flat Design moodboard with blank flat-interface proofs, colored rectangles, matte paper chips, icon placeholder tiles, card grids, button shapes, and acrylic squares.",
+    caption: "Two-dimensional clarity: use solid color fields, matte surfaces, simple modules, and icon-like placeholders without shadows or soft depth.",
+    directionKeywords: ["real flat interface board", "solid color modules", "matte paper system", "two dimensional clarity", "simple UI hierarchy"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/flat-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Flat Design in web design. Photograph a real designer's flat interface and icon-system research board from above on a clean white studio table. Include printed flat-design website layouts made only of blank colored rectangles, empty bars, and simple shape modules, flat color chips, matte paper swatches, icon placeholder tiles with no symbols or letters, simple card-grid studies, solid button-shape samples with no text, color-block product fragments, and small physical objects like blank colored cards, matte acrylic squares, and paper tabs. The visual language should communicate two-dimensional clarity, simple color systems, direct UI hierarchy, and icon-like structure for web pages, not material shadows, neumorphic depth, or startup gradient marketing. Use tape corners, pin marks, slight paper curl, clean cut edges, matte paper texture, varied paper thickness, subtle dust, and soft shadows. Palette: white, black, cobalt, coral, mint, yellow, light grey, navy. Absolutely no readable text, no fake text, no letters, no numbers, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "material-design": {
+    alt: "Material Design moodboard with blank component proofs, layered paper surfaces, elevation stacks, ripple circles, color-role chips, acrylic samples, and spacing cards.",
+    caption: "Surface discipline: use layered paper, elevation shadows, state circles, and component spacing to express product consistency rather than flat color.",
+    directionKeywords: ["real material system board", "layered elevation surfaces", "state component studies", "product UI consistency", "soft physical shadows"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/material-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Material Design in web design. Photograph a real designer's surface-elevation and component-system research board from above on a neutral light grey studio table. Include printed material-design website and app layouts made only of blank cards, empty bars, and unlabeled state blocks, layered paper surfaces casting real shadows, elevation-stack studies, ripple-state paper circles with no icons, color role chips, matte paper and acrylic samples, component spacing cards, motion-sequence strips without numbers, and small physical objects like stacked blank cards and translucent dividers. The visual language should communicate surfaces, elevation, states, motion discipline, and product UI consistency for web pages, not flat color-only design, glass transparency, or neumorphic embossing. Use tape corners, pin marks, slight paper curl, soft physical shadows, layered paper thickness, subtle dust, and clean studio texture. Palette: white, light grey, indigo, teal, amber, coral, graphite, soft shadow grey. Absolutely no readable text, no fake text, no letters, no numbers, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  neumorphism: {
+    alt: "Neumorphism moodboard with blank soft UI proofs, raised and inset paper buttons, tone-on-tone chips, pill controls, molded paper, foam, bevel studies, and rounded tokens.",
+    caption: "Pressed soft surfaces: rely on low-contrast embossing, inset controls, molded paper, foam, and double shadows instead of colorful 3D clay.",
+    directionKeywords: ["real soft embossed board", "raised inset controls", "tone on tone depth", "gentle double shadows", "low contrast UI"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/neumorphism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Neumorphism in web design. Photograph a real designer's soft-embossed interface research board from above on a pale warm grey studio surface. Include printed neumorphic web and app layouts made only of blank rounded cards and empty bars, raised and inset paper button studies, soft shadow tests, tone-on-tone color chips, pill controls with no icons or text, molded paper samples, matte foam swatches, subtle bevel studies, tactile white and grey cards, and small physical objects like rounded blank tokens and embossed paper tiles. The visual language should communicate pressed surfaces, soft depth, low-contrast tactile controls, and calm product UI for web pages, not flat design, material elevation, or claymorphism 3D colors. Use tape corners, pin marks, slight paper curl, gentle double shadows, soft edges, varied paper thickness, subtle dust, and real surface texture. Palette: pale grey, warm white, cloud blue, soft taupe, muted lavender, graphite accent. Absolutely no readable text, no fake text, no letters, no numbers, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  glassmorphism: {
+    alt: "Glassmorphism moodboard with blank translucent panel proofs, frosted acrylic, glass samples, blurred color fields, vellum, transparent card studies, and acrylic blocks.",
+    caption: "Layered translucency: use frosted acrylic, glass edges, blur fields, vellum, and refraction to express depth without hologram spectacle.",
+    directionKeywords: ["real translucent interface board", "frosted acrylic sheets", "blurred color fields", "glass refraction depth", "layered transparent panels"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/glassmorphism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Glassmorphism in web design. Photograph a real designer's translucent glass interface research board from above on a cool dark-to-light gradient studio surface. Include printed glassmorphism web layouts made only of blank translucent panels and empty bars, frosted acrylic sheets, clear glass samples, blurred color-field photo crops with no labels, layered vellum, transparent rounded card studies, soft glow color chips, depth shadow tests, refraction samples, and small physical objects like clear acrylic blocks, glass tiles, and unmarked translucent discs. The visual language should communicate layered transparency, blur, depth, and luminous interface surfaces for web pages, not hologram rainbow film, bubble gel volume, or material paper elevation. Use tape corners, pin marks, paper curl, glass reflections, frosted edges, varied paper thickness, subtle dust, and real shadows. Palette: frosted white, icy blue, violet, soft cyan, pale pink, graphite, clear glass. Absolutely no readable text, no fake text, no letters, no numbers, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  claymorphism: {
+    alt: "Claymorphism moodboard with blank soft 3D app proofs, extruded shapes, pastel clay blobs, polymer clay, puffy modules, foam blocks, beads, and rounded tokens.",
+    caption: "Soft 3D tactility: use polymer clay, puffy cards, rounded tokens, and pastel extrusion so depth feels playful rather than embossed or glassy.",
+    directionKeywords: ["real soft 3D board", "pastel clay objects", "puffy rounded cards", "friendly tactile depth", "casual app commerce"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/claymorphism-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Claymorphism in web design. Photograph a real designer's soft 3D clay interface and casual app research board from above on a warm cream studio table. Include printed claymorphism web layouts made only of blank rounded 3D cards and empty bars, soft extruded paper shapes, pastel clay blobs, matte polymer clay samples, pill control studies with no icons or text, puffy product-module studies, soft shadow tests, bright friendly color chips, rounded toy-like object crops with no labels or characters, and small physical objects like unmarked clay beads, squishy foam blocks, and smooth rounded tokens. The visual language should communicate soft 3D depth, friendly tactility, inflated cards, and casual app commerce for web pages, not neumorphic monochrome embossing, toy product photography, or bubble gel reflections. Use tape corners, pin marks, slight paper curl, clay texture, soft shadows, rounded edges, varied paper thickness, subtle dust, and real surface texture. Palette: cream, peach, lavender, mint, butter yellow, coral, sky blue, soft graphite. Absolutely no readable text, no fake text, no letters, no numbers, no labels, no logos, no faces, no characters, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "dark-mode-design": {
+    alt: "Dark Mode Design moodboard with blank dark UI proofs, contrast cards, graphite papers, status chips, dark glass, matte plastic, focus-ring studies, and black acrylic tiles.",
+    caption: "Readable dark control: use graphite surfaces, status accents, focus-ring shapes, matte black materials, and contrast studies rather than neon genre styling.",
+    directionKeywords: ["real dark UI board", "readable graphite surfaces", "status accent chips", "focus ring studies", "reduced glare product control"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/dark-mode-design-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Dark Mode Design in web design. Photograph a real designer's dark interface accessibility and product dashboard research board from above on a matte charcoal studio table. Include printed dark-mode web layouts made only of blank dark panels, empty bars, and unlabeled status blocks, contrast test cards without numbers, OLED-black and graphite paper samples, muted color chips for status states, blue and green accent strips, dark glass and matte plastic swatches, focus-ring shape studies with no icons or text, night product crop fragments with no labels, and small physical objects like black acrylic tiles and unmarked toggle tokens. The visual language should communicate readable dark surfaces, state clarity, reduced glare, and product UI control for web pages, not cyberpunk neon, rave nightlife, or high-tech instrument panels. Use tape corners, pin marks, slight paper curl, dark surface dust, soft edge highlights, varied paper thickness, and real shadows. Palette: black, charcoal, graphite, cool white, muted blue, status green, warning amber, soft violet. Absolutely no readable text, no fake text, no letters, no numbers, no labels, no logos, no watermarks, no people, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "saas-style": {
+    alt: "SaaS Style moodboard with blank product web proofs, dashboard cards, unlabeled charts, abstract table rows, component sheets, pricing shapes, status chips, and dividers.",
+    caption: "Operational product clarity: use tables, charts, sidebars, status chips, and component sheets for B2B trust rather than marketing hero flow.",
+    directionKeywords: ["real B2B product board", "dashboard component system", "abstract table rows", "status chips", "operational clarity"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/saas-style-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for SaaS Style in web design. Photograph a real designer's B2B product interface and operations web research board from above on a clean light grey office table. Include printed SaaS website and dashboard layouts made only of blank cards, empty bars, unlabeled charts, and abstract table rows with no text or numbers, component library sheets, pricing-card shapes with no currency symbols, status color chips, neutral UI paper samples, sidebar and navigation studies, feature-comparison blocks without labels, matte screen-like acrylic, and small physical objects like blank sticky tabs, clear dividers, and unmarked toggle tokens. The visual language should communicate product trust, operational clarity, repeatable components, and conversion support for web pages, not startup hero marketing, high-tech dashboards, or dark mode surfaces. Use tape corners, pin marks, slight paper curl, clean shadows, varied paper thickness, subtle dust, and real office texture. Palette: white, light grey, navy, cobalt, teal, status green, amber, graphite. Absolutely no readable text, no fake text, no letters, no numbers, no currency, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+  "startup-landing-page": {
+    alt: "Startup Landing Page moodboard with blank conversion web proofs, hero blocks, CTA bars, feature sections, testimonial shapes, funnel studies, gradient papers, and progress tokens.",
+    caption: "Conversion storytelling: use hero blocks, feature sequences, funnel shapes, optimistic gradients, and progress tokens rather than operations dashboards.",
+    directionKeywords: ["real startup landing board", "hero CTA flow", "conversion funnel studies", "optimistic product story", "marketing sequence"],
+    generatedWith: "imagegen",
+    imageSrc: "/generated/moodboards/startup-landing-page-realistic-v2.webp",
+    prompt:
+      "Create a realistic editorial moodboard for Startup Landing Page style in web design. Photograph a real designer's startup conversion landing page and growth-story research board from above on a bright white studio table. Include printed startup landing layouts made only of blank hero blocks, empty CTA bars, feature sections, testimonial-card shapes with no text, pricing or plan cards with no currency symbols, funnel flow studies with no labels, pitch-deck color chips, optimistic product screenshot placeholders, soft gradient paper samples, clean illustration-shape cutouts with no icons, and small physical objects like blank sticky tabs, clear acrylic arrows, and colored progress tokens. The visual language should communicate fast value communication, conversion flow, founder-product optimism, and marketing page sequencing for web pages, not B2B SaaS operations dashboard, flat design system, or material component library. Use tape corners, pin marks, slight paper curl, clean shadows, varied paper thickness, subtle dust, and real studio texture. Palette: white, navy, bright blue, mint, coral, sunny yellow, pale violet, graphite. Absolutely no readable text, no fake text, no letters, no numbers, no currency, no labels, no logos, no watermarks, no floating cards. Landscape 16:10 realistic top-down editorial photography.",
+  },
+};
+
 function mergeTokens(
   base: StyleTokens,
   over?: DeepPartial<Omit<StyleTokens, "color">>,
@@ -3281,6 +4086,7 @@ function buildStyle(seed: DesignStyleSeed, index: number): DesignStyle {
     related: related.slice(0, 3),
     palette: seed.palette,
     imagePrompt: `A square editorial poster representing ${seed.nameEn} design style, ${seed.tone}, ${profile.visual.join(", ")}, ${promptSuffix}`,
+    moodboard: styleMoodboards[seed.slug],
     research,
     sampleType: seed.sampleType ?? profile.sampleType,
     tokens,
